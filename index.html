@@ -5,23 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>(-20ºT.E) Curso de Refrigeración</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: #f0f4f8; color: #333; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: #f0f4f8; color: #333; line-height: 1.6; }
         header { background: linear-gradient(135deg, #003366, #007bff); color: white; padding: 40px 20px; text-align: center; }
         .container { max-width: 900px; margin: 20px auto; padding: 20px; }
-        .main-img { width: 100%; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px; }
-        .card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-left: 5px solid #007bff; }
-        .aval { text-align: center; background: #e9ecef; padding: 20px; border-radius: 10px; margin-top: 20px; }
-        .aval img { max-width: 200px; margin-bottom: 10px; }
+        .main-img { width: 100%; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); margin-bottom: 20px; }
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 10px; }
+        .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-top: 5px solid #007bff; }
+        .aval { text-align: center; background: #ffffff; padding: 30px; border-radius: 12px; margin-top: 20px; border: 1px solid #dee2e6; }
+        .aval img { max-width: 250px; height: auto; margin-bottom: 15px; }
         .highlight { color: #0056b3; font-weight: bold; }
-        .btn { display: inline-block; background: #28a745; color: white; padding: 15px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 20px; }
+        .map-container { width: 100%; border-radius: 10px; overflow: hidden; margin-top: 15px; border: 1px solid #ccc; }
+        .btn { display: inline-block; background: #25d366; color: white; padding: 18px 30px; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 1.1em; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: 0.3s; }
+        .btn:hover { background: #128c7e; transform: scale(1.05); }
+        h2, h3 { color: #003366; margin-top: 0; }
     </style>
 </head>
 <body>
 
 <header>
     <h1>(-20ºT.E) Curso de Refrigeración (-20º T.E-)</h1>
-    <p>Especialista en Heladeras y Aire Acondicionado</p>
+    <p>Heladeras y Aire Acondicionado • Formación Profesional</p>
 </header>
 
 <div class="container">
@@ -29,28 +32,38 @@
 
     <div class="info-grid">
         <div class="card">
-            <h3>📅 Detalles del Curso</h3>
+            <h3>📅 Información General</h3>
             <p><span class="highlight">Duración:</span> 4 Meses</p>
             <p><span class="highlight">Carga Horaria:</span> 6 horas semanales</p>
-            <p><span class="highlight">Incluye:</span> Certificado Oficial y Matrícula</p>
+            <p><span class="highlight">Oficial:</span> Se otorga Certificado y Matrícula</p>
+            <p>Aprende reparación y mantenimiento de equipos de frío de forma práctica.</p>
         </div>
+
         <div class="card">
-            <h3>📍 Ubicación</h3>
+            <h3>📍 Lugar de Cursada</h3>
             <p><strong>Círculo Católico de Rafael Calzada</strong></p>
-            <p>Entre Ríos 1555, Rafael Calzada,<br>Buenos Aires, Argentina</p>
+            <p>Entre Ríos 1555, Rafael Calzada<br>Buenos Aires, Argentina</p>
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3276.533221976211!2d-58.3585098!3d-34.8051261!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcd3c43b851815%3A0x60a575882623dd57!2sEntre%20R%C3%ADos%201555%2C%20B1847%20Rafael%20Calzada%2C%20Provincia%20de%20Buenos%20Aires!5e0!3m2!1ses!2sar!4v1707590000000!5m2!1ses!2sar" 
+                    width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy">
+                </iframe>
+            </div>
         </div>
     </div>
 
     <div class="aval">
         <img src="https://www.caim.com.ar/img/ultimo-genial-web.png" alt="Logo CAIM">
-        <p>Curso avalado por la <br><strong>CAMARA ARGENTINA DE INSTALADORES MATRICULADOS (C.A.I.M)</strong></p>
-        <a href="https://www.caim.com.ar/" target="_blank" style="color: #0056b3;">Ver sitio oficial de C.A.I.M</a>
+        <p>Curso avalado oficialmente por la<br><strong>CAMARA ARGENTINA DE INSTALADORES MATRICULADOS (C.A.I.M)</strong></p>
+        <a href="https://www.caim.com.ar/" target="_blank" style="color: #007bff; text-decoration: none;">Visitar sitio de C.A.I.M</a>
     </div>
 
-    <div style="text-align: center; margin-top: 40px;">
-        <h2>¿Listo para empezar tu oficio?</h2>
-        <p>Formación técnica con salida laboral inmediata.</p>
-        <a href="https://wa.me/TU_CELULAR_AQUI" class="btn">Solicitar Información por WhatsApp</a>
+    <div style="text-align: center; margin-top: 50px; margin-bottom: 50px;">
+        <h2>¿Querés inscribirte o recibir más info?</h2>
+        <p>Hacé clic en el botón de abajo y consultanos por WhatsApp.</p>
+        <a href="https://wa.me/5491100000000?text=Hola!%20Me%20interesa%20el%20curso%20de%20refrigeración%20-20ºT.E" class="btn">
+            💬 Consultar por WhatsApp
+        </a>
     </div>
 </div>
 
