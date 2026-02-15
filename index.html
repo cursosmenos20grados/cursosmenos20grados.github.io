@@ -94,42 +94,42 @@ async function sendMessage() {
     input.value = '';
     chatBox.scrollTop = chatBox.scrollHeight;
 
-    // CLAVE API: Asegurate de que sea exactamente esta sin espacios
+    // CLAVE API - Asegurate que sea esta la que copiaste
     const apiKey = "AIzaSyDnVobQ0dRotP8_KpKWJq0FYZiV3Ps12T0"; 
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
+    // Datos del Curso (Entrenamiento rápido)
     const prompt = `Sos el asistente del Curso de Refrigeración (-20ºT.E). 
-    Info: Duración 4 meses, 6hs semanales, título oficial, matrícula otorgada por C.A.I.M. 
+    Info clave: 4 meses de duración, 6hs semanales, título oficial, matrícula C.A.I.M. 
     Lugar: Círculo Católico de Rafael Calzada, Entre Ríos 1555. 
-    Responde de forma corta, profesional y amable en español. 
-    Usuario pregunta: ${message}`;
+    Responde de forma muy corta, amable y en español. 
+    Pregunta del usuario: ${message}`;
 
     try {
         const response = await fetch(url, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ 
-                contents: [{ 
-                    parts: [{ text: prompt }] 
-                }] 
+            body: JSON.stringify({
+                contents: [{
+                    parts: [{ text: prompt }]
+                }]
             })
         });
 
         const data = await response.json();
 
-        // Si Google devuelve un error, lo veremos en la consola (F12)
-        if (data.error) {
-            console.error("Error de Google:", data.error.message);
-            throw new Error(data.error.message);
+        // Verificamos si Google devolvió la respuesta esperada
+        if (data.candidates && data.candidates[0].content) {
+            const aiResponse = data.candidates[0].content.parts[0].text;
+            chatBox.innerHTML += `<div style="background: #e1f5fe; padding: 8px; border-radius: 10px; align-self: flex-start;">${aiResponse}</div>`;
+        } else {
+            console.error("Error en la respuesta:", data);
+            throw new Error("Respuesta incompleta");
         }
 
-        const aiResponse = data.candidates[0].content.parts[0].text;
-
-        // Mostrar respuesta de la IA
-        chatBox.innerHTML += `<div style="background: #e1f5fe; padding: 8px; border-radius: 10px; align-self: flex-start;">${aiResponse}</div>`;
     } catch (error) {
-        console.error("Error completo:", error);
-        chatBox.innerHTML += `<div style="color: red; font-size: 0.8em;">Error: No se pudo conectar con la IA. Probá en 1 minuto.</div>`;
+        console.error("Error de conexión:", error);
+        chatBox.innerHTML += `<div style="color: red; font-size: 0.8em;">La IA está descansando. Reintentá en un momento.</div>`;
     }
     chatBox.scrollTop = chatBox.scrollHeight;
 }
