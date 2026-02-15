@@ -94,26 +94,42 @@ async function sendMessage() {
     input.value = '';
     chatBox.scrollTop = chatBox.scrollHeight;
 
-    const apiKey = "AIzaSyDnVobQ0dRotP8_KpKWJq0FYZiV3Ps12T0"; // Pega acá la clave que sacaste de AI Studio
+    // CLAVE API: Asegurate de que sea exactamente esta sin espacios
+    const apiKey = "AIzaSyDnVobQ0dRotP8_KpKWJq0FYZiV3Ps12T0"; 
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
     const prompt = `Sos el asistente del Curso de Refrigeración (-20ºT.E). 
-    Info: 4 meses, 6hs semanales, título oficial, matrícula C.A.I.M. Lugar: Rafael Calzada. 
-    Responde corto y amable. Usuario pregunta: ${message}`;
+    Info: Duración 4 meses, 6hs semanales, título oficial, matrícula otorgada por C.A.I.M. 
+    Lugar: Círculo Católico de Rafael Calzada, Entre Ríos 1555. 
+    Responde de forma corta, profesional y amable en español. 
+    Usuario pregunta: ${message}`;
 
     try {
         const response = await fetch(url, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+            body: JSON.stringify({ 
+                contents: [{ 
+                    parts: [{ text: prompt }] 
+                }] 
+            })
         });
+
         const data = await response.json();
+
+        // Si Google devuelve un error, lo veremos en la consola (F12)
+        if (data.error) {
+            console.error("Error de Google:", data.error.message);
+            throw new Error(data.error.message);
+        }
+
         const aiResponse = data.candidates[0].content.parts[0].text;
 
         // Mostrar respuesta de la IA
         chatBox.innerHTML += `<div style="background: #e1f5fe; padding: 8px; border-radius: 10px; align-self: flex-start;">${aiResponse}</div>`;
     } catch (error) {
-        chatBox.innerHTML += `<div style="color: red; font-size: 0.8em;">Error al conectar. Verifica tu API Key.</div>`;
+        console.error("Error completo:", error);
+        chatBox.innerHTML += `<div style="color: red; font-size: 0.8em;">Error: No se pudo conectar con la IA. Probá en 1 minuto.</div>`;
     }
     chatBox.scrollTop = chatBox.scrollHeight;
 }
