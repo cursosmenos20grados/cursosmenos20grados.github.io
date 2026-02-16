@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>(-20ºT.E) Curso de Refrigeración -20 grados Rafael Calzada </title>
+    <title>(-20ºT.E) Curso de Refrigeración -20 grados Rafael Calzada</title>
     <style>
         /* Estilos Generales */
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background-color: #f0f4f8; color: #333; }
@@ -96,8 +96,9 @@
 <body>
 
 <header>
-    <h1>(-20ºT.E) Curso de Refrigeración</h1>
-    <p>Especialista en Heladeras y Aires Acondicionados</p>
+    <h1>(-20ºT.E) Curso de Refrigeración 2026</h1>
+    <p>Especialistas en 
+ formación profesional </p>
 </header>
 
 <div class="container">
@@ -122,7 +123,7 @@
     </div>
 
     <div style="text-align: center; margin-top: 40px;">
-        <a href="https://wa.me/5491100000000" class="btn-ws">Solicitar Información por WhatsApp</a>
+        <a href="https://wa.me/5491165928524" class="btn-ws">Solicitar Información por WhatsApp</a>
     </div>
 </div>
 
@@ -130,11 +131,11 @@
 
 <div id="chat-window">
     <div id="chat-header">
-        <span>❄️ Asistente "IA" Menos 20 Grados</span>
+        <span>❄️ Asistente Menos 20 Grados</span>
         <span class="close-chat" onclick="toggleChat()">×</span>
     </div>
     <div id="chat-messages">
-        <div class="msg msg-ia">¡Hola! Soy tu asistente "IA" incorporada!  Preguntame lo que quieras sobre el curso de refrigeración.</div>
+        <div class="msg msg-ia">¡Hola! Soy tu asistente "IA". Preguntame lo que quieras sobre el curso de refrigeración.</div>
     </div>
     <div class="chat-input-area">
         <input type="text" id="chat-input" placeholder="Escribe tu mensaje..." onkeypress="if(event.key==='Enter') sendMessage()">
@@ -147,7 +148,37 @@
     const apiKey = "AIzaSyCHIAlLk6i5c12AUKdpCznGKjHXG2zL_vE"; 
     const apiUrl = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
 
-    const contextIA = "Sos el asistente de 'Cursos Menos 20 Grados'. El curso es de Refrigeración en el Círculo Católico de Rafael Calzada (Entre Ríos 1555). Dura 4 meses, 6h semanales. Avalado por C.A.I.M. Sé amable, breve y responde en base a esta información.";
+    // ENTRENAMIENTO DETALLADO BASADO EN EL FORMULARIO DE INSCRIPCIÓN
+   const contextIA = `Sos el asistente experto de 'Cursos Menos 20 Grados' (-20°T.E-). 
+    Tu objetivo es inscribir alumnos y resolver dudas técnicas.
+    
+    INFORMACIÓN DE VENTAS Y CIERRE:
+    - No requiere conocimientos previos: El curso arranca de cero (incluye electricidad básica aplicada).
+    - Salida Laboral: Al finalizar, el alumno puede trabajar por su cuenta. El certificado permite tramitar la matrícula de C.A.I.M para firmar garantías oficiales.
+    - Herramientas: No hace falta comprar nada para empezar; el taller provee todo. Orientamos al alumno en qué comprar para armar su propio bolso profesional.
+    - Valor agregado: Práctica real con equipos (heladeras domiciliarias, No Frost, comerciales y Splits).
+    
+    INFORMACIÓN TÉCNICA (Asistente de taller):
+    - Gases: Manejo de R134a, R410A (presión 110-120 PSI en baja), R22 (presión 60-70 PSI en baja) y R600.
+    - Procedimientos: Siempre enfatizar realizar VACÍO con bomba y presurizar con nitrógeno para buscar fugas.
+    - Electricidad: Identificación de común, arranque y trabajo en motocompresores. Uso de pinza amperométrica.
+    
+    DATOS ADMINISTRATIVOS:
+    - Sede: Círculo Católico Rafael Calzada (Entre Ríos 1555).
+    - Inicio: 9 de Marzo 2026. Comisiones: L/M o M/J (17:30 a 20:30 hs).
+    - Duración: 4 meses (32 clases presenciales / 96 horas totales).
+    - Inasistencias: Máximo 4. No se recuperan. Puntualidad obligatoria.
+    - Pagos: Del 1 al 10 de cada mes (10% recargo luego). La cuota debe estar paga para iniciar el curso.
+    - Título/Matrícula: Se abona aparte al finalizar (aprox. 80% de una cuota). Ver www.caim.com.ar.
+    PROFESORES INSTRUCTORES:
+    -Marcelo Cardozo es el instructor a cargo de el alta de matriculas y certificados.
+    -Ruben Ruiz, es el instructor encargado del curso de aire acondicionado
+    
+    REGLAS Y CONVIVENCIA: 
+    - No se permite tomar fotos ni videos (propiedad intelectual del Círculo).
+    - No se puede comer ni tomar mate en clase.
+    
+    Responde siempre de forma amable, motivadora y profesional. Si algo no figura aquí, sugerí consultar por WhatsApp.`;
 
     // Abrir y cerrar ventana
     function toggleChat() {
