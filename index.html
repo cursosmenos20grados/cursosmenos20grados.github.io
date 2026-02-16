@@ -81,58 +81,74 @@
 <button onclick="document.getElementById('chat-container').style.display='flex'; this.style.display='none';" style="position: fixed; bottom: 20px; right: 20px; background: #007bff; color: white; border: none; border-radius: 50px; padding: 15px 25px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 999;">
     💬 Preguntar a la IA
 </button>
-
 <script>
-async function sendMessage() {
-    const input = document.getElementById('user-input');
-    const chatBox = document.getElementById('chat-box');
-    const message = input.value.trim();
-    if (!message) return;
+    // 1. CONFIGURACIÓN - PEGA TU CLAVE AQUÍ
+    const apiKey = "AIzaSyDaqofuD7ed_LhV25e8sN8OPCSv1nqRkbU"; 
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
-    // Mostrar mensaje del usuario
-    chatBox.innerHTML += `<div style="background: #eee; padding: 8px; border-radius: 10px; align-self: flex-end;">${message}</div>`;
-    input.value = '';
-    chatBox.scrollTop = chatBox.scrollHeight;
+    // 2. PERSONALIDAD DE LA IA (Información del curso)
+    const contextIA = "Sos el asistente de Helados Mix. Información del curso: Se dicta en el Círculo Católico de Rafael Calzada (Entre Ríos 1555). Dura 4 meses (6 horas semanales). Temario: Heladeras y Aire Acondicionado. Avalado por C.A.I.M. El profesor es un experto en refrigeración.";
 
-    // CLAVE API - Asegurate que sea esta la que copiaste
-    const apiKey ="AIzaSyDaqofuD7ed_LhV25e8sN8OPCSv1nqRkbU"; 
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    async function getAIResponse(userMessage) {
+        try {
+            const response = await fetch(apiUrl, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    contents: [{
+                        parts: [{ text: contextIA + "\nUsuario pregunta: " + userMessage }]
+                    }]
+                })
+            });
 
-    // Datos del Curso (Entrenamiento rápido)
-    const prompt = `Sos el asistente del Curso de Refrigeración (-20ºT.E). 
-    Info clave: 4 meses de duración, 6hs semanales, título oficial, matrícula C.A.I.M. 
-    Lugar: Círculo Católico de Rafael Calzada, Entre Ríos 1555. 
-    Responde de forma muy corta, amable y en español. 
-    Pregunta del usuario: ${message}`;
+            const data = await response.json();
 
-    try {
-        const response = await fetch(url, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                contents: [{
-                    parts: [{ text: prompt }]
-                }]
-            })
-        });
+            // Si Google responde con un error, lo vemos en la consola (F12)
+            if (data.error) {
+                console.error("Error de Google:", data.error.message);
+                return "La IA está descansando un momento. (Error: " + data.error.status + ")";
+            }
 
-        const data = await response.json();
-
-        // Verificamos si Google devolvió la respuesta esperada
-        if (data.candidates && data.candidates[0].content) {
-            const aiResponse = data.candidates[0].content.parts[0].text;
-            chatBox.innerHTML += `<div style="background: #e1f5fe; padding: 8px; border-radius: 10px; align-self: flex-start;">${aiResponse}</div>`;
-        } else {
-            console.error("Error en la respuesta:", data);
-            throw new Error("Respuesta incompleta");
+            return data.candidates[0].content.parts[0].text;
+        } catch (error) {
+            console.error("Error de conexión:", error);
+            return "Hubo un problema de conexión. Intentá de nuevo.";
         }
-
-    } catch (error) {
-        console.error("Error de conexión:", error);
-        chatBox.innerHTML += `<div style="color: red; font-size: 0.8em;">La IA está descansando. Reintentá en un momento.</div>`;
     }
-    chatBox.scrollTop = chatBox.scrollHeight;
-}
+
+    // 3. LÓGICA DE LA VENTANA DE CHAT
+    async function sendMessage() {
+        const input = document.getElementById("chat-input");
+        const messagesContainer = document.getElementById("chat-messages");
+        const message = input.value.trim();
+
+        if (message === "") return;
+
+        // Mostrar mensaje del usuario
+        messagesContainer.innerHTML += `<div style="margin-bottom:10px; text-align:right;"><b>Vos:</b> ${message}</div>`;
+        input.value = "";
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+        // Mostrar "Escribiendo..."
+        const loadingId = "loading-" + Date.now();
+        messagesContainer.innerHTML += `<div id="${loadingId}" style="margin-bottom:10px; color:gray;"><i>La IA está pensando...</i></div>`;
+
+        // Obtener respuesta
+        const aiResponse = await getAIResponse(message);
+
+        // Borrar "Escribiendo..." y mostrar respuesta real
+        document.getElementById(loadingId).remove();
+        messagesContainer.innerHTML += `<div style="margin-bottom:10px;"><b>IA:</b> ${aiResponse}</div>`;
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    // Permitir enviar con la tecla Enter
+    function checkEnter(event) {
+        if (event.key === "Enter") {
+            sendMessage();
+        }
+    }
 </script>
+
 </body>
 </html>
