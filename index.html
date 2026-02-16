@@ -78,9 +78,10 @@
 
 <script>
     // --- CONFIGURACIÓN DE IA ---
-    const apiKey ="AIzaSyDaqofuD7ed_LhV25e8sN8OPCSv1nqRkbU"; // <--- TU CLAVE VA AQUÍ
- const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
+    // --- CONFIGURACIÓN DE IA ---
+    const apiKey = "AIzaSyDaqofuD7ed_LhV25e8sN8OPCSv1nqRkbU"; 
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=${apiKey}`;
+  
     const contextIA = "Sos el asistente experto de 'Cursos Menos 20 Grados'. El curso es de Refrigeración (Heladeras y Aire Acondicionado). Lugar: Círculo Católico de Rafael Calzada (Entre Ríos 1555). Duración: 4 meses. Carga: 6h semanales. Avalado por C.A.I.M. Respondé de forma amable, profesional y técnica.";
 
     async function sendMessage() {
