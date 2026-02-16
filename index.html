@@ -195,10 +195,11 @@
     
     INFO CLAVE:
     - No requiere conocimientos previos (incluye electricidad básica).
+    - edad promedio de inscripcion  de 17 a 70 años.
     - Salida Laboral: Trabajo independiente + Matrícula C.A.I.M.
     - Herramientas: El taller provee todo para las prácticas.
     - Prácticas: Heladeras (familiares, No Frost, comerciales) y Aire Acondicionado Splits.
-    
+    -Los pagos de las cuotas son del 1 al 10 de cada mes.
     ADMIN:
     - Ubicación: Entre Ríos 1555, Rafael Calzada.
     - Inicio: 9 de Marzo 2026. Comisiones L/M o M/J (17:30 a 20:30).
@@ -249,7 +250,7 @@
                 const aiText = data.candidates[0].content.parts[0].text;
                 container.innerHTML += `<div class="msg msg-ia">${aiText}</div>`;
             } else {
-                container.innerHTML += `<div class="msg msg-ia">Lo siento, hubo un problema al procesar tu respuesta.</div>`;
+                container.innerHTML += `<div class="msg msg-ia">Lo siento, hubo un problema al procesar tu respuesta, contactate por whatsapp</div>`;
             }
         } catch (e) {
             if(document.getElementById(tempId)) document.getElementById(tempId).remove();
