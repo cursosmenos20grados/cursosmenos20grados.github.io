@@ -3,36 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>(-20ºT.E) Curso de Refrigeración</title>
+    <title>(-20ºT.E) Curso de Refrigeración -20 grados Rafael Calzada </title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: #f0f4f8; color: #333; }
+        /* Estilos Generales */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background-color: #f0f4f8; color: #333; }
         header { background: linear-gradient(135deg, #003366, #007bff); color: white; padding: 40px 20px; text-align: center; }
         .container { max-width: 900px; margin: 20px auto; padding: 20px; padding-bottom: 100px; }
         .main-img { width: 100%; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px; }
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 30px; }
         .card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-left: 5px solid #007bff; }
         .aval { text-align: center; background: #e9ecef; padding: 20px; border-radius: 10px; margin-top: 20px; }
-        .aval img { max-width: 200px; margin-bottom: 10px; }
         .highlight { color: #0056b3; font-weight: bold; }
-        .btn { display: inline-block; background: #28a745; color: white; padding: 15px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 20px; }
+        .btn-ws { display: inline-block; background: #28a745; color: white; padding: 15px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 20px; transition: 0.3s; }
+        .btn-ws:hover { background: #218838; transform: scale(1.05); }
 
-        /* --- ESTILOS DEL CHAT IA --- */
-        #chat-window { position: fixed; bottom: 20px; right: 20px; width: 300px; background: white; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); border: 1px solid #003366; display: flex; flex-direction: column; overflow: hidden; z-index: 1000; }
-        #chat-header { background: #003366; color: white; padding: 10px; text-align: center; font-weight: bold; font-size: 14px; }
-        #chat-messages { height: 250px; overflow-y: auto; padding: 10px; font-size: 13px; background: #f9f9f9; display: flex; flex-direction: column; }
-        .msg { margin-bottom: 8px; padding: 8px; border-radius: 5px; max-width: 85%; }
-        .msg-user { align-self: flex-end; background: #007bff; color: white; }
-        .msg-ia { align-self: flex-start; background: #e2e2e2; color: #333; }
-        .chat-input-area { display: flex; border-top: 1px solid #ccc; }
-        #chat-input { flex: 1; border: none; padding: 10px; outline: none; }
-        #chat-send { background: #003366; color: white; border: none; padding: 10px; cursor: pointer; }
+        /* --- CHAT MODERNO Y FLOTANTE --- */
+        #chat-launcher {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 65px;
+            height: 65px;
+            background: linear-gradient(135deg, #003366, #007bff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+            z-index: 1001;
+            transition: all 0.3s ease;
+        }
+        #chat-launcher:hover { transform: scale(1.1) rotate(10deg); }
+
+        #chat-window {
+            position: fixed;
+            bottom: 100px;
+            right: 25px;
+            width: 350px;
+            height: 500px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+            display: none; /* Empieza oculto */
+            flex-direction: column;
+            z-index: 1000;
+            overflow: hidden;
+            border: 1px solid rgba(0,51,102,0.1);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        #chat-header {
+            background: #003366;
+            color: white;
+            padding: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .close-chat { cursor: pointer; font-size: 24px; line-height: 1; }
+
+        #chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+            background: #fdfdfd;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .msg { padding: 12px 16px; border-radius: 18px; font-size: 14.5px; max-width: 85%; line-height: 1.5; word-wrap: break-word; }
+        .msg-user { align-self: flex-end; background: #007bff; color: white; border-bottom-right-radius: 4px; box-shadow: 0 2px 5px rgba(0,123,255,0.2); }
+        .msg-ia { align-self: flex-start; background: #f0f0f0; color: #333; border-bottom-left-radius: 4px; }
+
+        .chat-input-area { padding: 15px; border-top: 1px solid #eee; display: flex; gap: 10px; background: white; }
+        #chat-input { flex: 1; border: 1px solid #ddd; padding: 12px; border-radius: 10px; outline: none; font-size: 14px; }
+        #chat-input:focus { border-color: #007bff; }
+        #chat-send { background: #003366; color: white; border: none; padding: 10px 18px; border-radius: 10px; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>(-20ºT.E) Curso de Refrigeración (-20º T.E-)</h1>
-    <p>Especialista en Heladeras y Aire Acondicionado</p>
+    <h1>(-20ºT.E) Curso de Refrigeración</h1>
+    <p>Especialista en Heladeras y Aires Acondicionados</p>
 </header>
 
 <div class="container">
@@ -53,59 +118,71 @@
     </div>
 
     <div class="aval">
-        <img src="https://www.caim.com.ar/img/ultimo-genial-web.png" alt="Logo CAIM">
         <p>Curso avalado por la <br><strong>CAMARA ARGENTINA DE INSTALADORES MATRICULADOS (C.A.I.M)</strong></p>
-        <a href="https://www.caim.com.ar/" target="_blank" style="color: #0056b3;">Ver sitio oficial de C.A.I.M</a>
     </div>
 
     <div style="text-align: center; margin-top: 40px;">
-        <h2>¿Listo para empezar tu oficio?</h2>
-        <p>Formación técnica con salida laboral inmediata.</p>
-        <a href="https://wa.me/TU_CELULAR_AQUI" class="btn">Solicitar Información por WhatsApp</a>
+        <a href="https://wa.me/5491100000000" class="btn-ws">Solicitar Información por WhatsApp</a>
     </div>
 </div>
 
+<div id="chat-launcher" onclick="toggleChat()">💬</div>
+
 <div id="chat-window">
-    <div id="chat-header">❄️ Asistente Menos 20 Grados</div>
+    <div id="chat-header">
+        <span>❄️ Asistente "IA" Menos 20 Grados</span>
+        <span class="close-chat" onclick="toggleChat()">×</span>
+    </div>
     <div id="chat-messages">
-        <div class="msg msg-ia">¡Hola! Soy la IA de Helados Mix. Consultame lo que quieras sobre el curso en Rafael Calzada.</div>
+        <div class="msg msg-ia">¡Hola! Soy tu asistente "IA" incorporada!  Preguntame lo que quieras sobre el curso de refrigeración.</div>
     </div>
     <div class="chat-input-area">
-        <input type="text" id="chat-input" placeholder="Escribe aquí..." onkeypress="checkEnter(event)">
+        <input type="text" id="chat-input" placeholder="Escribe tu mensaje..." onkeypress="if(event.key==='Enter') sendMessage()">
         <button id="chat-send" onclick="sendMessage()">➤</button>
     </div>
 </div>
 
 <script>
-    // --- CONFIGURACIÓN DE IA ---
-    // --- CONFIGURACIÓN DE IA ---
+    // --- CONFIGURACIÓN DE IA DEFINITIVA ---
     const apiKey = "AIzaSyBB1-0UIJNIw9-tGwHMUzsbW0bCLVyLgQU"; 
-    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-    
-    const contextIA = "Sos el asistente experto de 'Cursos Menos 20 Grados'. El curso es de Refrigeración (Heladeras y Aire Acondicionado). Lugar: Círculo Católico de Rafael Calzada (Entre Ríos 1555). Duración: 4 meses. Carga: 6h semanales. Avalado por C.A.I.M. Respondé de forma amable, profesional y técnica.";
+    const apiUrl = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+
+    const contextIA = "Sos el asistente de 'Cursos Menos 20 Grados'. El curso es de Refrigeración en el Círculo Católico de Rafael Calzada (Entre Ríos 1555). Dura 4 meses, 6h semanales. Avalado por C.A.I.M. Sé amable, breve y responde en base a esta información.";
+
+    // Abrir y cerrar ventana
+    function toggleChat() {
+        const chatWin = document.getElementById("chat-window");
+        const isVisible = chatWin.style.display === "flex";
+        chatWin.style.display = isVisible ? "none" : "flex";
+        if(!isVisible) document.getElementById("chat-input").focus();
+    }
 
     async function sendMessage() {
         const input = document.getElementById("chat-input");
         const container = document.getElementById("chat-messages");
-        const message = input.value.trim();
+        const msgText = input.value.trim();
 
-        if (!message) return;
+        if (!msgText) return;
 
         // Mostrar mensaje usuario
-        container.innerHTML += `<div class="msg msg-user">${message}</div>`;
+        container.innerHTML += `<div class="msg msg-user">${msgText}</div>`;
         input.value = "";
         container.scrollTop = container.scrollHeight;
 
-        // Indicador de carga
+        // Mostrar indicador de carga
         const tempId = "loading-" + Date.now();
-        container.innerHTML += `<div id="${tempId}" class="msg msg-ia"><i>Pensando...</i></div>`;
+        container.innerHTML += `<div id="${tempId}" class="msg msg-ia">...</div>`;
+        container.scrollTop = container.scrollHeight;
 
         try {
             const response = await fetch(apiUrl, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    contents: [{ parts: [{ text: contextIA + "\nPregunta: " + message }] }]
+                    contents: [{
+                        role: "user",
+                        parts: [{ text: contextIA + "\nUsuario pregunta: " + msgText }]
+                    }]
                 })
             });
 
@@ -113,19 +190,17 @@
             document.getElementById(tempId).remove();
 
             if (data.error) {
-                container.innerHTML += `<div class="msg msg-ia">Error: ${data.error.message}</div>`;
-            } else {
-                const aiResponse = data.candidates[0].content.parts[0].text;
-                container.innerHTML += `<div class="msg msg-ia">${aiResponse}</div>`;
+                container.innerHTML += `<div class="msg msg-ia">Aviso técnico: ${data.error.message}</div>`;
+            } else if (data.candidates && data.candidates[0].content) {
+                const aiText = data.candidates[0].content.parts[0].text;
+                container.innerHTML += `<div class="msg msg-ia">${aiText}</div>`;
             }
-        } catch (error) {
-            document.getElementById(tempId).remove();
-            container.innerHTML += `<div class="msg msg-ia">Error de conexión.</div>`;
+        } catch (e) {
+            if(document.getElementById(tempId)) document.getElementById(tempId).remove();
+            container.innerHTML += `<div class="msg msg-ia">Error de conexión. Intenta de nuevo.</div>`;
         }
         container.scrollTop = container.scrollHeight;
     }
-
-    function checkEnter(e) { if (e.key === "Enter") sendMessage(); }
 </script>
 
 </body>
