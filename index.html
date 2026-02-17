@@ -160,35 +160,65 @@
     </div>
 </div>
 <script>
-    function toggleChat() {
-        const chatWin = document.getElementById("chat-window");
-        chatWin.style.display = chatWin.style.display === "flex" ? "none" : "flex";
-        if(chatWin.style.display === "flex") document.getElementById("chat-input").focus();
+  function toggleChat() {
+    const chatWin = document.getElementById("chat-window");
+    const isVisible = chatWin.style.display === "flex";
+    chatWin.style.display = isVisible ? "none" : "flex";
+    if(!isVisible) document.getElementById("chat-input").focus();
+}
+
+function sendMessage() {
+    const input = document.getElementById("chat-input");
+    const container = document.getElementById("chat-messages");
+    const msgText = input.value.trim().toLowerCase();
+
+    if (!msgText) return;
+
+    // Mostrar mensaje del usuario
+    container.innerHTML += `<div class="msg msg-user">${input.value}</div>`;
+    input.value = "";
+    container.scrollTop = container.scrollHeight;
+
+    // Respuestas según palabras clave
+    let respuesta = "Gracias por tu pregunta. Contactanos por WhatsApp para más info: https://wa.me/5491165928524";
+
+    if (msgText.includes("precio") || msgText.includes("cuota") || msgText.includes("pago") || msgText.includes("costo")) {
+        respuesta = "💰 <strong>Pagos:</strong> Se realizan del 1 al 10 de cada mes (10% recargo después). La cuota debe estar paga para iniciar el curso. El título/matrícula se abona aparte al finalizar (aprox. 80% de una cuota). Ver www.caim.com.ar";
+    } else if (msgText.includes("inicio") || msgText.includes("fecha") || msgText.includes("cuándo") || msgText.includes("comienza")) {
+        respuesta = "📅 <strong>Inicio:</strong> 9 de Marzo 2026. Comisiones: Lunes/Martes o Miércoles/Jueves de 17:30 a 20:30 hs.";
+    } else if (msgText.includes("duración") || msgText.includes("meses") || msgText.includes("horas") || msgText.includes("cuánto")) {
+        respuesta = "⏱️ <strong>Duración:</strong> 4 meses (32 clases presenciales / 96 horas totales). Máximo 4 inasistencias (no se recuperan). Puntualidad obligatoria.";
+    } else if (msgText.includes("ubicación") || msgText.includes("dónde") || msgText.includes("sede") || msgText.includes("dirección")) {
+        respuesta = "📍 <strong>Sede:</strong> Círculo Católico Rafael Calzada - Entre Ríos 1555, Rafael Calzada, Buenos Aires.";
+    } else if (msgText.includes("conocimiento") || msgText.includes("requisito") || msgText.includes("previo") || msgText.includes("necesito")) {
+        respuesta = "✅ <strong>Sin requisitos:</strong> No requiere conocimientos previos. El curso arranca de cero e incluye electricidad básica aplicada.";
+    } else if (msgText.includes("herramienta") || msgText.includes("comprar") || msgText.includes("bolso") || msgText.includes("equipo")) {
+        respuesta = "🔧 <strong>Herramientas:</strong> No hace falta comprar nada para empezar. El taller provee todo. Te orientamos en qué comprar para armar tu propio bolso profesional.";
+    } else if (msgText.includes("trabajo") || msgText.includes("salida") || msgText.includes("laboral") || msgText.includes("empleo")) {
+        respuesta = "💼 <strong>Salida laboral:</strong> Al finalizar, puedes trabajar por tu cuenta. El certificado permite tramitar matrícula de C.A.I.M para firmar garantías oficiales.";
+    } else if (msgText.includes("gases") || msgText.includes("r134") || msgText.includes("r410") || msgText.includes("r22")) {
+        respuesta = "⚙️ <strong>Gases:</strong> Manejo de R134a, R410A (presión 110-120 PSI en baja), R22 (presión 60-70 PSI en baja) y R600. Siempre realizar VACÍO con bomba y presurizar con nitrógeno para buscar fugas.";
+    } else if (msgText.includes("electricidad") || msgText.includes("motocompressor") || msgText.includes("pinza")) {
+        respuesta = "⚡ <strong>Electricidad:</strong> Identificación de común, arranque y trabajo en motocompresores. Uso de pinza amperométrica.";
+    } else if (msgText.includes("hola") || msgText.includes("buenos") || msgText.includes("qué tal")) {
+        respuesta = "❄️ ¡Hola! Bienvenido al curso de Refrigeración (-20°T.E-). ¿Qué quieres saber?";
+    } else if (msgText.includes("regla") || msgText.includes("fotos") || msgText.includes("video") || msgText.includes("mate")) {
+        respuesta = "📋 <strong>Reglas:</strong> No se permite tomar fotos ni videos (propiedad intelectual del Círculo). No se puede comer ni tomar mate en clase.";
+    } else if (msgText.includes("instructor") || msgText.includes("profesor") || msgText.includes("marcelo") || msgText.includes("ruben")) {
+        respuesta = "👨‍🏫 <strong>Instructores:</strong> Marcelo Cardozo (a cargo de alta de matrículas y certificados). Rubén Ruiz (encargado del curso de aire acondicionado).";
     }
 
-    function sendMessage() {
-        const input = document.getElementById("chat-input");
-        const container = document.getElementById("chat-messages");
-        const msgText = input.value.trim();
-
-        if (!msgText) return;
-
-        // Mostrar mensaje del usuario
-        container.innerHTML += `<div class="msg msg-user">${msgText}</div>`;
-        input.value = "";
+    // Mostrar respuesta
+    setTimeout(() => {
+        container.innerHTML += `<div class="msg msg-ia">${respuesta}</div>`;
         container.scrollTop = container.scrollHeight;
+    }, 500);
+}
 
-        // Respuesta automática después de 500ms
-        setTimeout(() => {
-            container.innerHTML += `<div class="msg msg-ia">Gracias por tu mensaje. Un asesor se comunicará contigo pronto.</div>`;
-            container.scrollTop = container.scrollHeight;
-        }, 500);
-    }
-
-    // Enviar con Enter
-    document.getElementById("chat-input").addEventListener('keypress', (e) => {
-        if(e.key === 'Enter') sendMessage();
-    });
+// Enviar con Enter
+document.getElementById("chat-input").addEventListener('keypress', (e) => {
+    if(e.key === 'Enter') sendMessage();
+});
 </script>
 
 </body>
