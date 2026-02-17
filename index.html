@@ -160,97 +160,35 @@
     </div>
 </div>
 <script>
-    // --- CONFIGURACIÓN DE IA SEGURA ---
-    // ✅ La API Key NO está aquí. Se maneja en el backend.
-
-    // ENTRENAMIENTO DETALLADO BASADO EN EL FORMULARIO DE INSCRIPCIÓN
-    const contextIA = `Sos el asistente experto de 'Cursos Menos 20 Grados' (-20°T.E-). 
-    Tu objetivo es inscribir alumnos y resolver dudas técnicas.
-    
-    INFORMACIÓN DE VENTAS Y CIERRE:
-    - No requiere conocimientos previos: El curso arranca de cero (incluye electricidad básica aplicada).
-    - Salida Laboral: Al finalizar, el alumno puede trabajar por su cuenta. El certificado permite tramitar la matrícula de C.A.I.M para firmar garantías oficiales.
-    - Herramientas: No hace falta comprar nada para empezar; el taller provee todo. Orientamos al alumno en qué comprar para armar su propio bolso profesional.
-    - Valor agregado: Práctica real con equipos (heladeras domiciliarias, No Frost, comerciales y Splits).
-    
-    INFORMACIÓN TÉCNICA (Asistente de taller):
-    - Gases: Manejo de R134a, R410A (presión 110-120 PSI en baja), R22 (presión 60-70 PSI en baja) y R600.
-    - Procedimientos: Siempre enfatizar realizar VACÍO con bomba y presurizar con nitrógeno para buscar fugas.
-    - Electricidad: Identificación de común, arranque y trabajo en motocompresores. Uso de pinza amperométrica.
-    
-    DATOS ADMINISTRATIVOS:
-    - Sede: Círculo Católico Rafael Calzada (Entre Ríos 1555).
-    - Inicio: 9 de Marzo 2026. Comisiones: L/M o M/J (17:30 a 20:30 hs).
-    - Duración: 4 meses (32 clases presenciales / 96 horas totales).
-    - Inasistencias: Máximo 4. No se recuperan. Puntualidad obligatoria.
-    - Pagos: Del 1 al 10 de cada mes (10% recargo luego). La cuota debe estar paga para iniciar el curso.
-    - Título/Matrícula: Se abona aparte al finalizar (aprox. 80% de una cuota). Ver www.caim.com.ar.
-    
-    PROFESORES INSTRUCTORES:
-    - Marcelo Cardozo es el instructor a cargo de el alta de matriculas y certificados.
-    - Ruben Ruiz, es el instructor encargado del curso de aire acondicionado
-    
-    REGLAS Y CONVIVENCIA: 
-    - No se permite tomar fotos ni videos (propiedad intelectual del Círculo).
-    - No se puede comer ni tomar mate en clase.
-    
-    Responde siempre de forma amable, motivadora y profesional. Si algo no figura aquí, sugerí consultar por WhatsApp.`;
-
-    // Abrir y cerrar ventana
     function toggleChat() {
         const chatWin = document.getElementById("chat-window");
-        const isVisible = chatWin.style.display === "flex";
-        chatWin.style.display = isVisible ? "none" : "flex";
-        if(!isVisible) document.getElementById("chat-input").focus();
+        chatWin.style.display = chatWin.style.display === "flex" ? "none" : "flex";
+        if(chatWin.style.display === "flex") document.getElementById("chat-input").focus();
     }
 
-    async function sendMessage() {
+    function sendMessage() {
         const input = document.getElementById("chat-input");
         const container = document.getElementById("chat-messages");
         const msgText = input.value.trim();
 
         if (!msgText) return;
 
-        // Mostrar mensaje usuario
+        // Mostrar mensaje del usuario
         container.innerHTML += `<div class="msg msg-user">${msgText}</div>`;
         input.value = "";
         container.scrollTop = container.scrollHeight;
 
-        // Mostrar indicador de carga
-        const tempId = "loading-" + Date.now();
-        container.innerHTML += `<div id="${tempId}" class="msg msg-ia">...</div>`;
-        container.scrollTop = container.scrollHeight;
-
-        try {
-            // ✅ SEGURO: Llamar a tu backend (sin API Key expuesta)
-            const response = await fetch("/api/chat", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    message: msgText,
-                    context: contextIA
-                })
-            });
-
-            const data = await response.json();
-            
-            if(document.getElementById(tempId)) {
-                document.getElementById(tempId).remove();
-            }
-
-            if (data.error) {
-                container.innerHTML += `<div class="msg msg-ia">Aviso técnico: ${data.error}</div>`;
-            } else if (data.reply) {
-                container.innerHTML += `<div class="msg msg-ia">${data.reply}</div>`;
-            }
-        } catch (e) {
-            if(document.getElementById(tempId)) {
-                document.getElementById(tempId).remove();
-            }
-            container.innerHTML += `<div class="msg msg-ia">Error de conexión. Intenta de nuevo.</div>`;
-        }
-        container.scrollTop = container.scrollHeight;
+        // Respuesta automática después de 500ms
+        setTimeout(() => {
+            container.innerHTML += `<div class="msg msg-ia">Gracias por tu mensaje. Un asesor se comunicará contigo pronto.</div>`;
+            container.scrollTop = container.scrollHeight;
+        }, 500);
     }
+
+    // Enviar con Enter
+    document.getElementById("chat-input").addEventListener('keypress', (e) => {
+        if(e.key === 'Enter') sendMessage();
+    });
 </script>
 
 </body>
