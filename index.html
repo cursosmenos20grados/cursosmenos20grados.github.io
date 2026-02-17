@@ -159,14 +159,12 @@
         <button id="chat-send" onclick="sendMessage()">➤</button>
     </div>
 </div>
-
 <script>
-    // --- CONFIGURACIÓN DE IA DEFINITIVA ---
-    const apiKey = "AIzaSyCHIAlLk6i5c12AUKdpCznGKjHXG2zL_vE"; 
-    const apiUrl = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+    // --- CONFIGURACIÓN DE IA SEGURA ---
+    // ✅ La API Key NO está aquí. Se maneja en el backend.
 
     // ENTRENAMIENTO DETALLADO BASADO EN EL FORMULARIO DE INSCRIPCIÓN
-   const contextIA = `Sos el asistente experto de 'Cursos Menos 20 Grados' (-20°T.E-). 
+    const contextIA = `Sos el asistente experto de 'Cursos Menos 20 Grados' (-20°T.E-). 
     Tu objetivo es inscribir alumnos y resolver dudas técnicas.
     
     INFORMACIÓN DE VENTAS Y CIERRE:
@@ -187,9 +185,10 @@
     - Inasistencias: Máximo 4. No se recuperan. Puntualidad obligatoria.
     - Pagos: Del 1 al 10 de cada mes (10% recargo luego). La cuota debe estar paga para iniciar el curso.
     - Título/Matrícula: Se abona aparte al finalizar (aprox. 80% de una cuota). Ver www.caim.com.ar.
+    
     PROFESORES INSTRUCTORES:
-    -Marcelo Cardozo es el instructor a cargo de el alta de matriculas y certificados.
-    -Ruben Ruiz, es el instructor encargado del curso de aire acondicionado
+    - Marcelo Cardozo es el instructor a cargo de el alta de matriculas y certificados.
+    - Ruben Ruiz, es el instructor encargado del curso de aire acondicionado
     
     REGLAS Y CONVIVENCIA: 
     - No se permite tomar fotos ni videos (propiedad intelectual del Círculo).
@@ -223,28 +222,31 @@
         container.scrollTop = container.scrollHeight;
 
         try {
-            const response = await fetch(apiUrl, {
+            // ✅ SEGURO: Llamar a tu backend (sin API Key expuesta)
+            const response = await fetch("/api/chat", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    contents: [{
-                        role: "user",
-                        parts: [{ text: contextIA + "\nUsuario pregunta: " + msgText }]
-                    }]
+                    message: msgText,
+                    context: contextIA
                 })
             });
 
             const data = await response.json();
-            document.getElementById(tempId).remove();
+            
+            if(document.getElementById(tempId)) {
+                document.getElementById(tempId).remove();
+            }
 
             if (data.error) {
-                container.innerHTML += `<div class="msg msg-ia">Aviso técnico: ${data.error.message}</div>`;
-            } else if (data.candidates && data.candidates[0].content) {
-                const aiText = data.candidates[0].content.parts[0].text;
-                container.innerHTML += `<div class="msg msg-ia">${aiText}</div>`;
+                container.innerHTML += `<div class="msg msg-ia">Aviso técnico: ${data.error}</div>`;
+            } else if (data.reply) {
+                container.innerHTML += `<div class="msg msg-ia">${data.reply}</div>`;
             }
         } catch (e) {
-            if(document.getElementById(tempId)) document.getElementById(tempId).remove();
+            if(document.getElementById(tempId)) {
+                document.getElementById(tempId).remove();
+            }
             container.innerHTML += `<div class="msg msg-ia">Error de conexión. Intenta de nuevo.</div>`;
         }
         container.scrollTop = container.scrollHeight;
