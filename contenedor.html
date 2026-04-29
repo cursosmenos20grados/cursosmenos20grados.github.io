@@ -508,6 +508,9 @@
         alert("En Android: Tocá los 3 puntos arriba a la derecha y elegí 'Instalar aplicación' o 'Agregar a pantalla de inicio'.\n\nEn iPhone: Tocá el botón de 'Compartir' (el cuadradito con la flecha) y buscá 'Agregar a inicio'.");
         document.getElementById('install-banner').style.display = 'none';
     }
+  if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
+}
 </script>
 
 </body>
