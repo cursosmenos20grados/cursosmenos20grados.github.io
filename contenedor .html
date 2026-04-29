@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contenedor Digital - Heladeras Comerciales</title>
+    <style>
+        :root {
+            --azul-oscuro: #003366;
+            --celeste: #00AEEF;
+            --blanco: #FFFFFF;
+            --gris-claro: #f4f7f6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--gris-claro);
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--azul-oscuro), var(--celeste));
+            color: var(--blanco);
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .simbolo {
+            font-weight: bold;
+            display: block;
+            font-size: 1.2rem;
+            margin-top: 5px;
+        }
+
+        .container {
+            padding: 15px;
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .card {
+            background: var(--blanco);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--celeste);
+        }
+
+        .card-header {
+            padding: 15px;
+            background: var(--blanco);
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--azul-oscuro);
+        }
+
+        .card-content {
+            padding: 0 15px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+            background: #fafafa;
+        }
+
+        .card.active .card-content {
+            max-height: 2500px; /* Aumentado para que entre todo el proceso largo */
+            padding: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            display: block;
+            margin: 10px auto;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: var(--azul-oscuro);
+            color: white;
+            padding: 8px;
+        }
+
+        td {
+            padding: 8px;
+            text-align: center;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        .warning-box {
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 0.95rem;
+            border-left: 5px solid #ffc107;
+        }
+
+        h3 {
+            color: var(--celeste);
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1 style="margin:0; font-size: 1.4rem;">Contenedor Digital Heladeras Comerciales</h1>
+    <span class="simbolo">(-20°T.E-)</span>
+</header>
+
+<div class="container">
+
+    <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+            1. Relé Voltimétrico y Capacitores <span>▼</span>
+        </div>
+        <div class="card-content">
+            <p><strong>Conexión de Relé Voltimétrico Comercial:</strong></p>
+            <img src="https://cursosmenos20grados.github.io/rvolt.jpg" alt="Conexión relé voltimétrico">
+            
+            <p><strong>Capacitores según HP del Motor:</strong></p>
+            <table>
+                <tr>
+                    <th>HP Motor</th>
+                    <th>Marcha (µF)</th>
+                    <th>Arranque (µF)</th>
+                </tr>
+                <tr><td>1/4 HP</td><td>10-12</td><td>80-100</td></tr>
+                <tr><td>1/2 HP</td><td>15-20</td><td>100-120</td></tr>
+                <tr><td>1 HP</td><td>25-30</td><td>200-250</td></tr>
+                <tr><td>2 HP</td><td>40-50</td><td>250-300</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+            2. Combistato Digital (ETC-1000) <span>▼</span>
+        </div>
+        <div class="card-content">
+            <p><strong>Conexión y Parámetros:</strong></p>
+            <img src="https://cursosmenos20grados.github.io/etc1000.jpg" alt="Descripción ETC-1000">
+            <ul>
+                <li><strong>Bornes 1 y 2:</strong> Alimentación.</li>
+                <li><strong>Bornes 3 y 4:</strong> Sonda de temperatura.</li>
+                <li><strong>Bornes 5 y 6:</strong> Contacto Relé (Compresor).</li>
+            </ul>
+            <div class="warning-box" style="background: #e1f5fe; border-left-color: var(--celeste);">
+                <strong>Programación:</strong> Mantener presionada la tecla "SET" para seleccionar parámetro, volver a presionar y sin soltar, seleccionar el valor deseado.
+                <br><br>
+                <em>F1: Set Point / F2: Diferencial / F3: Tiempo de retardo.</em>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+            3. Carga de Gas y Vacío <span>▼</span>
+        </div>
+        <div class="card-content">
+            <h2 style="color: var(--azul-oscuro); font-size: 1.2rem;">🔧 Procedimiento recomendado</h2>
+
+            <h3>1. Preparación inicial</h3>
+            <ul>
+                <li>Identificar el refrigerante correcto según la placa del equipo.</li>
+                <li>Conectar el manifold a las válvulas de servicio de alta y baja.</li>
+                <li>Conectar la bomba de vacío y el cilindro de refrigerante.</li>
+            </ul>
+
+            <h3>2. Vacío del sistema</h3>
+            <ul>
+                <li>Realizar vacío simultáneo por las líneas de alta y baja.</li>
+                <li>Mantener el vacío hasta alcanzar al menos <strong>500 micrones</strong>.</li>
+                <li>Aislar la bomba y verificar que el vacío se mantenga.</li>
+            </ul>
+
+            <h3>3. Verificación de estanqueidad</h3>
+            <ul>
+                <li>Observar si la presión se mantiene estable durante 10–15 minutos.</li>
+                <li>Si sube, revisar fugas con detector o solución jabonosa.</li>
+            </ul>
+
+            <h3>4. Carga de refrigerante</h3>
+            <ul>
+                <li>Colocar el cilindro en posición invertida para suministrar líquido.</li>
+                <li>Cargar líquido <strong>directo al tubo recibidor</strong>, nunca por succión.</li>
+                <li>Controlar cantidad por peso (balanza) o presiones y recalentamiento.</li>
+            </ul>
+
+            <h3>5. Ajustes finales</h3>
+            <ul>
+                <li>Encender el equipo y dejar estabilizar.</li>
+                <li>Verificar presiones y temperaturas de descarga/retorno.</li>
+                <li>Lograr <strong>Recalentamiento</strong> de 8–12 °C y <strong>Subenfriamiento</strong> de 5–10 °C.</li>
+            </ul>
+
+            <div class="warning-box">
+                👉 <strong>Nota:</strong> En equipos pequeños (hasta 3 HP) es común cargar por peso. Un exceso puede dañar el compresor.
+            </div>
+        </div>
+    </div>
+
+    <div class="card" style="border-left: 5px solid #4caf50;">
+    <div class="card-header" onclick="toggleCard(this)" style="color: #2e7d32;">
+        4. Diagnóstico: Recalentamiento y Subenfriamiento <span>▼</span>
+    </div>
+    <div class="card-content">
+        <p style="font-size: 0.9rem; line-height: 1.4;">
+            Estos valores permiten verificar si existe desborde o ausencia de refrigerante, evitando daños al compresor y pérdida de potencia.
+        </p>
+
+        <h3 style="color: #2e7d32; font-size: 1rem;">Definiciones Técnicas</h3>
+        <ul style="font-size: 0.85rem; padding-left: 20px;">
+            <li><strong>Subenfriamiento (Condensación):</strong> T. Condensación - T. salida condensador.</li>
+            <li><strong>Subenfriamiento Adicional:</strong> T. Condensador - T. entrada a la VET.</li>
+            <li><strong>Recalentamiento Útil:</strong> T. salida evaporador - T. evaporación.</li>
+            <li><strong>Recalentamiento Ambiental:</strong> T. entrada compresor - T. salida evaporador.</li>
+        </ul>
+
+        <h3 style="color: #2e7d32; font-size: 1rem;">Tabla de Valores Normales</h3>
+        <div style="overflow-x: auto;">
+            <table style="font-size: 0.8rem;">
+                <tr>
+                    <th>PARÁMETRO</th>
+                    <th>VALORES NORMALES</th>
+                    <th>TU VALOR</th>
+                </tr>
+                <tr>
+                    <td>Subenfriamiento Condensación</td>
+                    <td>DE 3° A 6°</td>
+                    <td><input type="text" id="diagSubC" placeholder="--" oninput="validarSimple('diagSubC', 3, 6)" style="width: 50px; border: 1px solid #ccc; text-align: center; border-radius: 4px;"></td>
+                </tr>
+                <tr>
+                    <td>Subenfriamiento Adicional</td>
+                    <td>DE 2° A 6°</td>
+                    <td><input type="text" id="diagSubA" placeholder="--" oninput="validarSimple('diagSubA', 2, 6)" style="width: 50px; border: 1px solid #ccc; text-align: center; border-radius: 4px;"></td>
+                </tr>
+                <tr>
+                    <td>Recalentamiento Útil</td>
+                    <td>DE 5° A 8°</td>
+                    <td><input type="text" id="diagRecU" placeholder="--" oninput="validarSimple('diagRecU', 5, 8)" style="width: 50px; border: 1px solid #ccc; text-align: center; border-radius: 4px;"></td>
+                </tr>
+                <tr>
+                    <td>Recalentamiento Ambiental</td>
+                    <td>DE 12° A 15°</td>
+                    <td><input type="text" id="diagRecA" placeholder="--" oninput="validarSimple('diagRecA', 12, 15)" style="width: 50px; border: 1px solid #ccc; text-align: center; border-radius: 4px;"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="warning-box" style="background-color: #e8f5e9; border-color: #c8e6c9; border-left: 5px solid #4caf50;">
+            <strong>Recalentamiento Total:</strong> Es la suma del útil y el ambiental. Un valor correcto asegura que no regrese líquido al cárter.
+        </div>
+    </div>
+    
+</div>
+
+<div class="card" style="border-left: 5px solid #f44336;">
+        <div class="card-header" onclick="toggleCard(this)" style="color: #d32f2f;">
+           5. Guía de Fallas: ¿Qué revisar? <span>▼</span>
+        </div>
+        <div class="card-content">
+            <p style="font-size: 0.9rem; margin-bottom: 10px;">Diagnóstico según presiones y síntomas:</p>
+
+            <div style="background: #fff5f5; border: 1px solid #ffcdd2; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
+                <strong style="color: #d32f2f;">❄️ Escarcha en el retorno (Compresor):</strong>
+                <ul style="font-size: 0.85rem; margin: 5px 0; padding-left: 20px;">
+                    <li>Exceso de refrigerante.</li>
+                    <li>Evaporador sucio o forzador parado.</li>
+                    <li>VET muy abierta (poco recalentamiento).</li>
+                </ul>
+            </div>
+
+            <div style="background: #fff8e1; border: 1px solid #ffecb3; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
+                <strong style="color: #f57f17;">🔥 Alta Presión de Alta y Poca Baja:</strong>
+                <ul style="font-size: 0.85rem; margin: 5px 0; padding-left: 20px;">
+                    <li>Condensador sucio o tapado.</li>
+                    <li>Presencia de incondensables (aire en el sistema).</li>
+                    <li>Obstrucción parcial en filtro o capilar.</li>
+                </ul>
+            </div>
+
+            <div style="background: #e3f2fd; border: 1px solid #bbdefb; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
+                <strong style="color: #1976d2;">💨 El equipo no rinde y la Baja está alta:</strong>
+                <ul style="font-size: 0.85rem; margin: 5px 0; padding-left: 20px;">
+                    <li>Compresor "desinflado" (válvulas rotas o desgastadas).</li>
+                    <li>VET trabada abierta.</li>
+                </ul>
+            </div>
+
+            <div class="warning-box" style="font-style: italic; font-size: 0.85rem;">
+                💡 <strong>Tip de Marcelo:</strong> Antes de tocar el gas, ¡siempre verificá que los condensadores y evaporadores estén limpios!
+            </div>
+        </div>
+    </div>
+
+
+   <div class="card" style="border-left: 5px solid #ff5722;">
+        <div class="card-header" onclick="toggleCard(this)" style="color: #ff5722;">
+            6.🧮 Herramientas de Cálculo y Conversión <span>▼</span>
+        </div>
+        <div class="card-content">
+            
+            <div style="background: #fff; border: 1px solid #ddd; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
+                <label style="font-weight: bold; color: var(--azul-oscuro);">Convertir Watts a Frigorías</label>
+                <div style="display: flex; gap: 5px; margin-top: 5px;">
+                    <input type="text" id="wIn" placeholder="Ej: 1500,5" style="flex-grow: 1; padding: 8px; border: 1px solid #ccc; border-radius: 5px;">
+                    <button onclick="calcWtoF()" style="background: var(--azul-oscuro); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">CALCULAR</button>
+                </div>
+                <p id="resWF" style="margin: 8px 0 0; color: #d32f2f; font-weight: bold;"></p>
+            </div>
+
+            <div style="background: #fff; border: 1px solid #ddd; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
+                <label style="font-weight: bold; color: var(--azul-oscuro);">Convertir BTU a Kcal/h</label>
+                <div style="display: flex; gap: 5px; margin-top: 5px;">
+                    <input type="text" id="btuIn" placeholder="Ej: 12000" style="flex-grow: 1; padding: 8px; border: 1px solid #ccc; border-radius: 5px;">
+                    <button onclick="calcBtoK()" style="background: var(--azul-oscuro); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">CALCULAR</button>
+                </div>
+                <p id="resBK" style="margin: 8px 0 0; color: #d32f2f; font-weight: bold;"></p>
+            </div>
+
+            <div style="background: #e3f2fd; border: 1px solid var(--celeste); padding: 12px; border-radius: 8px;">
+                <label style="font-weight: bold; color: var(--azul-oscuro);">Dimensionado de Cámara (Media T°)</label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px; margin-top: 10px;">
+                    <input type="text" id="L" placeholder="Largo" style="padding: 8px; border: 1px solid #ccc; border-radius: 5px; width: 100%; box-sizing: border-box;">
+                    <input type="text" id="A" placeholder="Ancho" style="padding: 8px; border: 1px solid #ccc; border-radius: 5px; width: 100%; box-sizing: border-box;">
+                    <input type="text" id="H" placeholder="Alto" style="padding: 8px; border: 1px solid #ccc; border-radius: 5px; width: 100%; box-sizing: border-box;">
+                </div>
+                <button onclick="calcCamara()" style="width: 100%; background: #ff5722; color: white; border: none; padding: 12px; border-radius: 5px; margin-top: 10px; font-weight: bold; cursor: pointer;">CALCULAR HP ESTIMADOS</button>
+                <div id="resC" style="display: none; margin-top: 10px; border-top: 1px dashed #aaa; padding-top: 10px;">
+                    <p id="m3" style="margin: 0; font-size: 0.9rem;"></p>
+                    <p id="hp" style="margin: 5px 0 0; font-weight: bold; color: #d32f2f; font-size: 1.1rem;"></p>
+                    <small style="color: #666;">*Cálculo base: 1 HP cada 18 m³</small>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+<div class="footer">
+    Creador: Marcelo Cardozo <br>
+    © 2026 - Curso de Refrigeración
+</div>
+
+<script>
+    function toggleCard(element) {
+        const card = element.parentElement;
+        card.classList.toggle('active');
+    }
+
+    // Esta función es la "magia" que arregla las comas
+    function limpiarValor(id) {
+        let input = document.getElementById(id).value;
+        if (input === "") return NaN;
+        // Cambia coma por punto y convierte a número
+        return parseFloat(input.toString().replace(',', '.'));
+    }
+
+    function calcWtoF() {
+        let val = limpiarValor('wIn');
+        if(!isNaN(val)) {
+            let res = val * 0.86;
+            document.getElementById('resWF').innerText = "≡ " + res.toFixed(2) + " Frigorías/h";
+        }
+    }
+
+    function calcBtoK() {
+        let val = limpiarValor('btuIn');
+        if(!isNaN(val)) {
+            let res = val * 0.252;
+            document.getElementById('resBK').innerText = "≡ " + res.toFixed(2) + " Kcal/h";
+        }
+    }
+
+    function calcCamara() {
+        let l = limpiarValor('L');
+        let a = limpiarValor('A');
+        let h = limpiarValor('H');
+        
+        if(!isNaN(l) && !isNaN(a) && !isNaN(h)) {
+            let vol = l * a * h;
+            let hpReq = vol / 18; 
+            
+            document.getElementById('resC').style.display = "block";
+            document.getElementById('m3').innerText = "Volumen Total: " + vol.toFixed(2) + " m³";
+            document.getElementById('hp').innerText = "Potencia sugerida: " + hpReq.toFixed(2) + " HP";
+        } else {
+            alert("Por favor, ingresa las tres medidas (puedes usar coma o punto).");
+        }
+    }
+    
+    function validarSimple(id, min, max) {
+    let input = document.getElementById(id);
+    let valor = limpiarValor(id); // Usa la función que ya tenemos para comas y puntos
+
+    if (isNaN(valor)) {
+        input.style.backgroundColor = "white";
+        input.style.color = "black";
+        return;
+    }
+
+    if (valor >= min && valor <= max) {
+        // Estilo APTO (Verde)
+        input.style.backgroundColor = "#c8e6c9";
+        input.style.color = "#2e7d32";
+        input.style.fontWeight = "bold";
+        input.style.borderColor = "#4caf50";
+    } else {
+        // Estilo NO APTO (Rojo)
+        input.style.backgroundColor = "#ffcdd2";
+        input.style.color = "#d32f2f";
+        input.style.fontWeight = "bold";
+        input.style.borderColor = "#f44336";
+    }
+}
+</script>
+
+</body>
+</html>
