@@ -1,14 +1,20 @@
 {
   "name": "Contenedor Comercial -20°",
   "short_name": "RefriApp",
-  "start_url": "/contenedor.html",
+  "description": "Herramientas para el técnico de refrigeración",
+  "start_url": "contenedor.html",
   "display": "standalone",
   "background_color": "#003366",
   "theme_color": "#003366",
   "icons": [
     {
-      "src": "log-20.jpg",
-      "sizes": "500x500",
+      "src": "logoap.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "logoap.jpg",
+      "sizes": "512x512",
       "type": "image/jpeg"
     }
   ]
