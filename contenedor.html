@@ -144,6 +144,39 @@
             padding-bottom: 5px;
             margin-top: 20px;
         }
+        
+        #install-banner {
+    display: none; 
+    background: var(--azul-oscuro); 
+    color: white; 
+    padding: 12px 5px; 
+    position: fixed; 
+    bottom: 0; 
+    left: 0; 
+    width: 100%; 
+    text-align: center; 
+    z-index: 2000; 
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+    box-sizing: border-box; /* Esto evita que el padding lo desalinee */
+}
+
+#install-banner span {
+    font-size: 0.85rem;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+#install-banner button {
+    background: var(--celeste); 
+    border: none; 
+    color: white; 
+    padding: 8px 15px; 
+    border-radius: 5px; 
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.8rem;
+    margin-left: 5px;
+}
     </style>
 </head>
 <body>
@@ -387,10 +420,12 @@
     © 2026 - Curso de Refrigeración
 </div>
 
-<div id="install-banner" style="display:none; background: var(--azul-oscuro); color: white; padding: 15px; position: fixed; bottom: 0; width: 100%; text-align: center; z-index: 2000; box-shadow: 0 -2px 10px rgba(0,0,0,0.3);">
-        <span>¡Instalá esta App en tu pantalla de inicio!</span>
-        <button onclick="cerrarBanner()" style="margin-left:10px; background: var(--celeste); border: none; color: white; padding: 5px 10px; border-radius: 5px; font-weight: bold;">CÓMO HACERLO</button>
+<div id="install-banner">
+    <div style="max-width: 600px; margin: auto; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px;">
+        <span>¡Instalá esta App en tu inicio!</span>
+        <button onclick="cerrarBanner()">CÓMO HACERLO</button>
     </div>
+</div>
 
 <script>
     function toggleCard(element) {
