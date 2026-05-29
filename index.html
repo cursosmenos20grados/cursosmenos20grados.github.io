@@ -15,11 +15,11 @@
         header { background: linear-gradient(135deg, #003366, #007bff); color: white; padding: 40px 20px; text-align: center; }
         .container { max-width: 900px; margin: 20px auto; padding: 20px; padding-bottom: 100px; }
         
-        /* --- ESTILOS DEL CARRUSEL AUTOMÁTICO --- */
+        /* --- ESTILOS DEL CARRUSEL ENCUADRADO Y CORREGIDO --- */
         .carrusel-contenedor {
             position: relative;
             width: 100%;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             overflow: hidden;
             border-radius: 15px; 
             box-shadow: 0 5px 15px rgba(0,0,0,0.2); 
@@ -29,7 +29,7 @@
             display: flex; 
             width: 100%; 
             scroll-behavior: smooth; 
-            overflow-x: hidden; /* Oculta la barra por completo */
+            overflow-x: hidden; 
         }
 
         .item-carrusel { 
@@ -37,15 +37,22 @@
             width: 100%;
         }
 
+        /* Forzamos a que las imágenes mantengan la proporción dentro del margen */
         .item-carrusel img { 
             width: 100%; 
-            height: auto; 
-            max-height: 450px; 
-            object-fit: cover; 
+            height: 450px; /* Altura fija para PC */
+            object-fit: cover; /* Centra y recorta los excesos sin deformar la imagen */
             display: block; 
         }
 
-        /* Botones manuales por si alguien quiere pasar atrás/adelante */
+        /* Ajuste responsivo para celulares */
+        @media (max-width: 600px) {
+            .item-carrusel img {
+                height: 280px; /* Altura más cómoda para pantallas móviles */
+            }
+        }
+
+        /* Botones manuales */
         .btn-carrusel {
             position: absolute;
             top: 50%;
@@ -60,6 +67,7 @@
             border-radius: 50%;
             transition: 0.3s;
             user-select: none;
+            z-index: 5;
         }
         .btn-carrusel:hover { background: rgba(0, 123, 255, 0.8); }
         .btn-izq { left: 15px; }
@@ -156,8 +164,11 @@
     <p>Especialistas en formación profesional</p>
 </header>
 
-     /* --- carrussel --- */
-<div class="carrusel-contenedor">
+<!-- AQUÍ INICIA EL CONTENEDOR PRINCIPAL QUE ARREGLA LOS MÁRGENES DE TODA LA PÁGINA -->
+<div class="container">
+    
+    <!-- --- SECCIÓN DEL CARRUSEL --- -->
+    <div class="carrusel-contenedor">
         <div class="carrusel" id="carruselTrack">
             <div class="item-carrusel">
                 <img src="https://circulocatolicorafaelcalzada.wordpress.com/wp-content/uploads/2024/03/refrigeracion_2024caim_insta.jpg?w=1024" alt="Curso de Refrigeración Imagen 1">
@@ -168,26 +179,12 @@
             <div class="item-carrusel">
                 <img src="https://lh3.googleusercontent.com/d/1oKQZ4MevH8walBA5nEXfCzOA7sIVA6kz" alt="Curso de Refrigeración Imagen 3">
             </div>
-            <div class="item-carrusel">
-                <img src="https://lh3.googleusercontent.com/d/1oKQZ4MevH8walBA5nEXfCzOA7sIVA6kz" alt="Curso de Refrigeración Imagen 1">
-            </div>
-            <div class="item-carrusel">
-                <img src="https://lh3.googleusercontent.com/d/1oKQZ4MevH8walBA5nEXfCzOA7sIVA6kz" alt="Curso de Refrigeración Imagen 4">
-            </div>
-            <div class="item-carrusel">
-                <img src="https://lh3.googleusercontent.com/d/1oKQZ4MevH8walBA5nEXfCzOA7sIVA6kz" alt="Curso de Refrigeración Imagen 5">
-            </div>
-            <div class="item-carrusel">
-                <img src="https://lh3.googleusercontent.com/d/1oKQZ4MevH8walBA5nEXfCzOA7sIVA6kz" alt="Curso de Refrigeración Imagen 6">
-            </div>
-            <div class="item-carrusel">
-                <img src="https://lh3.googleusercontent.com/d/1oKQZ4MevH8walBA5nEXfCzOA7sIVA6kz" alt="Curso de Refrigeración Imagen 7">
-            </div>
         </div>
         <button class="btn-carrusel btn-izq" onclick="pasarFolleto(-1)">❮</button>
         <button class="btn-carrusel btn-der" onclick="pasarFolleto(1)">❯</button>
     </div>
 
+    <!-- --- INFORMACIÓN --- -->
     <div class="info-grid">
         <div class="card">
             <h3>📅Inicia 6 de julio 2026</h3>
@@ -224,8 +221,9 @@
     <div style="text-align: center; margin-top: 40px;">
         <a href="https://wa.me/5491165928524?text=Hola!%20Te%20hablo%20desde%20la%20web%20por%20el%20curso%20de%20refrigeración" class="btn-ws" target="_blank">Solicitar Información por WhatsApp</a>
     </div>
-</div>
+</div> <!-- AQUÍ TERMINA EL CONTENEDOR PRINCIPAL -->
 
+<!-- --- ELEMENTOS DEL CHAT --- -->
 <div id="chat-launcher" onclick="toggleChat()">💬</div>
 
 <div id="chat-window">
@@ -243,7 +241,7 @@
 </div>
 
 <script>
-// --- PROGRAMACIÓN DEL LÓGICA AUTOMÁTICA DEL CARRUSEL ---
+// --- LOGICA AUTOMÁTICA DEL CARRUSEL ---
 const track = document.getElementById('carruselTrack');
 let indiceActual = 0;
 const totalImagenes = document.querySelectorAll('.item-carrusel').length;
@@ -255,17 +253,15 @@ function actualizarCarrusel() {
 function pasarFolleto(direccion) {
     indiceActual += direccion;
     if (indiceActual >= totalImagenes) {
-        indiceActual = 0; // Vuelve al inicio
+        indiceActual = 0; 
     } else if (indiceActual < 0) {
-        indiceActual = totalImagenes - 1; // Va a la última
+        indiceActual = totalImagenes - 1; 
     }
     actualizarCarrusel();
 }
 
-// Cambia la imagen sola cada 3.5 segundos (3500 milisegundos)
 let temporizador = setInterval(() => pasarFolleto(1), 3500);
 
-// Si el usuario toca un botón manual, frena el tiempo automático un momento para que no salte de golpe
 document.querySelectorAll('.btn-carrusel').forEach(b => {
     b.addEventListener('click', () => {
         clearInterval(temporizador);
@@ -273,11 +269,9 @@ document.querySelectorAll('.btn-carrusel').forEach(b => {
     });
 });
 
-// Reajusta el tamaño si giran la pantalla del celular
 window.addEventListener('resize', actualizarCarrusel);
 
-
-// --- FUNCIONES ORIGINALES DEL CHAT ---
+// --- FUNCIONES DEL CHAT ---
 function toggleChat() {
     const chatWin = document.getElementById("chat-window");
     const isVisible = chatWin.style.display === "flex";
