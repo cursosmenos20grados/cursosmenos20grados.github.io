@@ -760,36 +760,38 @@
         contenedor.innerHTML = htmlContent;
         contenedor.style.display = "block";
     }
-    // Base de datos de códigos de motocompresores comunes en el mercado argentino
+   // Base de datos ampliada de motocompresores en el mercado argentino
     const tablaMotores = [
-        // EMBRACO (Modelos muy comunes en familiares y comerciales ligeras)
-        { modelo: "EMIS70HER", marca: "Embraco", hp: "1/5 HP", gas: "R134a", tipo: "LBP (Familiar / Congelados)" },
-        { modelo: "EMI70HER", marca: "Embraco", hp: "1/5 HP", gas: "R134a", tipo: "LBP (Familiar)" },
-        { modelo: "EMIS60HER", marca: "Embraco", hp: "1/6 HP", gas: "R134a", tipo: "LBP (Familiar)" },
-        { modelo: "EMIS30HER", marca: "Embraco", hp: "1/10 HP", gas: "R134a", tipo: "LBP (Bajo consumo/Minibar)" },
-        { modelo: "EGAS70HLR", marca: "Embraco", hp: "1/5+ HP (Alta eficiencia)", gas: "R134a", tipo: "LBP (Familiar)" },
-        { modelo: "EGAS80HLR", marca: "Embraco", hp: "1/4 HP", gas: "R134a", tipo: "LBP (Familiar / Comercial chica)" },
-        { modelo: "EGAS90HLR", marca: "Embraco", hp: "1/4+ HP", gas: "R134a", tipo: "LBP (Familiar Grande)" },
-        { modelo: "FFI10HAK", marca: "Embraco", hp: "1/3 Ligeramente Reforzado", gas: "R134a", tipo: "LBP (Comercial / Mostrador)" },
-        { modelo: "FFI12HBK", marca: "Embraco", hp: "1/3+ HP (Potente)", gas: "R134a", tipo: "LBP (Vitrinas / Heladeras Comerciales)" },
-        { modelo: "FF7.5HBK", marca: "Embraco", hp: "1/5 HP", gas: "R134a", tipo: "LBP (Familiar)" },
-        { modelo: "FF8.5HBK", marca: "Embraco", hp: "1/4 HP", gas: "R134a", tipo: "LBP (Familiar)" },
-        { modelo: "FFU130HAX", marca: "Embraco", hp: "1/3+ HP", gas: "R134a", tipo: "LBP (Comercial)" },
-        { modelo: "EM2X3110U", marca: "Embraco", hp: "1/3 HP", gas: "R290 (Ecológico)", tipo: "LBP (Comercial Moderna)" },
-        { modelo: "EM2X3115U", marca: "Embraco", hp: "1/3+ HP", gas: "R290 (Ecológico)", tipo: "LBP (Comercial/Exhibidora)" },
-        { modelo: "EMI45HER", marca: "Embraco", hp: "1/8 HP", gas: "R134a", tipo: "LBP (Familiar Chica)" },
-
-        // TECUMSEH (Clásicos de comerciales, familiares y aire acondicionado)
+        // TECUMSEH (Agregados los modelos 1390 y comerciales comunes)
+        { modelo: "THG1390YS", marca: "Tecumseh", hp: "1/4 HP Reforzado (1/4+)", gas: "R134a", tipo: "LBP (Familiar Grande / Exhibidora)" },
+        { modelo: "TSA1390YS", marca: "Tecumseh", hp: "1/4 HP Reforzado (1/4+)", gas: "R134a", tipo: "LBP (Familiar / No Frost)" },
         { modelo: "THG1374YS", marca: "Tecumseh", hp: "1/5 HP", gas: "R134a", tipo: "LBP (Familiar)" },
         { modelo: "TSA1374YS", marca: "Tecumseh", hp: "1/5 HP", gas: "R134a", tipo: "LBP (Familiar)" },
         { modelo: "THG1365YS", marca: "Tecumseh", hp: "1/6 HP", gas: "R134a", tipo: "LBP (Familiar)" },
-        { modelo: "TW1380YS", marca: "Tecumseh", hp: "1/4 HP", gas: "R134a", tipo: "LBP (Familiar / No Frost)" },
-        { modelo: "AEA3430YXA", marca: "Tecumseh", hp: "1/4 HP (Alta)", gas: "R134a", tipo: "HBP (Exhibidora / Vertical / Lácteos)" },
-        { modelo: "AEA3440YXA", marca: "Tecumseh", hp: "1/3 HP", gas: "R134a", tipo: "HBP (Exhibidora Vertical Briket/Inelro)" },
-        { modelo: "AEA4448YXA", marca: "Tecumseh", hp: "1/2 HP", gas: "R134a", tipo: "HBP (Comercial Grande / Fiambrero)" },
+        { modelo: "TW1380YS", marca: "Tecumseh", hp: "1/4 HP", gas: "R134a", tipo: "LBP (Familiar)" },
         { modelo: "AZ1355YS", marca: "Tecumseh", hp: "1/7 HP", gas: "R134a", tipo: "LBP (Familiar)" },
-        { modelo: "TP1410YS", marca: "Tecumseh", hp: "1/3 HP", gas: "R134a", tipo: "LBP (Comercial / Bajo mesada)" },
-        { modelo: "AZ1340YS", marca: "Tecumseh", hp: "1/8 HP", gas: "R134a", tipo: "LBP (Familiar)" }
+        { modelo: "AZ1340YS", marca: "Tecumseh", hp: "1/8 HP", gas: "R134a", tipo: "LBP (Familiar)" },
+        { modelo: "AEA3430YXA", marca: "Tecumseh", hp: "1/4 HP (Alta)", gas: "R134a", tipo: "HBP (Exhibidora / Vertical / Lácteos)" },
+        { modelo: "AEA3440YXA", marca: "Tecumseh", hp: "1/3 HP (Alta)", gas: "R134a", tipo: "HBP (Exhibidora Vertical)" },
+        { modelo: "AEA4448YXA", marca: "Tecumseh", hp: "1/2 HP (Alta)", gas: "R134a", tipo: "HBP (Comercial / Fiambrero)" },
+        { modelo: "TP1410YS", marca: "Tecumseh", hp: "1/3 HP (Baja)", gas: "R134a", tipo: "LBP (Comercial / Bajo Mesada)" },
+        { modelo: "TYB1413YJS", marca: "Tecumseh", hp: "1/2 HP (Baja)", gas: "R134a", tipo: "LBP (Freezer Comercial / Pozos)" },
+
+        // EMBRACO (Modelos familiares y comerciales de uso diario)
+        { modelo: "EMIS70HER", marca: "Embraco", hp: "1/5 HP", gas: "R134a", tipo: "LBP (Familiar / Congelados)" },
+        { modelo: "EMI70HER", marca: "Embraco", hp: "1/5 HP", gas: "R134a", tipo: "LBP (Familiar)" },
+        { modelo: "EMIS60HER", marca: "Embraco", hp: "1/6 HP", gas: "R134a", tipo: "LBP (Familiar)" },
+        { modelo: "EMIS30HER", marca: "Embraco", hp: "1/10 HP", gas: "R134a", tipo: "LBP (Minibar)" },
+        { modelo: "EGAS70HLR", marca: "Embraco", hp: "1/5+ HP", gas: "R134a", tipo: "LBP (Familiar)" },
+        { modelo: "EGAS80HLR", marca: "Embraco", hp: "1/4 HP", gas: "R134a", tipo: "LBP (Familiar / Comercial Chica)" },
+        { modelo: "EGAS90HLR", marca: "Embraco", hp: "1/4+ HP", gas: "R134a", tipo: "LBP (Familiar Grande)" },
+        { modelo: "EGAS100HLR", marca: "Embraco", hp: "1/3 HP", gas: "R134a", tipo: "LBP (Comercial Ligera)" },
+        { modelo: "FFI10HAK", marca: "Embraco", hp: "1/3 HP", gas: "R134a", tipo: "LBP (Comercial / Mostrador)" },
+        { modelo: "FFI12HBK", marca: "Embraco", hp: "1/3+ HP (Potente)", gas: "R134a", tipo: "LBP (Vitrinas / Heladeras Comerciales)" },
+        { modelo: "FF7.5HBK", marca: "Embraco", hp: "1/5 HP", gas: "R134a", tipo: "LBP (Familiar)" },
+        { modelo: "FF8.5HBK", marca: "Embraco", hp: "1/4 HP", gas: "R134a", tipo: "LBP (Familiar)" },
+        { modelo: "EM2X3110U", marca: "Embraco", hp: "1/3 HP", gas: "R290", tipo: "LBP (Comercial Moderna)" },
+        { modelo: "EM2X3115U", marca: "Embraco", hp: "1/3+ HP", gas: "R290", tipo: "LBP (Exhibidora Moderna)" }
     ];
 
     function buscarMotor() {
