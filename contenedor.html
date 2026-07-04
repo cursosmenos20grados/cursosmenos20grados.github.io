@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contenedor Digital - Heladeras Comerciales</title>
 
@@ -86,7 +86,7 @@
         }
 
         .card.active .card-content {
-            max-height: 2500px; /* Aumentado para que entre todo el proceso largo */
+            max-height: 2500px; 
             padding: 15px;
             border-top: 1px solid #eee;
         }
@@ -146,37 +146,37 @@
         }
         
         #install-banner {
-    display: none; 
-    background: var(--azul-oscuro); 
-    color: white; 
-    padding: 12px 5px; 
-    position: fixed; 
-    bottom: 0; 
-    left: 0; 
-    width: 100%; 
-    text-align: center; 
-    z-index: 2000; 
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
-    box-sizing: border-box; /* Esto evita que el padding lo desalinee */
-}
+            display: none; 
+            background: var(--azul-oscuro); 
+            color: white; 
+            padding: 12px 5px; 
+            position: fixed; 
+            bottom: 0; 
+            left: 0; 
+            width: 100%; 
+            text-align: center; 
+            z-index: 2000; 
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+            box-sizing: border-box;
+        }
 
-#install-banner span {
-    font-size: 0.85rem;
-    display: inline-block;
-    margin-bottom: 5px;
-}
+        #install-banner span {
+            font-size: 0.85rem;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
 
-#install-banner button {
-    background: var(--celeste); 
-    border: none; 
-    color: white; 
-    padding: 8px 15px; 
-    border-radius: 5px; 
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 0.8rem;
-    margin-left: 5px;
-}
+        #install-banner button {
+            background: var(--celeste); 
+            border: none; 
+            color: white; 
+            padding: 8px 15px; 
+            border-radius: 5px; 
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-left: 5px;
+        }
     </style>
 </head>
 <body>
@@ -254,7 +254,7 @@
 
             <h3>3. Verificación de estanqueidad</h3>
             <ul>
-                <li>Observar si la presión se mantiene estable durante 10–15 minutos.</li>
+                <li>Observar si la presión se mantiene stable durante 10–15 minutos.</li>
                 <li>Si sube, revisar fugas con detector o solución jabonosa.</li>
             </ul>
 
@@ -279,61 +279,96 @@
     </div>
 
     <div class="card" style="border-left: 5px solid #4caf50;">
-    <div class="card-header" onclick="toggleCard(this)" style="color: #2e7d32;">
-        4. Diagnóstico: Recalentamiento y Subenfriamiento <span>▼</span>
-    </div>
-    <div class="card-content">
-        <p style="font-size: 0.9rem; line-height: 1.4;">
-            Estos valores permiten verificar si existe desborde o ausencia de refrigerante, evitando daños al compresor y pérdida de potencia.
-        </p>
-
-        <h3 style="color: #2e7d32; font-size: 1rem;">Definiciones Técnicas</h3>
-        <ul style="font-size: 0.85rem; padding-left: 20px;">
-            <li><strong>Subenfriamiento (Condensación):</strong> T. Condensación - T. salida condensador.</li>
-            <li><strong>Subenfriamiento Adicional:</strong> T. Condensador - T. entrada a la VET.</li>
-            <li><strong>Recalentamiento Útil:</strong> T. salida evaporador - T. evaporación.</li>
-            <li><strong>Recalentamiento Ambiental:</strong> T. entrada compresor - T. salida evaporador.</li>
-        </ul>
-
-        <h3 style="color: #2e7d32; font-size: 1rem;">Tabla de Valores Normales</h3>
-        <div style="overflow-x: auto;">
-            <table style="font-size: 0.8rem;">
-                <tr>
-                    <th>PARÁMETRO</th>
-                    <th>VALORES NORMALES</th>
-                    <th>TU VALOR</th>
-                </tr>
-                <tr>
-                    <td>Subenfriamiento Condensación</td>
-                    <td>DE 3° A 6°</td>
-                    <td><input type="text" id="diagSubC" placeholder="--" oninput="validarSimple('diagSubC', 3, 6)" style="width: 50px; border: 1px solid #ccc; text-align: center; border-radius: 4px;"></td>
-                </tr>
-                <tr>
-                    <td>Subenfriamiento Adicional</td>
-                    <td>DE 2° A 6°</td>
-                    <td><input type="text" id="diagSubA" placeholder="--" oninput="validarSimple('diagSubA', 2, 6)" style="width: 50px; border: 1px solid #ccc; text-align: center; border-radius: 4px;"></td>
-                </tr>
-                <tr>
-                    <td>Recalentamiento Útil</td>
-                    <td>DE 5° A 8°</td>
-                    <td><input type="text" id="diagRecU" placeholder="--" oninput="validarSimple('diagRecU', 5, 8)" style="width: 50px; border: 1px solid #ccc; text-align: center; border-radius: 4px;"></td>
-                </tr>
-                <tr>
-                    <td>Recalentamiento Ambiental</td>
-                    <td>DE 12° A 15°</td>
-                    <td><input type="text" id="diagRecA" placeholder="--" oninput="validarSimple('diagRecA', 12, 15)" style="width: 50px; border: 1px solid #ccc; text-align: center; border-radius: 4px;"></td>
-                </tr>
-            </table>
+        <div class="card-header" onclick="toggleCard(this)" style="color: #2e7d32;">
+            4. Diagnóstico: Recalentamiento y Subenfriamiento <span>▼</span>
         </div>
+        <div class="card-content">
+            <p style="font-size: 0.9rem; line-height: 1.4;">
+                Estos valores permiten verificar si existe desborde o ausencia de refrigerante, evitando daños al compresor y pérdida de potencia.
+            </p>
 
-        <div class="warning-box" style="background-color: #e8f5e9; border-color: #c8e6c9; border-left: 5px solid #4caf50;">
-            <strong>Recalentamiento Total:</strong> Es la suma del útil y el ambiental. Un valor correcto asegura que no regrese líquido al cárter.
+            <h3 style="color: #2e7d32; font-size: 1rem;">📍 Guía de Conexión en el Equipo</h3>
+
+            <div style="background-color: #f1f8e9; border: 1px solid #c8e6c9; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 0.85rem;">
+                <strong style="color: #2e7d32;">🎛️ MANIFOLDS (Presiones):</strong><br>
+                • <strong>Manifold de BAJA (Azul):</strong> Conectar en la válvula de servicio de la succión del compresor.<br>
+                • <strong>Manifold de ALTA (Rojo):</strong> Conectar en la línea de líquido (salida del tubo recibidor o válvula de descarga).
+            </div>
+
+            <h3 style="color: #2e7d32; font-size: 1rem;">🌡️ ¿Dónde apoyar la pinza del Termómetro?</h3>
+
+            <div style="font-size: 0.85rem; line-height: 1.6;">
+                <div style="margin-bottom: 12px; padding: 8px; border-left: 3px solid #1976d2; background: #fff;">
+                    <strong>1. Para Subenfriamiento de Condensación:</strong><br>
+                    En el caño de cobre a la <strong>salida del condensador</strong> (justo antes de ingresar al filtro deshidratador).
+                </div>
+
+                <div style="margin-bottom: 12px; padding: 8px; border-left: 3px solid #00bcd4; background: #fff;">
+                    <strong>2. Para Subenfriamiento Adicional:</strong><br>
+                    En el caño de líquido, lo más <strong>cerca posible de la entrada de la VET</strong> (Válvula de Expansión Termostática).
+                </div>
+
+                <div style="margin-bottom: 12px; padding: 8px; border-left: 3px solid #ff9800; background: #fff;">
+                    <strong>3. Para Recalentamiento Útil:</strong><br>
+                    A la <strong>salida del evaporador</strong> (sobre el caño de retorno, pegado al lugar donde está sujeto el bulbo sensor de la VET).
+                </div>
+
+                <div style="margin-bottom: 12px; padding: 8px; border-left: 3px solid #e91e63; background: #fff;">
+                    <strong>4. Para Recalentamiento Ambiental/Total:</strong><br>
+                    En la línea de succión, unos <strong>15 a 20 centímetros antes de la entrada al compresor</strong> (bocha).
+                </div>
+            </div>
+
+            <h3 style="color: #2e7d32; font-size: 1rem; margin-top: 20px;">📊 Fórmulas de Cálculo rápido</h3>
+            <ul style="font-size: 0.85rem; padding-left: 20px; margin-top: 5px; line-height: 1.6; background: #fff; padding-top: 8px; padding-bottom: 8px; border-radius: 8px; border: 1px solid #eee; text-align: left;">
+                <li><strong>Subenfriamiento Condensación:</strong> T. Manifold Alta - T. Pinza Salida Condensador</li>
+                <li><strong>Subenfriamiento Adicional:</strong> T. Manifold Alta - T. Pinza Entrada VET</li>
+                <li style="margin-top: 4px;"><strong>Recalentamiento Útil:</strong> T. Pinza Salida Evaporador - T. Manifold Baja</li>
+                <li><strong>Recalentamiento Ambiental:</strong> T. Pinza Entrada Compresor - T. Pinza Salida Evaporador</li>
+                <li style="margin-top: 6px; border-top: 1px dashed #ccc; padding-top: 6px; color: #b71c1c;">
+                    <strong>Recalentamiento Total (Retorno):</strong> T. Pinza Entrada Compresor - T. Manifold Baja <br>
+                    <small style="color: #555;">*Es la suma del Útil + Ambiental. ¡Asegura que no vuelva líquido al cárter!</small>
+                </li>
+            </ul>
+
+            <h3 style="color: #2e7d32; font-size: 1rem;">Tabla de Valores Normales</h3>
+            <div style="overflow-x: auto;">
+                <table style="font-size: 0.8rem;">
+                    <tr>
+                        <th>PARÁMETRO</th>
+                        <th>VALORES NORMALES</th>
+                        <th>TU VALOR</th>
+                    </tr>
+                    <tr>
+                        <td>Subenfriamiento Condensación</td>
+                        <td>DE 3° A 6°</td>
+                        <td><input type="text" id="diagSubC" placeholder="--" oninput="validarSimple('diagSubC', 3, 6)" style="width: 50px; border: 1px solid #ccc; text-align: center; border-radius: 4px;"></td>
+                    </tr>
+                    <tr>
+                        <td>Subenfriamiento Adicional</td>
+                        <td>DE 2° A 6°</td>
+                        <td><input type="text" id="diagSubA" placeholder="--" oninput="validarSimple('diagSubA', 2, 6)" style="width: 50px; border: 1px solid #ccc; text-align: center; border-radius: 4px;"></td>
+                    </tr>
+                    <tr>
+                        <td>Recalentamiento Útil</td>
+                        <td>DE 5° A 8°</td>
+                        <td><input type="text" id="diagRecU" placeholder="--" oninput="validarSimple('diagRecU', 5, 8)" style="width: 50px; border: 1px solid #ccc; text-align: center; border-radius: 4px;"></td>
+                    </tr>
+                    <tr>
+                        <td>Recalentamiento Ambiental</td>
+                        <td>DE 12° A 15°</td>
+                        <td><input type="text" id="diagRecA" placeholder="--" oninput="validarSimple('diagRecA', 12, 15)" style="width: 50px; border: 1px solid #ccc; text-align: center; border-radius: 4px;"></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="warning-box" style="background-color: #e8f5e9; border-color: #c8e6c9; border-left: 5px solid #4caf50;">
+                <strong>Recalentamiento Total:</strong> Es la suma del útil y el ambiental. Un valor correcto asegura que no regrese líquido al cárter.
+            </div>
         </div>
     </div>
     
-</div>
-
-<div class="card" style="border-left: 5px solid #f44336;">
+    <div class="card" style="border-left: 5px solid #f44336;">
         <div class="card-header" onclick="toggleCard(this)" style="color: #d32f2f;">
            5. Guía de Fallas: ¿Qué revisar? <span>▼</span>
         </div>
@@ -372,10 +407,9 @@
         </div>
     </div>
 
-
-   <div class="card" style="border-left: 5px solid #ff5722;">
+    <div class="card" style="border-left: 5px solid #ff5722;">
         <div class="card-header" onclick="toggleCard(this)" style="color: #ff5722;">
-            6.🧮 Herramientas de Cálculo y Conversión <span>▼</span>
+            6. 🧮 Herramientas de Cálculo y Conversión <span>▼</span>
         </div>
         <div class="card-content">
             
@@ -415,7 +449,7 @@
         </div>
     </div>
 
-<div class="footer">
+</div> <div class="footer">
     Creador: Marcelo Cardozo <br>
     © 2026 - Curso de Refrigeración
 </div>
@@ -433,11 +467,9 @@
         card.classList.toggle('active');
     }
 
-    // Esta función es la "magia" que arregla las comas
     function limpiarValor(id) {
         let input = document.getElementById(id).value;
         if (input === "") return NaN;
-        // Cambia coma por punto y convierte a número
         return parseFloat(input.toString().replace(',', '.'));
     }
 
@@ -457,7 +489,7 @@
         }
     }
 
-   function calcCamara() {
+    function calcCamara() {
         let l = limpiarValor('L');
         let a = limpiarValor('A');
         let h = limpiarValor('H');
@@ -467,7 +499,6 @@
             let motorSugerido = "";
             let notaTecnica = "";
 
-            // Lógica por escalones de volumen comercial real (Media Temperatura / Conservación)
             if (vol <= 4) {
                 motorSugerido = "1/2 HP o 3/4 HP";
                 notaTecnica = "Ideal para cámaras muy chicas o heladeras comerciales tipo batea/exhibidora.";
@@ -491,12 +522,10 @@
                 notaTecnica = "El volumen supera los 50 m³. Requiere cálculo formal de balance térmico.";
             }
             
-            // Mostrar los resultados en la interfaz
             document.getElementById('resC').style.display = "block";
             document.getElementById('m3').innerHTML = "<strong>Volumen Total:</strong> " + vol.toFixed(2) + " m³";
             document.getElementById('hp').innerHTML = "<strong>Motor Comercial Sugerido:</strong> " + motorSugerido;
             
-            // Reemplazamos el texto estático de la ayuda por una nota dinámica que ayude al técnico
             document.querySelector('#resC small').innerHTML = "💡 <strong>Guía de uso:</strong> " + notaTecnica;
             
         } else {
@@ -505,42 +534,42 @@
     }
     
     function validarSimple(id, min, max) {
-    let input = document.getElementById(id);
-    let valor = limpiarValor(id); // Usa la función que ya tenemos para comas y puntos
+        let input = document.getElementById(id);
+        let valor = limpiarValor(id);
 
-    if (isNaN(valor)) {
-        input.style.backgroundColor = "white";
-        input.style.color = "black";
-        return;
+        if (isNaN(valor)) {
+            input.style.backgroundColor = "white";
+            input.style.color = "black";
+            return;
+        }
+
+        if (valor >= min && valor <= max) {
+            input.style.backgroundColor = "#c8e6c9";
+            input.style.color = "#2e7d32";
+            input.style.fontWeight = "bold";
+            input.style.borderColor = "#4caf50";
+        } else {
+            input.style.backgroundColor = "#ffcdd2";
+            input.style.color = "#d32f2f";
+            input.style.fontWeight = "bold";
+            input.style.borderColor = "#f44336";
+        }
     }
 
-    if (valor >= min && valor <= max) {
-        // Estilo APTO (Verde)
-        input.style.backgroundColor = "#c8e6c9";
-        input.style.color = "#2e7d32";
-        input.style.fontWeight = "bold";
-        input.style.borderColor = "#4caf50";
-    } else {
-        // Estilo NO APTO (Rojo)
-        input.style.backgroundColor = "#ffcdd2";
-        input.style.color = "#d32f2f";
-        input.style.fontWeight = "bold";
-        input.style.borderColor = "#f44336";
-    }
-}
-
-// Mostrar el aviso de instalación después de 3 segundos
     setTimeout(() => {
         document.getElementById('install-banner').style.display = 'block';
     }, 3000);
 
     function cerrarBanner() {
-        alert("En Android: Tocá los 3 puntos arriba a la derecha y elegí 'Instalar aplicación' o 'Agregar a pantalla de inicio'.\n\nEn iPhone: Tocá el botón de 'Compartir' (el cuadradito con la flecha) y buscá 'Agregar a inicio'.");
         document.getElementById('install-banner').style.display = 'none';
+        setTimeout(() => {
+            alert("En Android: Tocá los 3 puntos arriba a la derecha y elegí 'Instalar aplicación' o 'Agregar a pantalla de inicio'.\n\nEn iPhone: Tocá el botón de 'Compartir' (el cuadradito con la flecha) y buscá 'Agregar a inicio'.");
+        }, 100);
     }
-  if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js');
-}
+
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js');
+    }
 </script>
 
 </body>
