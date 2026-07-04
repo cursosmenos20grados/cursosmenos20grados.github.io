@@ -447,8 +447,34 @@
             </div>
 
         </div>
+        
     </div>
+<div class="card" style="border-left: 5px solid #9c27b0;">
+        <div class="card-header" onclick="toggleCard(this)" style="color: #7b1fa2;">
+            7. 🔍 Buscador de Errores en Combistatos <span>▼</span>
+        </div>
+        <div class="card-content">
+            <p style="font-size: 0.9rem; margin-bottom: 10px;">Seleccioná la marca y buscá el código de error que muestra la pantalla:</p>
+            
+            <div style="background: #fff; border: 1px solid #ddd; padding: 12px; border-radius: 8px; margin-bottom: 10px;">
+                <div style="display: flex; gap: 5px; flex-direction: column;">
+                    <label style="font-weight: bold; color: var(--azul-oscuro); font-size: 0.85rem;">1. Seleccionar Marca:</label>
+                    <select id="combistatoMarca" onchange="buscarError()" style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; background: white; font-size: 0.9rem;">
+                        <option value="todos">-- Todas las Marcas --</option>
+                        <option value="etc">Elitech (ETC-1000 / STC)</option>
+                        <option value="carel">Carel (Easy / IR33)</option>
+                        <option value="dixell">Dixell (XR)</option>
+                        <option value="fullgauge">Full Gauge (TC-900)</option>
+                    </select>
+                    
+                    <label style="font-weight: bold; color: var(--azul-oscuro); font-size: 0.85rem; margin-top: 8px;">2. Escribir Código de Error:</label>
+                    <input type="text" id="errorInput" placeholder="Ej: E1, EE, dF, AL..." oninput="buscarError()" style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 0.9rem; text-transform: uppercase;">
+                </div>
+            </div>
 
+            <div id="resultadoErrores" style="margin-top: 10px;"></div>
+        </div>
+    </div>
 </div> <div class="footer">
     Creador: Marcelo Cardozo <br>
     © 2026 - Curso de Refrigeración
@@ -569,6 +595,79 @@
 
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('sw.js');
+    }
+    // Base de datos de errores comunes de combistatos comerciales
+    const tablaErrores = [
+        // ELITECH
+        { marca: "etc", codigo: "E1", detalle: "Falla del sensor de ambiente (ambiente abierto o en corto).", solucion: "Revisar cableado del sensor térmico ambiental o reemplazar la sonda NTC." },
+        { marca: "etc", codigo: "E2", detalle: "Falla del sensor de evaporador (descongelamiento).", solucion: "Verificar la conexión de la segunda sonda en las teleras de bornes o reemplazarla." },
+        { marca: "etc", codigo: "EE", detalle: "Error de memoria interna del chip.", solucion: "Desconectar el equipo de la red eléctrica 1 minuto. Si persiste, reprogramar parámetros de fábrica o cambiar combistato." },
+        { marca: "etc", codigo: "HH", detalle: "Alerta de alta temperatura (Superó los 99°C o el límite configurado).", solucion: "Verificar si el compresor cortó, falta de gas o si el forzador del evaporador está parado." },
+        { marca: "etc", codigo: "LL", detalle: "Alerta de baja temperatura (Menor a -40°C o sensor desconectado).", solucion: "Revisar si el sensor se soltó de la bornera o si el relay del compresor quedó pegado directo." },
+        
+        // CAREL
+        { marca: "carel", codigo: "E0", detalle: "Falla en sonda 1 (Ambiente).", solucion: "Controlar bornes 3 y 4 (o según modelo Carel). Cambiar sensor NTC." },
+        { marca: "carel", codigo: "E1", detalle: "Falla en sonda 2 (Defrost / Evaporador).", solucion: "Revisar si el parámetro de deshielo por temperatura está activo sin tener conectada la sonda física." },
+        { marca: "carel", codigo: "IA", detalle: "Alarma externa inmediata (Entrada digital activa).", solucion: "Verificar microswitch de puerta de la cámara o presostato conectado a la entrada digital." },
+        { marca: "carel", codigo: "HI", detalle: "Alarma de alta temperatura en el mueble/cámara.", solucion: "Puerta mal cerrada, burletes rotos, condensador tapado de tierra o evaporador bloqueado de hielo." },
+        { marca: "carel", codigo: "LO", detalle: "Alarma de baja temperatura.", solucion: "El controlador no corta. Revisar que el relay no se haya soldado internamente por exceso de amperaje." },
+        
+        // DIXELL
+        { marca: "dixell", codigo: "P1", detalle: "Falla en sonda ambiental sondeada.", solucion: "Revisar conexiones del sensor de control principal. Limpiar sulfatación en bornera." },
+        { marca: "dixell", codigo: "P2", detalle: "Falla en sonda del evaporador.", solucion: "Apagar el ciclo de deshielo automático por temperatura y pasarlo a tiempo hasta cambiar el sensor." },
+        { marca: "dixell", codigo: "HA", detalle: "Alarma de máxima temperatura registrada.", solucion: "Revisar rendimiento del motor, presiones de trabajo o si el forzador de condensación arrancó." },
+        { marca: "dixell", codigo: "LA", detalle: "Alarma de mínima temperatura.", solucion: "Ajustar el diferencial (F2/Hy) para evitar sobre-enfriamiento de la mercadería." },
+        { marca: "dixell", codigo: "EA", detalle: "Alarma externa general.", solucion: "Entrada digital configurada enclavada. Revisar relevo térmico o protector de fase externo." },
+        
+        // FULL GAUGE
+        { marca: "fullgauge", codigo: "E1", detalle: "Sonda ambiental desconectada o dañada.", solucion: "Chequear la resistencia en Kohm de la sonda con el tester para verificar curva de fábrica." },
+        { marca: "fullgauge", codigo: "E2", detalle: "Sonda de deshielo (Evaporador) abierta.", solucion: "Revisar cañería de retorno, el bulbo puede estar dañado por congelamiento extremo." },
+        { marca: "fullgauge", codigo: "AHi", detalle: "Alarma de alta temperatura ambiental interna.", solucion: "Comprobar que no haya ingresado mercadería caliente en exceso o fallas en el sistema frigorífico." },
+        { marca: "fullgauge", codigo: "ALo", detalle: "Alarma de baja temperatura interna.", solucion: "Verificar histéresis del termostato. El compresor trabaja de continuo." },
+        { marca: "fullgauge", codigo: "OPN", detalle: "Puerta de la cámara frigorífica abierta por demasiado tiempo.", solucion: "Cerrar puerta o calibrar el tiempo de retardo de la alarma digital en los parámetros avanzados." }
+    ];
+
+    function buscarError() {
+        const marcaSeleccionada = document.getElementById("combistatoMarca").value;
+        const textoBusqueda = document.getElementById("errorInput").value.trim().toUpperCase();
+        const contenedorResultados = document.getElementById("resultadoErrores");
+        
+        // Limpiamos pantalla si no hay texto y está en "todos"
+        if (marcaSeleccionada === "todos" && textoBusqueda === "") {
+            contenedorResultados.innerHTML = "";
+            return;
+        }
+
+        // Filtramos la base de datos según marca y código escrito
+        const erroresFiltrados = tablaErrores.filter(err => {
+            const coincideMarca = (marcaSeleccionada === "todos" || err.marca === marcaSeleccionada);
+            const coincideCodigo = (textoBusqueda === "" || err.codigo.toUpperCase().includes(textoBusqueda));
+            return coincideMarca && coincideCodigo;
+        });
+
+        // Si no encuentra nada, avisa de forma prolija
+        if (erroresFiltrados.length === 0) {
+            contenedorResultados.innerHTML = `
+                <div style="background: #f5f5f5; border: 1px solid #ccc; padding: 10px; border-radius: 8px; font-size: 0.85rem; color: #666; text-align: center;">
+                    ❌ No se encontraron códigos que coincidan con "${textoBusqueda}".
+                </div>`;
+            return;
+        }
+
+        // Mapeo estético de nombres de marcas
+        const nombreMarca = { etc: "Elitech", carel: "Carel", dixell: "Dixell", fullgauge: "Full Gauge" };
+
+        // Renderizamos las tarjetas de fallas encontradas
+        contenedorResultados.innerHTML = erroresFiltrados.map(err => `
+            <div style="background: #f3e5f5; border: 1px solid #d1c4e9; border-left: 5px solid #9c27b0; padding: 10px; border-radius: 8px; margin-bottom: 8px; font-size: 0.85rem; text-align: left;">
+                <div style="display: flex; justify-content: space-between; font-weight: bold; color: #4a148c; border-bottom: 1px dashed #d1c4e9; padding-bottom: 3px; margin-bottom: 5px;">
+                    <span>⚠️ CÓDIGO: ${err.codigo}</span>
+                    <span style="font-size: 0.75rem; background: #9c27b0; color: white; padding: 2px 6px; border-radius: 4px;">${nombreMarca[err.marca]}</span>
+                </div>
+                <p style="margin: 3px 0;"><strong>¿Qué significa?:</strong> ${err.detalle}</p>
+                <p style="margin: 3px 0; color: #2e7d32;"><strong>🔧 Solución Técnica:</strong> ${err.solución}</p>
+            </div>
+        `).join('');
     }
 </script>
 
