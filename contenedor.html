@@ -449,12 +449,16 @@
         </div>
         
     </div>
-<div class="card" style="border-left: 5px solid #9c27b0;">
+<!-- TARJETA 7: BUSCADOR DE ERRORES Y GUÍA SET POINT -->
+    <div class="card" style="border-left: 5px solid #9c27b0;">
         <div class="card-header" onclick="toggleCard(this)" style="color: #7b1fa2;">
-            7. 🔍 Buscador de Errores en Combistatos <span>▼</span>
+            7. 🔍 Combistatos: Errores y Set Point <span>▼</span>
         </div>
         <div class="card-content">
-            <p style="font-size: 0.9rem; margin-bottom: 10px;">Seleccioná la marca y buscá el código de error que muestra la pantalla:</p>
+            
+            <!-- SECCIÓN 1: BUSCADOR DE ERRORES -->
+            <h3 style="color: #7b1fa2; font-size: 1rem; margin-top: 5px; border-bottom: 1px solid #e1bee7;">🔍 Buscador de Errores</h3>
+            <p style="font-size: 0.85rem; margin-bottom: 10px; color: #555;">Seleccioná la marca y escribí el código que muestra la pantalla:</p>
             
             <div style="background: #fff; border: 1px solid #ddd; padding: 12px; border-radius: 8px; margin-bottom: 10px;">
                 <div style="display: flex; gap: 5px; flex-direction: column;">
@@ -472,7 +476,25 @@
                 </div>
             </div>
 
+            <!-- Contenedor dinámico de resultados del buscador -->
             <div id="resultadoErrores" style="margin-top: 10px;"></div>
+
+            <!-- SECCIÓN 2: GUÍA DE SET POINT -->
+            <h3 style="color: #7b1fa2; font-size: 1rem; margin-top: 25px; border-bottom: 1px solid #e1bee7;">🌡️ Guía Rápida: Cambiar Set Point</h3>
+            <p style="font-size: 0.85rem; margin-bottom: 10px; color: #555;">Tocá la marca para ver el paso a paso en el display:</p>
+            
+            <!-- Botonera -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px;">
+                <button onclick="verSetPoint('etc')" style="background: #4a148c; color: white; border: none; padding: 10px; border-radius: 6px; font-weight: bold; font-size: 0.8rem; cursor: pointer;">ELITECH</button>
+                <button onclick="verSetPoint('carel')" style="background: #4a148c; color: white; border: none; padding: 10px; border-radius: 6px; font-weight: bold; font-size: 0.8rem; cursor: pointer;">CAREL EASY</button>
+                <button onclick="verSetPoint('dixell')" style="background: #4a148c; color: white; border: none; padding: 10px; border-radius: 6px; font-weight: bold; font-size: 0.8rem; cursor: pointer;">DIXELL XR</button>
+                <button onclick="verSetPoint('fullgauge')" style="background: #4a148c; color: white; border: none; padding: 10px; border-radius: 6px; font-weight: bold; font-size: 0.8rem; cursor: pointer;">FULL GAUGE</button>
+            </div>
+
+            <!-- Contenedor dinámico de la explicación del Set Point -->
+            <div id="explicacionSetPoint" style="display: none; background: #fff; border: 1px solid #e1bee7; padding: 12px; border-radius: 8px; font-size: 0.85rem; text-align: left;">
+            </div>
+
         </div>
     </div>
 </div> <div class="footer">
@@ -668,6 +690,53 @@
                 <p style="margin: 3px 0; color: #2e7d32;"><strong>🔧 Solución Técnica:</strong> ${err.solución}</p>
             </div>
         `).join('');
+    }
+    function verSetPoint(marca) {
+        const contenedor = document.getElementById("explicacionSetPoint");
+        let htmlContent = "";
+
+        if (marca === 'etc') {
+            htmlContent = `
+                <strong style="color: #4a148c; display: block; margin-bottom: 6px; border-bottom: 1px dashed #ccc; padding-bottom: 4px;">❄️ Elitech (ETC-1000 / STC-200)</strong>
+                <ol style="margin: 0; padding-left: 20px; line-height: 1.5;">
+                    <li>Mantené presionado el botón <strong>"SET"</strong> por más de 3 segundos hasta que aparezca <strong>F1</strong> en la pantalla.</li>
+                    <li>Presioná <strong>"SET"</strong> otra vez (sin soltarlo) y vas a ver el valor actual del Set Point.</li>
+                    <li><strong>Sin soltar "SET"</strong>, usá las flechas <strong>Arriba (▲)</strong> o <strong>Abajo (▼)</strong> para regular la temperatura deseada.</li>
+                    <li>Una vez seleccionado el valor, soltá todos los botones y presioná el botón de <strong>Encendido/Apagar (RST)</strong> o esperá 10 segundos para que guarde y salga solo.</li>
+                </ol>
+            `;
+        } else if (marca === 'carel') {
+            htmlContent = `
+                <strong style="color: #4a148c; display: block; margin-bottom: 6px; border-bottom: 1px dashed #ccc; padding-bottom: 4px;">❄️ Carel (Modelos Easy / ir33)</strong>
+                <ol style="margin: 0; padding-left: 20px; line-height: 1.5;">
+                    <li>Presioná el botón <strong>"SET"</strong> por al menos 1 segundo. El valor actual programado va a empezar a parpadear en la pantalla.</li>
+                    <li>Usá las flechas <strong>Arriba (▲)</strong> o <strong>Abajo (▼)</strong> para subir o bajar los grados según necesite el equipo.</li>
+                    <li>Presioná el botón <strong>"SET"</strong> una vez más para confirmar el nuevo valor. La pantalla dejará de parpadear y volverá a mostrar la temperatura ambiente.</li>
+                </ol>
+            `;
+        } else if (marca === 'dixell') {
+            htmlContent = `
+                <strong style="color: #4a148c; display: block; margin-bottom: 6px; border-bottom: 1px dashed #ccc; padding-bottom: 4px;">❄️ Dixell (Gama XR20CX / XR60CX)</strong>
+                <ol style="margin: 0; padding-left: 20px; line-height: 1.5;">
+                    <li>Presioná y soltá rápido el botón <strong>"SET"</strong>: la pantalla te va a mostrar el valor del Set Point actual y el LED indicador del compresor va a parpadear.</li>
+                    <li>Para cambiarlo, antes de que pasen 15 segundos, mantené apretado el botón <strong>"SET"</strong> por 2 segundos hasta que parpadee la unidad de medida (°C o °F).</li>
+                    <li>Ajustá el valor con las flechas <strong>▲</strong> o <strong>▼</strong>.</li>
+                    <li>Para guardar, volvé a apretar el botón <strong>"SET"</strong> o esperá 15 segundos sin tocar nada.</li>
+                </ol>
+            `;
+        } else if (marca === 'fullgauge') {
+            htmlContent = `
+                <strong style="color: #4a148c; display: block; margin-bottom: 6px; border-bottom: 1px dashed #ccc; padding-bottom: 4px;">❄️ Full Gauge (TC-900 / MT-512)</strong>
+                <ol style="margin: 0; padding-left: 20px; line-height: 1.5;">
+                    <li>Presioná el botón <strong>"SET"</strong> por 2 segundos hasta que aparezca el mensaje <span style="color:#d32f2f; font-weight:bold;">[Set]</span> en el visor. Al soltar la tecla, parpadeará el valor configurado.</li>
+                    <li>Utilizá las teclas <strong>▲</strong> o <strong>▼</strong> para modificar la temperatura de corte del compresor.</li>
+                    <li>Presioná la tecla <strong>"SET"</strong> brevemente para grabar el nuevo valor en la memoria interna y retornar a la operación normal.</li>
+                </ol>
+            `;
+        }
+
+        contenedor.innerHTML = htmlContent;
+        contenedor.style.display = "block";
     }
 </script>
 
