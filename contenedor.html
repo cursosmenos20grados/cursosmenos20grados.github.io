@@ -760,9 +760,18 @@
         contenedor.innerHTML = htmlContent;
         contenedor.style.display = "block";
     }
-   // Base de datos ampliada de motocompresores en el mercado argentino
+  // Base de datos de motocompresores ampliada con Embraco, Tecumseh y Huayi
     const tablaMotores = [
-        // TECUMSEH (Agregados los modelos 1390 y comerciales comunes)
+        // HUAYI (Nuevos agregados para el mercado local)
+        { modelo: "HYE55Y", marca: "Huayi", hp: "1/6 HP (98 Frig/h)", gas: "R134a / Blend", tipo: "LBP (Familiar / Congelados)" },
+        { modelo: "HYE60Y", marca: "Huayi", hp: "1/5 HP (140 Frig/h)", gas: "R134a / Blend", tipo: "LBP (Familiar diario)" },
+        { modelo: "HYE69YG", marca: "Huayi", hp: "1/5+ HP (164 Frig/h)", gas: "R134a / Blend", tipo: "LBP (Familiar Grande / Eficiente)" },
+        { modelo: "HYE69YK", marca: "Huayi", hp: "1/4 HP (179 Frig/h)", gas: "R134a / Blend", tipo: "LBP (Familiar / No Frost)" },
+        { modelo: "HYE81YT", marca: "Huayi", hp: "1/4+ HP (195 Frig/h)", gas: "R134a / Blend", tipo: "LBP (Comercial Chica / Mostrador)" },
+        { modelo: "HY90Y", marca: "Huayi", hp: "1/3 HP (235 Frig/h)", gas: "R134a / Blend", tipo: "LBP (Comercial / Exhibidora)" },
+        { modelo: "HY113Y", marca: "Huayi", hp: "1/3+ HP (330 Frig/h)", gas: "R134a / Blend", tipo: "LBP (Bajo Mesada / Comercial Grande)" },
+
+        // TECUMSEH
         { modelo: "THG1390YS", marca: "Tecumseh", hp: "1/4 HP Reforzado (1/4+)", gas: "R134a", tipo: "LBP (Familiar Grande / Exhibidora)" },
         { modelo: "TSA1390YS", marca: "Tecumseh", hp: "1/4 HP Reforzado (1/4+)", gas: "R134a", tipo: "LBP (Familiar / No Frost)" },
         { modelo: "THG1374YS", marca: "Tecumseh", hp: "1/5 HP", gas: "R134a", tipo: "LBP (Familiar)" },
@@ -777,7 +786,7 @@
         { modelo: "TP1410YS", marca: "Tecumseh", hp: "1/3 HP (Baja)", gas: "R134a", tipo: "LBP (Comercial / Bajo Mesada)" },
         { modelo: "TYB1413YJS", marca: "Tecumseh", hp: "1/2 HP (Baja)", gas: "R134a", tipo: "LBP (Freezer Comercial / Pozos)" },
 
-        // EMBRACO (Modelos familiares y comerciales de uso diario)
+        // EMBRACO
         { modelo: "EMIS70HER", marca: "Embraco", hp: "1/5 HP", gas: "R134a", tipo: "LBP (Familiar / Congelados)" },
         { modelo: "EMI70HER", marca: "Embraco", hp: "1/5 HP", gas: "R134a", tipo: "LBP (Familiar)" },
         { modelo: "EMIS60HER", marca: "Embraco", hp: "1/6 HP", gas: "R134a", tipo: "LBP (Familiar)" },
