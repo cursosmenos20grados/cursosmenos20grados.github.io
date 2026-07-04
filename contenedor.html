@@ -457,18 +457,48 @@
         }
     }
 
-    function calcCamara() {
+   function calcCamara() {
         let l = limpiarValor('L');
         let a = limpiarValor('A');
         let h = limpiarValor('H');
         
         if(!isNaN(l) && !isNaN(a) && !isNaN(h)) {
             let vol = l * a * h;
-            let hpReq = vol / 18; 
+            let motorSugerido = "";
+            let notaTecnica = "";
+
+            // Lógica por escalones de volumen comercial real (Media Temperatura / Conservación)
+            if (vol <= 4) {
+                motorSugerido = "1/2 HP o 3/4 HP";
+                notaTecnica = "Ideal para cámaras muy chicas o heladeras comerciales tipo batea/exhibidora.";
+            } else if (vol > 4 && vol <= 8) {
+                motorSugerido = "1 HP";
+                notaTecnica = "Rendimiento óptimo para conservación de frescos (Media T°). Si es para Congelados (Baja T°), saltar a 1.5 o 2 HP.";
+            } else if (vol > 8 && vol <= 14) {
+                motorSugerido = "1.5 HP";
+                notaTecnica = "Para cámaras medianas de carnes, lácteos o verduras con rotación normal.";
+            } else if (vol > 14 && vol <= 22) {
+                motorSugerido = "2 HP";
+                notaTecnica = "Estándar comercial para cámaras de media temperatura bien aisladas.";
+            } else if (vol > 22 && vol <= 35) {
+                motorSugerido = "3 HP";
+                notaTecnica = "Cámaras grandes de distribución o depósitos de frescos.";
+            } else if (vol > 35 && vol <= 50) {
+                motorSugerido = "4 HP o 5 HP";
+                notaTecnica = "Requiere análisis de carga térmica detallado y equipo trifásico.";
+            } else {
+                motorSugerido = "Consultar tablas de ingeniería";
+                notaTecnica = "El volumen supera los 50 m³. Requiere cálculo formal de balance térmico.";
+            }
             
+            // Mostrar los resultados en la interfaz
             document.getElementById('resC').style.display = "block";
-            document.getElementById('m3').innerText = "Volumen Total: " + vol.toFixed(2) + " m³";
-            document.getElementById('hp').innerText = "Potencia sugerida: " + hpReq.toFixed(2) + " HP";
+            document.getElementById('m3').innerHTML = "<strong>Volumen Total:</strong> " + vol.toFixed(2) + " m³";
+            document.getElementById('hp').innerHTML = "<strong>Motor Comercial Sugerido:</strong> " + motorSugerido;
+            
+            // Reemplazamos el texto estático de la ayuda por una nota dinámica que ayude al técnico
+            document.querySelector('#resC small').innerHTML = "💡 <strong>Guía de uso:</strong> " + notaTecnica;
+            
         } else {
             alert("Por favor, ingresa las tres medidas (puedes usar coma o punto).");
         }
