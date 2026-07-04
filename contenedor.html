@@ -497,6 +497,28 @@
 
         </div>
     </div>
+  <div class="card" style="border-left: 5px solid #2e7d32;">
+        <div class="card-header" onclick="toggleCard(this)" style="color: #1b5e20;">
+            8. 🔌 Identificador de Motores por Código <span>▼</span>
+        </div>
+        <div class="card-content">
+            <p style="font-size: 0.85rem; margin-bottom: 10px; color: #555;">
+                Escribí el modelo que figura en la etiqueta del motocompresor para saber sus HP y refrigerante:
+            </p>
+            
+            <div style="background: #fff; border: 1px solid #ddd; padding: 12px; border-radius: 8px; margin-bottom: 10px;">
+                <div style="display: flex; gap: 5px; flex-direction: column;">
+                    <label style="font-weight: bold; color: var(--azul-oscuro); font-size: 0.85rem;">Escribir Modelo del Motor:</label>
+                    <div style="display: flex; gap: 6px;">
+                        <input type="text" id="motorInput" placeholder="Ej: EMIS70, FFI12..." oninput="buscarMotor()" style="flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 0.9rem; text-transform: uppercase;">
+                        <button onclick="buscarMotor()" style="background: #2e7d32; color: white; border: none; padding: 0 15px; border-radius: 5px; font-weight: bold; font-size: 0.85rem; cursor: pointer;">BUSCAR</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="resultadoMotores" style="margin-top: 10px;"></div>
+        </div>
+    </div>
 </div> <div class="footer">
     Creador: Marcelo Cardozo <br>
     © 2026 - Curso de Refrigeración
@@ -737,6 +759,76 @@
 
         contenedor.innerHTML = htmlContent;
         contenedor.style.display = "block";
+    }
+    // Base de datos de códigos de motocompresores comunes en el mercado argentino
+    const tablaMotores = [
+        // EMBRACO (Modelos muy comunes en familiares y comerciales ligeras)
+        { modelo: "EMIS70HER", marca: "Embraco", hp: "1/5 HP", gas: "R134a", tipo: "LBP (Familiar / Congelados)" },
+        { modelo: "EMI70HER", marca: "Embraco", hp: "1/5 HP", gas: "R134a", tipo: "LBP (Familiar)" },
+        { modelo: "EMIS60HER", marca: "Embraco", hp: "1/6 HP", gas: "R134a", tipo: "LBP (Familiar)" },
+        { modelo: "EMIS30HER", marca: "Embraco", hp: "1/10 HP", gas: "R134a", tipo: "LBP (Bajo consumo/Minibar)" },
+        { modelo: "EGAS70HLR", marca: "Embraco", hp: "1/5+ HP (Alta eficiencia)", gas: "R134a", tipo: "LBP (Familiar)" },
+        { modelo: "EGAS80HLR", marca: "Embraco", hp: "1/4 HP", gas: "R134a", tipo: "LBP (Familiar / Comercial chica)" },
+        { modelo: "EGAS90HLR", marca: "Embraco", hp: "1/4+ HP", gas: "R134a", tipo: "LBP (Familiar Grande)" },
+        { modelo: "FFI10HAK", marca: "Embraco", hp: "1/3 Ligeramente Reforzado", gas: "R134a", tipo: "LBP (Comercial / Mostrador)" },
+        { modelo: "FFI12HBK", marca: "Embraco", hp: "1/3+ HP (Potente)", gas: "R134a", tipo: "LBP (Vitrinas / Heladeras Comerciales)" },
+        { modelo: "FF7.5HBK", marca: "Embraco", hp: "1/5 HP", gas: "R134a", tipo: "LBP (Familiar)" },
+        { modelo: "FF8.5HBK", marca: "Embraco", hp: "1/4 HP", gas: "R134a", tipo: "LBP (Familiar)" },
+        { modelo: "FFU130HAX", marca: "Embraco", hp: "1/3+ HP", gas: "R134a", tipo: "LBP (Comercial)" },
+        { modelo: "EM2X3110U", marca: "Embraco", hp: "1/3 HP", gas: "R290 (Ecológico)", tipo: "LBP (Comercial Moderna)" },
+        { modelo: "EM2X3115U", marca: "Embraco", hp: "1/3+ HP", gas: "R290 (Ecológico)", tipo: "LBP (Comercial/Exhibidora)" },
+        { modelo: "EMI45HER", marca: "Embraco", hp: "1/8 HP", gas: "R134a", tipo: "LBP (Familiar Chica)" },
+
+        // TECUMSEH (Clásicos de comerciales, familiares y aire acondicionado)
+        { modelo: "THG1374YS", marca: "Tecumseh", hp: "1/5 HP", gas: "R134a", tipo: "LBP (Familiar)" },
+        { modelo: "TSA1374YS", marca: "Tecumseh", hp: "1/5 HP", gas: "R134a", tipo: "LBP (Familiar)" },
+        { modelo: "THG1365YS", marca: "Tecumseh", hp: "1/6 HP", gas: "R134a", tipo: "LBP (Familiar)" },
+        { modelo: "TW1380YS", marca: "Tecumseh", hp: "1/4 HP", gas: "R134a", tipo: "LBP (Familiar / No Frost)" },
+        { modelo: "AEA3430YXA", marca: "Tecumseh", hp: "1/4 HP (Alta)", gas: "R134a", tipo: "HBP (Exhibidora / Vertical / Lácteos)" },
+        { modelo: "AEA3440YXA", marca: "Tecumseh", hp: "1/3 HP", gas: "R134a", tipo: "HBP (Exhibidora Vertical Briket/Inelro)" },
+        { modelo: "AEA4448YXA", marca: "Tecumseh", hp: "1/2 HP", gas: "R134a", tipo: "HBP (Comercial Grande / Fiambrero)" },
+        { modelo: "AZ1355YS", marca: "Tecumseh", hp: "1/7 HP", gas: "R134a", tipo: "LBP (Familiar)" },
+        { modelo: "TP1410YS", marca: "Tecumseh", hp: "1/3 HP", gas: "R134a", tipo: "LBP (Comercial / Bajo mesada)" },
+        { modelo: "AZ1340YS", marca: "Tecumseh", hp: "1/8 HP", gas: "R134a", tipo: "LBP (Familiar)" }
+    ];
+
+    function buscarMotor() {
+        const textoBusqueda = document.getElementById("motorInput").value.trim().toUpperCase();
+        const contenedorResultados = document.getElementById("resultadoMotores");
+        
+        // Si no escribió nada, vaciamos el contenedor
+        if (textoBusqueda === "") {
+            contenedorResultados.innerHTML = "";
+            return;
+        }
+
+        // Buscamos motores que CONTENGAN el texto ingresado
+        const motoresFiltrados = tablaMotores.filter(m => 
+            m.modelo.toUpperCase().includes(textoBusqueda) || 
+            m.marca.toUpperCase().includes(textoBusqueda)
+        );
+
+        // Si no hay coincidencias
+        if (motoresFiltrados.length === 0) {
+            contenedorResultados.innerHTML = `
+                <div style="background: #f5f5f5; border: 1px solid #ccc; padding: 10px; border-radius: 8px; font-size: 0.85rem; color: #666; text-align: center;">
+                    ❌ No se encontró ningún motor con el código o marca "${textoBusqueda}".
+                </div>`;
+            return;
+        }
+
+        // Mostramos las coincidencias encontradas
+        contenedorResultados.innerHTML = motoresFiltrados.map(m => `
+            <div style="background: #e8f5e9; border: 1px solid #c8e6c9; border-left: 5px solid #2e7d32; padding: 10px; border-radius: 8px; margin-bottom: 8px; font-size: 0.85rem; text-align: left;">
+                <div style="display: flex; justify-content: space-between; font-weight: bold; color: #1b5e20; border-bottom: 1px dashed #c8e6c9; padding-bottom: 3px; margin-bottom: 5px;">
+                    <span>📦 MOD: ${m.modelo}</span>
+                    <span style="font-size: 0.75rem; background: #2e7d32; color: white; padding: 2px 6px; border-radius: 4px;">${m.marca}</span>
+                </div>
+                <p style="margin: 3px 0;"><strong>⚡ Potencia Comercial:</strong> <span style="font-size: 0.95rem; color: #d32f2f; font-weight: bold;">${m.hp}</span></p>
+                <p style="margin: 3px 0;"><strong>🛢️ Gas Refrigerante:</strong> ${m.gas}</p>
+                <p style="margin: 3px 0; color: #555;"><strong>🎯 Aplicación:</strong> ${m.tipo}</p>
+            </div>
+        `).join('');
     }
 </script>
 
