@@ -29,78 +29,20 @@
             --gris-claro: #f4f7f6;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--gris-claro);
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
-
-        header {
-            background: linear-gradient(135deg, var(--azul-oscuro), var(--celeste));
-            color: var(--blanco);
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .simbolo {
-            font-weight: bold;
-            display: block;
-            font-size: 1.2rem;
-            margin-top: 5px;
-        }
-
-        .container {
-            padding: 15px;
-            max-width: 600px;
-            margin: auto;
-        }
-
-        .card {
-            background: var(--blanco);
-            border-radius: 12px;
-            margin-bottom: 15px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            border-left: 5px solid var(--celeste);
-        }
-
-        .card-header {
-            padding: 15px;
-            background: var(--blanco);
-            cursor: pointer;
-            font-weight: bold;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: var(--azul-oscuro);
-        }
-
-        .card-content {
-            padding: 0 15px;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out, padding 0.3s ease;
-            background: #fafafa;
-        }
-
-        .card.active .card-content {
-            max-height: 5000px; 
-            padding: 15px;
-            border-top: 1px solid #eee;
-        }
-
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--gris-claro); margin: 0; padding: 0; color: #333; }
+        header { background: linear-gradient(135deg, var(--azul-oscuro), var(--celeste)); color: var(--blanco); padding: 20px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.2); position: sticky; top: 0; z-index: 1000; }
+        .simbolo { font-weight: bold; display: block; font-size: 1.2rem; margin-top: 5px; }
+        .container { padding: 15px; max-width: 600px; margin: auto; }
+        .card { background: var(--blanco); border-radius: 12px; margin-bottom: 15px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-left: 5px solid var(--celeste); }
+        .card-header { padding: 15px; background: var(--blanco); cursor: pointer; font-weight: bold; display: flex; justify-content: space-between; align-items: center; color: var(--azul-oscuro); }
+        .card-content { padding: 0 15px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out, padding 0.3s ease; background: #fafafa; }
+        .card.active .card-content { max-height: 5000px; padding: 15px; border-top: 1px solid #eee; }
+        
         img { max-width: 100%; height: auto; border-radius: 8px; display: block; margin: 10px auto; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         table, th, td { border: 1px solid #ddd; }
         th { background-color: var(--azul-oscuro); color: white; padding: 8px; }
         td { padding: 8px; text-align: center; }
-
         .footer { text-align: center; padding: 20px; font-size: 0.9rem; color: #777; }
         .warning-box { background-color: #fff3cd; border: 1px solid #ffeeba; padding: 15px; border-radius: 8px; margin-top: 10px; font-size: 0.95rem; border-left: 5px solid #ffc107; }
         h3 { color: var(--celeste); border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 20px; }
@@ -109,35 +51,35 @@
         #install-banner span { font-size: 0.85rem; display: inline-block; margin-bottom: 5px; }
         #install-banner button { background: var(--celeste); border: none; color: white; padding: 8px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 0.8rem; margin-left: 5px; }
 
-        /* --- ESTILOS MEJORADOS PARA LA BOLETA DE PRESUPUESTO (ACCESIBILIDAD) --- */
+        /* --- ESTILOS DE BOLETA (SÚPER LEGIBLES Y ANTI-DESFASAJE) --- */
         .botones-rapidos { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; }
-        .botones-rapidos button { white-space: nowrap; padding: 10px 15px; border-radius: 20px; border: 1px solid #d1d5db; background: #ffffff; color: #374151; font-size: 14px; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .botones-rapidos button { white-space: nowrap; padding: 12px 15px; border-radius: 20px; border: 1px solid #d1d5db; background: #ffffff; color: #374151; font-size: 15px; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.1); font-weight: bold; }
         
         .area-impresion { background: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 1px solid #ccc; font-family: 'Segoe UI', Tahoma, sans-serif; color: #000; position: relative; }
         
         .cabecera-boleta { border-bottom: 2px solid #003366; padding-bottom: 15px; margin-bottom: 15px; text-align: center; }
-        .cabecera-boleta h2 { margin: 0 0 5px 0; font-size: 22px; font-weight: bold; color: #003366; text-transform: uppercase; }
+        .cabecera-boleta h2 { margin: 0 0 5px 0; font-size: 24px; font-weight: bold; color: #003366; text-transform: uppercase; }
         
+        /* Entradas apiladas para evitar desbordes */
         .datos-tecnico-cliente { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
-        .input-linea { display: flex; align-items: center; gap: 10px; }
-        .input-linea label { font-weight: bold; font-size: 15px; min-width: 80px; color: #444; }
-        /* Inputs grandes para gente mayor */
-        .input-linea input { flex: 1; font-size: 16px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; background: #f9f9f9; color: #000; }
+        .input-linea { display: flex; flex-direction: column; gap: 4px; }
+        .input-linea label { font-weight: bold; font-size: 14px; color: #444; }
+        .input-linea input { width: 100%; font-size: 16px; padding: 12px; border: 1px solid #ccc; border-radius: 6px; background: #f9f9f9; color: #000; box-sizing: border-box; }
         .input-linea input:focus { outline: none; border-color: #00AEEF; background: #fff; }
 
-        .item-fila { border: 1px solid #e0e0e0; padding: 12px; border-radius: 8px; margin-bottom: 15px; background: #fafafa; position: relative; }
-        .btn-cerrar { background: #ff4d4d; border: none; color: white; border-radius: 4px; width: 35px; height: 35px; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .item-fila { border: 1px solid #e0e0e0; padding: 15px; border-radius: 8px; margin-bottom: 15px; background: #fafafa; position: relative; }
+        .btn-cerrar { background: #ff4d4d; border: none; color: white; border-radius: 4px; width: 40px; height: 40px; font-size: 18px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
         
         /* Cajas de inputs amplias y legibles */
-        .input-formato-grande { font-size: 16px !important; padding: 10px !important; border: 1px solid #bbb !important; border-radius: 5px !important; background: #fff !important; color: #000 !important; box-sizing: border-box; }
+        .input-formato-grande { font-size: 16px !important; padding: 12px !important; border: 1px solid #bbb !important; border-radius: 6px !important; background: #fff !important; color: #000 !important; box-sizing: border-box; width: 100%; }
         
-        .total-seccion { text-align: right; margin-top: 15px; font-size: 22px; font-weight: bold; background: #e3f2fd; padding: 15px; border-radius: 6px; border: 1px solid #00AEEF; color: #003366; }
+        .total-seccion { text-align: right; margin-top: 15px; font-size: 24px; font-weight: bold; background: #e3f2fd; padding: 15px; border-radius: 6px; border: 1px solid #00AEEF; color: #003366; }
         
         .acciones-fijas { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
-        .btn-agregar { background: #e5e7eb; border: none; padding: 15px; border-radius: 5px; font-weight: bold; color: #374151; cursor: pointer; font-size: 16px; }
+        .btn-agregar { background: #e5e7eb; border: none; padding: 15px; border-radius: 6px; font-weight: bold; color: #374151; cursor: pointer; font-size: 16px; }
         .grupo-enviar { display: flex; gap: 10px; }
-        .btn-generar { flex: 1; background: #ff9800; color: white; border: none; padding: 15px; border-radius: 5px; font-weight: bold; font-size: 16px; cursor: pointer; }
-        .btn-whatsapp { flex: 1; background: #25D366; color: white; border: none; padding: 15px; border-radius: 5px; font-weight: bold; font-size: 16px; cursor: pointer; }
+        .btn-generar { flex: 1; background: #ff9800; color: white; border: none; padding: 15px; border-radius: 6px; font-weight: bold; font-size: 16px; cursor: pointer; }
+        .btn-whatsapp { flex: 1; background: #25D366; color: white; border: none; padding: 15px; border-radius: 6px; font-weight: bold; font-size: 16px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -172,24 +114,9 @@
     </div></div>
 
     <div class="card" style="border-left: 5px solid #4caf50;"><div class="card-header" onclick="toggleCard(this)" style="color: #2e7d32;">4. Diagnóstico: Recalentamiento y Subenfriamiento <span>▼</span></div><div class="card-content">
-        <p style="font-size: 0.9rem; line-height: 1.4;">Estos valores permiten verificar si existe desborde o ausencia de refrigerante, evitando daños al compresor y pérdida de potencia.</p>
+        <p style="font-size: 0.9rem; line-height: 1.4;">Estos valores permiten verificar si existe desborde o ausencia de refrigerante.</p>
         <h3 style="color: #2e7d32; font-size: 1rem;">📍 Guía de Conexión en el Equipo</h3>
         <div style="background-color: #f1f8e9; border: 1px solid #c8e6c9; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 0.85rem;"><strong style="color: #2e7d32;">🎛️ MANIFOLDS (Presiones):</strong><br>• <strong>Manifold de BAJA (Azul):</strong> Conectar en la válvula de servicio de la succión del compresor.<br>• <strong>Manifold de ALTA (Rojo):</strong> Conectar en la línea de líquido (salida del tubo recibidor o válvula de descarga).</div>
-        <h3 style="color: #2e7d32; font-size: 1rem;">🌡️ ¿Dónde apoyar la pinza del Termómetro?</h3>
-        <div style="font-size: 0.85rem; line-height: 1.6;">
-            <div style="margin-bottom: 12px; padding: 8px; border-left: 3px solid #1976d2; background: #fff;"><strong>1. Para Subenfriamiento de Condensación:</strong><br>En el caño de cobre a la <strong>salida del condensador</strong> (justo antes de ingresar al filtro deshidratador).</div>
-            <div style="margin-bottom: 12px; padding: 8px; border-left: 3px solid #00bcd4; background: #fff;"><strong>2. Para Subenfriamiento Adicional:</strong><br>En el caño de líquido, lo más <strong>cerca posible de la entrada de la VET</strong>.</div>
-            <div style="margin-bottom: 12px; padding: 8px; border-left: 3px solid #ff9800; background: #fff;"><strong>3. Para Recalentamiento Útil:</strong><br>A la <strong>salida del evaporador</strong> (sobre el caño de retorno).</div>
-            <div style="margin-bottom: 12px; padding: 8px; border-left: 3px solid #e91e63; background: #fff;"><strong>4. Para Recalentamiento Ambiental/Total:</strong><br>En la línea de succión, unos <strong>15 a 20 centímetros antes de la entrada al compresor</strong> (bocha).</div>
-        </div>
-        <h3 style="color: #2e7d32; font-size: 1rem; margin-top: 20px;">📊 Fórmulas de Cálculo rápido</h3>
-        <ul style="font-size: 0.85rem; padding-left: 20px; margin-top: 5px; line-height: 1.6; background: #fff; padding-top: 8px; padding-bottom: 8px; border-radius: 8px; border: 1px solid #eee; text-align: left;">
-            <li><strong>Subenfriamiento Condensación:</strong> T. Manifold Alta - T. Pinza Salida Condensador</li>
-            <li><strong>Subenfriamiento Adicional:</strong> T. Manifold Alta - T. Pinza Entrada VET</li>
-            <li style="margin-top: 4px;"><strong>Recalentamiento Útil:</strong> T. Pinza Salida Evaporador - T. Manifold Baja</li>
-            <li><strong>Recalentamiento Ambiental:</strong> T. Pinza Entrada Compresor - T. Pinza Salida Evaporador</li>
-            <li style="margin-top: 6px; border-top: 1px dashed #ccc; padding-top: 6px; color: #b71c1c;"><strong>Recalentamiento Total (Retorno):</strong> T. Pinza Entrada Compresor - T. Manifold Baja <br><small style="color: #555;">*Es la suma del Útil + Ambiental. ¡Asegura que no vuelva líquido al cárter!</small></li>
-        </ul>
         <h3 style="color: #2e7d32; font-size: 1rem;">Tabla de Valores Normales</h3>
         <div style="overflow-x: auto;"><table style="font-size: 0.8rem;"><tr><th>PARÁMETRO</th><th>VALORES NORMALES</th><th>TU VALOR</th></tr><tr><td>Subenfriamiento Condensación</td><td>DE 3° A 6°</td><td><input type="text" id="diagSubC" placeholder="--" oninput="validarSimple('diagSubC', 3, 6)" style="width: 50px; border: 1px solid #ccc; text-align: center; border-radius: 4px;"></td></tr><tr><td>Subenfriamiento Adicional</td><td>DE 2° A 6°</td><td><input type="text" id="diagSubA" placeholder="--" oninput="validarSimple('diagSubA', 2, 6)" style="width: 50px; border: 1px solid #ccc; text-align: center; border-radius: 4px;"></td></tr><tr><td>Recalentamiento Útil</td><td>DE 5° A 8°</td><td><input type="text" id="diagRecU" placeholder="--" oninput="validarSimple('diagRecU', 5, 8)" style="width: 50px; border: 1px solid #ccc; text-align: center; border-radius: 4px;"></td></tr><tr><td>Recalentamiento Ambiental</td><td>DE 12° A 15°</td><td><input type="text" id="diagRecA" placeholder="--" oninput="validarSimple('diagRecA', 12, 15)" style="width: 50px; border: 1px solid #ccc; text-align: center; border-radius: 4px;"></td></tr></table></div>
     </div></div>
@@ -199,7 +126,6 @@
         <div style="background: #fff5f5; border: 1px solid #ffcdd2; padding: 10px; border-radius: 8px; margin-bottom: 10px;"><strong style="color: #d32f2f;">❄️ Escarcha en el retorno (Compresor):</strong><ul style="font-size: 0.85rem; margin: 5px 0; padding-left: 20px;"><li>Exceso de refrigerante.</li><li>Evaporador sucio o forzador parado.</li><li>VET muy abierta (poco recalentamiento).</li></ul></div>
         <div style="background: #fff8e1; border: 1px solid #ffecb3; padding: 10px; border-radius: 8px; margin-bottom: 10px;"><strong style="color: #f57f17;">🔥 Alta Presión de Alta y Poca Baja:</strong><ul style="font-size: 0.85rem; margin: 5px 0; padding-left: 20px;"><li>Condensador sucio o tapado.</li><li>Presencia de incondensables (aire en el sistema).</li><li>Obstrucción parcial en filtro o capilar.</li></ul></div>
         <div style="background: #e3f2fd; border: 1px solid #bbdefb; padding: 10px; border-radius: 8px; margin-bottom: 10px;"><strong style="color: #1976d2;">💨 El equipo no rinde y la Baja está alta:</strong><ul style="font-size: 0.85rem; margin: 5px 0; padding-left: 20px;"><li>Compresor "desinflado" (válvulas rotas o desgastadas).</li><li>VET trabada abierta.</li></ul></div>
-        <div class="warning-box" style="font-style: italic; font-size: 0.85rem;">💡 <strong>Tip:</strong> Antes de tocar el gas, ¡siempre verificá que los condensadores y evaporadores estén limpios!</div>
     </div></div>
 
     <div class="card" style="border-left: 5px solid #ff5722;"><div class="card-header" onclick="toggleCard(this)" style="color: #ff5722;">6. 🧮 Herramientas de Cálculo y Conversión <span>▼</span></div><div class="card-content">
@@ -232,11 +158,6 @@
             </div>
         </div>
         <div id="resultadoErrores" style="margin-top: 10px;"></div>
-        <h3 style="color: #7b1fa2; font-size: 1rem; margin-top: 25px; border-bottom: 1px solid #e1bee7;">🌡️ Guía Rápida: Cambiar Set Point</h3>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px;">
-            <button onclick="verSetPoint('etc')" style="background: #4a148c; color: white; border: none; padding: 10px; border-radius: 6px; font-weight: bold; font-size: 0.8rem; cursor: pointer;">ELITECH</button><button onclick="verSetPoint('carel')" style="background: #4a148c; color: white; border: none; padding: 10px; border-radius: 6px; font-weight: bold; font-size: 0.8rem; cursor: pointer;">CAREL EASY</button><button onclick="verSetPoint('dixell')" style="background: #4a148c; color: white; border: none; padding: 10px; border-radius: 6px; font-weight: bold; font-size: 0.8rem; cursor: pointer;">DIXELL XR</button><button onclick="verSetPoint('fullgauge')" style="background: #4a148c; color: white; border: none; padding: 10px; border-radius: 6px; font-weight: bold; font-size: 0.8rem; cursor: pointer;">FULL GAUGE</button>
-        </div>
-        <div id="explicacionSetPoint" style="display: none; background: #fff; border: 1px solid #e1bee7; padding: 12px; border-radius: 8px; font-size: 0.85rem; text-align: left;"></div>
     </div></div>
 
     <div class="card" style="border-left: 5px solid #2e7d32;"><div class="card-header" onclick="toggleCard(this)" style="color: #1b5e20;">8. 🔌 Identificador de Motores por Código <span>▼</span></div><div class="card-content">
@@ -263,17 +184,17 @@
             10. 📝 Creador de Presupuestos <span>▼</span>
         </div>
         <div class="card-content">
-            <p style="font-size: 0.95rem; margin-bottom: 12px; color: #555;">
+            <p style="font-size: 1rem; margin-bottom: 12px; color: #555;">
                 Generá una boleta detallada para el cliente y mandala en PDF o directo como texto por WhatsApp.
             </p>
             
             <div class="botones-rapidos">
-                <button onclick="agregarItem('Instalación de Aire Acondicionado', 'Servicio', 1, 85000)">+ Inst. Aire Acond.</button>
-                <button onclick="agregarItem('Reparación de Heladera', 'Servicio', 1, 45000)">+ Rep. Heladera</button>
-                <button onclick="agregarItem('Carga de gas R410A / R22', 'Servicio', 1, 45000)">+ Carga de Gas</button>
-                <button onclick="agregarItem('Cambio de motocompresor', 'Servicio', 1, 65000)">+ Cambio Motor</button>
-                <button onclick="agregarItem('Limpieza unidad y filtros', 'Servicio', 1, 30000)">+ Mantenimiento</button>
-                <button onclick="agregarItem('Capacitor / Relé', 'Repuesto', 1, 15000)">+ Cambio Eléctrico</button>
+                <button onclick="agregarItem('Instalación de Aire Acondicionado', 85000)">+ Inst. Aire Acond.</button>
+                <button onclick="agregarItem('Reparación de Heladera', 45000)">+ Rep. Heladera</button>
+                <button onclick="agregarItem('Carga de gas R410A / R22', 45000)">+ Carga de Gas</button>
+                <button onclick="agregarItem('Cambio de motocompresor', 65000)">+ Cambio Motor</button>
+                <button onclick="agregarItem('Limpieza unidad y filtros', 30000)">+ Mantenimiento</button>
+                <button onclick="agregarItem('Capacitor / Relé', 15000)">+ Cambio Eléctrico</button>
             </div>
 
             <!-- CONTENEDOR DE LA BOLETA -->
@@ -285,22 +206,22 @@
                 <!-- Datos personalizables guardados en memoria -->
                 <div class="datos-tecnico-cliente">
                     <div class="input-linea">
-                        <label>Empresa:</label>
-                        <input type="text" id="empresa-nombre" placeholder="Nombre de tu empresa o taller..." oninput="guardarDatosTecnico()">
+                        <label>Empresa / Taller:</label>
+                        <input type="text" id="empresa-nombre" placeholder="Súper frío..." oninput="guardarDatosTecnico()">
                     </div>
                     <div class="input-linea">
-                        <label>Técnico:</label>
-                        <input type="text" id="tec-nombre" placeholder="Tu nombre..." oninput="guardarDatosTecnico()">
+                        <label>Técnico a cargo:</label>
+                        <input type="text" id="tec-nombre" placeholder="Marcelo..." oninput="guardarDatosTecnico()">
                     </div>
                     <div class="input-linea">
-                        <label>Teléfono:</label>
-                        <input type="tel" id="tec-tel" placeholder="Tu número de contacto..." oninput="guardarDatosTecnico()">
+                        <label>Teléfono de contacto:</label>
+                        <input type="tel" id="tec-tel" placeholder="112713..." oninput="guardarDatosTecnico()">
                     </div>
                     
                     <div style="border-top: 1px dashed #ccc; margin: 10px 0;"></div>
 
                     <div class="input-linea">
-                        <label>Cliente:</label>
+                        <label>Cliente / Dirección:</label>
                         <input type="text" id="nombre-cliente" placeholder="Nombre o Dirección del cliente...">
                     </div>
                 </div>
@@ -317,7 +238,7 @@
             </div>
 
             <div class="acciones-fijas">
-                <button class="btn-agregar" onclick="agregarItem('', 'Servicio', 1, 0)">+ Añadir Fila Manual</button>
+                <button class="btn-agregar" onclick="agregarItem('', 0)">+ Añadir Trabajo Manual</button>
                 <div class="grupo-enviar">
                     <button id="boton-generar" class="btn-generar" onclick="crearPDF()">📄 Generar PDF</button>
                     <button class="btn-whatsapp" onclick="enviarWhatsApp()">💬 Enviar WhatsApp</button>
@@ -378,7 +299,7 @@
         if(nombreGuardado) document.getElementById("tec-nombre").value = nombreGuardado;
         if(telGuardado) document.getElementById("tec-tel").value = telGuardado;
         
-        agregarItem('', 'Servicio', 1, 0); // Fila inicial
+        agregarItem('', 0); // Fila inicial
     });
 
     function guardarDatosTecnico() {
@@ -387,24 +308,20 @@
         localStorage.setItem("tecTel", document.getElementById("tec-tel").value);
     }
 
-    // DISEÑO DE FILAS MEJORADO Y ACCESIBLE
-    function agregarItem(desc, tipo, cant, precio) {
+    // DISEÑO DE FILAS SIMPLIFICADO: Solo Descripción y Precio
+    function agregarItem(desc, precio) {
         const id = Date.now();
         const contenedor = document.getElementById('contenedor-items');
         
         const html = `
             <div class="item-fila" id="fila-${id}">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                    <input type="text" class="input-desc input-formato-grande" placeholder="Describa el trabajo..." value="${desc}" style="width: 85%;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 10px;">
+                    <input type="text" class="input-desc input-formato-grande" placeholder="Descripción del trabajo..." value="${desc}">
                     <button class="btn-cerrar btn-quitar-pdf" onclick="eliminarItem(${id})">X</button>
                 </div>
-                <div style="display: flex; gap: 8px;">
-                    <select class="input-tipo input-formato-grande" style="flex: 1.2;">
-                        <option value="Servicio" ${tipo === 'Servicio' ? 'selected' : ''}>M. Obra</option>
-                        <option value="Repuesto" ${tipo === 'Repuesto' ? 'selected' : ''}>Repuesto</option>
-                    </select>
-                    <input type="number" class="input-cant input-formato-grande" value="${cant}" min="1" oninput="calcularSuma()" style="flex: 0.8;" placeholder="Cant.">
-                    <input type="number" class="input-precio input-formato-grande" value="${precio}" min="0" oninput="calcularSuma()" style="flex: 1.5;" placeholder="$ Precio">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="font-size: 24px; font-weight: bold; color: #003366;">$</span>
+                    <input type="number" class="input-precio input-formato-grande" value="${precio}" min="0" oninput="calcularSuma()" placeholder="Ingrese el precio aquí...">
                 </div>
             </div>
         `;
@@ -421,9 +338,8 @@
         let total = 0;
         const filas = document.querySelectorAll('.item-fila');
         filas.forEach(fila => {
-            const cantidad = parseFloat(fila.querySelector('.input-cant').value) || 0;
             const precio = parseFloat(fila.querySelector('.input-precio').value) || 0;
-            total += (cantidad * precio);
+            total += precio;
         });
         document.getElementById('monto-total').innerText = total.toLocaleString('es-AR');
     }
@@ -447,12 +363,11 @@
         const filas = document.querySelectorAll('.item-fila');
         filas.forEach(fila => {
             const desc = fila.querySelector('.input-desc').value;
-            const cant = parseFloat(fila.querySelector('.input-cant').value) || 0;
             const precio = parseFloat(fila.querySelector('.input-precio').value) || 0;
             
             if (desc.trim() !== '') {
-                const subtotal = (cant * precio).toLocaleString('es-AR');
-                texto += `🔹 ${desc} (x${cant}) : $${subtotal}\n`;
+                const subtotal = precio.toLocaleString('es-AR');
+                texto += `🔹 ${desc} : $${subtotal}\n`;
             }
         });
 
@@ -473,25 +388,13 @@
         const elementoOriginal = document.getElementById('documento-presupuesto');
         const parent = elementoOriginal.parentNode;
         
-        // Fijar el texto de los casilleros para la "foto" y quitarle los bordes grises feos
+        // Fijar el texto de los casilleros para la "foto" y quitarle los bordes grises
         const inputs = elementoOriginal.querySelectorAll('input');
         inputs.forEach(input => {
             input.setAttribute('value', input.value);
             input.style.border = 'none';
             input.style.borderBottom = '1px solid #ccc';
             input.style.background = 'transparent';
-        });
-        
-        const selects = elementoOriginal.querySelectorAll('select');
-        selects.forEach(select => {
-            const options = select.querySelectorAll('option');
-            options.forEach(opt => {
-                if(opt.value === select.value) opt.setAttribute('selected', 'selected');
-                else opt.removeAttribute('selected');
-            });
-            select.style.border = 'none';
-            select.style.appearance = 'none'; // quita la flecha
-            select.style.background = 'transparent';
         });
 
         const filasItems = elementoOriginal.querySelectorAll('.item-fila');
@@ -504,13 +407,12 @@
         const botonesQuitar = elementoOriginal.querySelectorAll('.btn-quitar-pdf');
         botonesQuitar.forEach(btn => btn.style.display = 'none');
 
-        // LA SOLUCIÓN DEFINITIVA: Sacamos el elemento del "acordeón" temporalmente y lo ponemos
-        // sobre toda la pantalla para que html2canvas no lo recorte y lo deje blanco.
+        // Poner la boleta sobre todo el documento temporalmente para la captura perfecta
         document.body.appendChild(elementoOriginal);
         elementoOriginal.style.position = 'absolute';
         elementoOriginal.style.top = '0';
         elementoOriginal.style.left = '0';
-        elementoOriginal.style.width = '800px'; // Forzar ancho grande y nítido
+        elementoOriginal.style.width = '800px'; // Forzar ancho nítido
         elementoOriginal.style.backgroundColor = '#ffffff';
         elementoOriginal.style.zIndex = '9999';
 
@@ -525,7 +427,7 @@
         };
 
         html2pdf().set(opciones).from(elementoOriginal).save().then(() => {
-            // Restaurar todo a la normalidad
+            // Restaurar diseño a la normalidad
             parent.appendChild(elementoOriginal);
             elementoOriginal.style.position = 'relative';
             elementoOriginal.style.width = '100%';
@@ -536,11 +438,6 @@
             inputs.forEach(input => {
                 input.style.border = '1px solid #ccc';
                 input.style.background = '#f9f9f9';
-            });
-            selects.forEach(select => { 
-                select.style.border = '1px solid #bbb'; 
-                select.style.appearance = 'auto'; 
-                select.style.background = '#fff';
             });
             filasItems.forEach(fila => {
                 fila.style.border = '1px solid #e0e0e0';
