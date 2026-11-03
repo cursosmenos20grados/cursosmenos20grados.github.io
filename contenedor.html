@@ -17,6 +17,10 @@
     <link rel="apple-touch-icon" href="https://cursosmenos20grados.github.io/logoap.jpg?v=500">
     
     <link rel="manifest" href="manifest.json">
+    
+    <!-- Librería para generar PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
     <style>
         :root {
             --azul-oscuro: #003366;
@@ -86,7 +90,7 @@
         }
 
         .card.active .card-content {
-            max-height: 3500px; 
+            max-height: 4000px; 
             padding: 15px;
             border-top: 1px solid #eee;
         }
@@ -177,6 +181,25 @@
             font-size: 0.8rem;
             margin-left: 5px;
         }
+
+        /* ESTILOS DEL COTIZADOR PRO */
+        .botones-rapidos { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; }
+        .botones-rapidos button { white-space: nowrap; padding: 8px 15px; border-radius: 20px; border: 1px solid #d1d5db; background: #ffffff; color: #374151; font-size: 13px; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .area-impresion { background: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #eee; }
+        .cabecera-pdf { border-bottom: 2px solid var(--azul-oscuro); padding-bottom: 15px; margin-bottom: 15px; }
+        .cabecera-pdf h2 { color: var(--azul-oscuro); margin: 0 0 5px 0; font-size: 22px; }
+        .cabecera-pdf p { margin: 0; color: #4b5563; font-size: 14px; }
+        .input-cliente { width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 15px; box-sizing: border-box; background: #f9f9f9; }
+        .item-fila { border: 1px solid #e5e7eb; padding: 12px; margin-bottom: 12px; border-radius: 8px; background: #fafafa; position: relative; }
+        .btn-cerrar { position: absolute; top: 10px; right: 10px; background: none; border: none; color: #ef4444; font-size: 16px; font-weight: bold; cursor: pointer; }
+        .campo-grupo { margin-bottom: 8px; }
+        .campo-grupo label { display: block; font-size: 12px; color: #6b7280; margin-bottom: 3px; font-weight: bold; }
+        .item-fila input, .item-fila select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; box-sizing: border-box; }
+        .grid-3 { display: grid; grid-template-columns: 2fr 1fr 1.5fr; gap: 10px; }
+        .total-seccion { text-align: right; margin-top: 15px; font-size: 20px; font-weight: bold; color: #111827; background: #e3f2fd; padding: 10px; border-radius: 5px; border: 1px solid var(--celeste); }
+        .acciones-fijas { display: flex; gap: 10px; margin-top: 20px; }
+        .btn-agregar { flex: 1; background: #e5e7eb; border: none; padding: 12px; border-radius: 5px; font-weight: bold; color: #374151; cursor: pointer; }
+        .btn-generar { flex: 1; background: #ff9800; color: white; border: none; padding: 12px; border-radius: 5px; font-weight: bold; font-size: 15px; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
     </style>
 </head>
 <body>
@@ -630,6 +653,47 @@
         </div>
     </div>
 
+    <!-- TARJETA 10: CREADOR DE PRESUPUESTOS PDF -->
+    <div class="card" style="border-left: 5px solid #ff9800;">
+        <div class="card-header" onclick="toggleCard(this)" style="color: #e65100;">
+            10. 📝 Creador de Presupuestos (PDF) <span>▼</span>
+        </div>
+        <div class="card-content">
+            <p style="font-size: 0.85rem; margin-bottom: 12px; color: #555;">
+                Armá una cotización rápida en el domicilio del cliente y descargala en PDF lista para enviar por WhatsApp.
+            </p>
+            
+            <div class="botones-rapidos" id="ocultar-impresion-1">
+                <button onclick="agregarItem('Carga de gas R410A / R22', 'Mano de obra', 1, 45000)">+ Carga de Gas</button>
+                <button onclick="agregarItem('Cambio de motocompresor', 'Mano de obra', 1, 65000)">+ Cambio Motor</button>
+                <button onclick="agregarItem('Limpieza unidad y filtros', 'Mano de obra', 1, 30000)">+ Mantenimiento</button>
+                <button onclick="agregarItem('Cambio de capacitor / Relé', 'Material', 1, 15000)">+ Cambio Eléctrico</button>
+            </div>
+
+            <div id="documento-presupuesto" class="area-impresion">
+                <div class="cabecera-pdf">
+                    <h2>Presupuesto Técnico</h2>
+                    <p><strong>Taller de enseñanza (-20ºT.E-)</strong></p>
+                    <p>Técnico: Marcelo Cardozo</p>
+                    <input type="text" id="nombre-cliente" class="input-cliente" placeholder="Nombre del cliente o dirección">
+                </div>
+
+                <div id="contenedor-items">
+                    <!-- Las filas dinámicas se inyectan aquí -->
+                </div>
+
+                <div class="total-seccion">
+                    Total Estimado: $<span id="monto-total">0</span>
+                </div>
+            </div>
+
+            <div class="acciones-fijas" id="ocultar-impresion-2">
+                <button class="btn-agregar" onclick="agregarItem('', 'Mano de obra', 1, 0)">+ Agregar Ítem</button>
+                <button class="btn-generar" onclick="crearPDF()">Descargar PDF</button>
+            </div>
+        </div>
+    </div>
+
 </div> 
 
 <div class="footer">
@@ -754,30 +818,25 @@
         navigator.serviceWorker.register('sw.js');
     }
 
-    // Base de datos de errores comunes de combistatos comerciales
     const tablaErrores = [
-        // ELITECH
         { marca: "etc", codigo: "E1", detalle: "Falla del sensor de ambiente (ambiente abierto o en corto).", solucion: "Revisar cableado del sensor térmico ambiental o reemplazar la sonda NTC." },
         { marca: "etc", codigo: "E2", detalle: "Falla del sensor de evaporador (descongelamiento).", solucion: "Verificar la conexión de la segunda sonda en las teleras de bornes o reemplazarla." },
         { marca: "etc", codigo: "EE", detalle: "Error de memoria interna del chip.", solucion: "Desconectar el equipo de la red eléctrica 1 minuto. Si persiste, reprogramar parámetros de fábrica o cambiar combistato." },
         { marca: "etc", codigo: "HH", detalle: "Alerta de alta temperatura (Superó los 99°C o el límite configurado).", solucion: "Verificar si el compresor cortó, falta de gas o si el forzador del evaporador está parado." },
         { marca: "etc", codigo: "LL", detalle: "Alerta de baja temperatura (Menor a -40°C o sensor desconectado).", solucion: "Revisar si el sensor se soltó de la bornera o si el relay del compresor quedó pegado directo." },
         
-        // CAREL
         { marca: "carel", codigo: "E0", detalle: "Falla en sonda 1 (Ambiente).", solucion: "Controlar bornes 3 y 4 (o según modelo Carel). Cambiar sensor NTC." },
         { marca: "carel", codigo: "E1", detalle: "Falla en sonda 2 (Defrost / Evaporador).", solucion: "Revisar si el parámetro de deshielo por temperatura está activo sin tener conectada la sonda física." },
         { marca: "carel", codigo: "IA", detalle: "Alarma externa inmediata (Entrada digital activa).", solucion: "Verificar microswitch de puerta de la cámara o presostato conectado a la entrada digital." },
         { marca: "carel", codigo: "HI", detalle: "Alarma de alta temperatura en el mueble/cámara.", solucion: "Puerta mal cerrada, burletes rotos, condensador tapado de tierra o evaporador bloqueado de hielo." },
         { marca: "carel", codigo: "LO", detalle: "Alarma de baja temperatura.", solucion: "El controlador no corta. Revisar que el relay no se haya soldado internamente por exceso de amperaje." },
         
-        // DIXELL
         { marca: "dixell", codigo: "P1", detalle: "Falla en sonda ambiental sondeada.", solucion: "Revisar conexiones del sensor de control principal. Limpiar sulfatación en bornera." },
         { marca: "dixell", codigo: "P2", detalle: "Falla en sonda del evaporador.", solucion: "Apagar el ciclo de deshielo automático por temperatura y pasarlo a tiempo hasta cambiar el sensor." },
         { marca: "dixell", codigo: "HA", detalle: "Alarma de máxima temperatura registrada.", solucion: "Revisar rendimiento del motor, presiones de trabajo o si el forzador de condensación arrancó." },
         { marca: "dixell", codigo: "LA", detalle: "Alarma de mínima temperatura.", solucion: "Ajustar el diferencial (F2/Hy) para evitar sobre-enfriamiento de la mercadería." },
         { marca: "dixell", codigo: "EA", detalle: "Alarma externa general.", solucion: "Entrada digital configurada enclavada. Revisar relevo térmico o protector de fase externo." },
         
-        // FULL GAUGE
         { marca: "fullgauge", codigo: "E1", detalle: "Sonda ambiental desconectada o dañada.", solucion: "Chequear la resistencia en Kohm de la sonda con el tester para verificar curva de fábrica." },
         { marca: "fullgauge", codigo: "E2", detalle: "Sonda de deshielo (Evaporador) abierta.", solucion: "Revisar cañería de retorno, el bulbo puede estar dañado por congelamiento extremo." },
         { marca: "fullgauge", codigo: "AHi", detalle: "Alarma de alta temperatura ambiental interna.", solucion: "Comprobar que no haya ingresado mercadería caliente en exceso o fallas en el sistema frigorífico." },
@@ -871,7 +930,6 @@
         contenedor.style.display = "block";
     }
 
-    // Base de datos de motocompresores
     const tablaMotores = [
         { modelo: "HYE55Y", marca: "Huayi", hp: "1/6 HP (98 Frig/h)", gas: "R134a / Blend", tipo: "LBP (Familiar / Congelados)" },
         { modelo: "HYE60Y", marca: "Huayi", hp: "1/5 HP (140 Frig/h)", gas: "R134a / Blend", tipo: "LBP (Familiar diario)" },
@@ -942,6 +1000,88 @@
                 <p style="margin: 3px 0; color: #555;"><strong>🎯 Aplicación:</strong> ${m.tipo}</p>
             </div>
         `).join('');
+    }
+
+    // ----- FUNCIONES NUEVAS PARA EL COTIZADOR PRO -----
+    
+    // Iniciar con una fila vacía
+    document.addEventListener("DOMContentLoaded", () => {
+        agregarItem('', 'Mano de obra', 1, 0);
+    });
+
+    function agregarItem(desc, tipo, cant, precio) {
+        const id = Date.now();
+        const contenedor = document.getElementById('contenedor-items');
+        
+        const html = `
+            <div class="item-fila" id="fila-${id}">
+                <button class="btn-cerrar btn-quitar-pdf" onclick="eliminarItem(${id})">X</button>
+                <div class="campo-grupo">
+                    <label>Descripción</label>
+                    <input type="text" class="input-desc" value="${desc}">
+                </div>
+                <div class="grid-3">
+                    <div class="campo-grupo">
+                        <label>Tipo</label>
+                        <select class="input-tipo">
+                            <option value="Mano de obra" ${tipo === 'Mano de obra' ? 'selected' : ''}>Mano de obra</option>
+                            <option value="Material" ${tipo === 'Material' ? 'selected' : ''}>Material</option>
+                        </select>
+                    </div>
+                    <div class="campo-grupo">
+                        <label>Cant.</label>
+                        <input type="number" class="input-cant" value="${cant}" min="1" oninput="calcularSuma()">
+                    </div>
+                    <div class="campo-grupo">
+                        <label>Precio unit.</label>
+                        <input type="number" class="input-precio" value="${precio}" min="0" oninput="calcularSuma()">
+                    </div>
+                </div>
+            </div>
+        `;
+        contenedor.insertAdjacentHTML('beforeend', html);
+        calcularSuma();
+    }
+
+    function eliminarItem(id) {
+        const elemento = document.getElementById(`fila-${id}`);
+        if(elemento) {
+            elemento.remove();
+            calcularSuma();
+        }
+    }
+
+    function calcularSuma() {
+        let total = 0;
+        const filas = document.querySelectorAll('.item-fila');
+        filas.forEach(fila => {
+            const cantidad = parseFloat(fila.querySelector('.input-cant').value) || 0;
+            const precio = parseFloat(fila.querySelector('.input-precio').value) || 0;
+            total += (cantidad * precio);
+        });
+        document.getElementById('monto-total').innerText = total.toLocaleString('es-AR');
+    }
+
+    function crearPDF() {
+        // Ocultar elementos para el PDF
+        const botonesQuitar = document.querySelectorAll('.btn-quitar-pdf');
+        botonesQuitar.forEach(btn => btn.style.display = 'none');
+        
+        const cliente = document.getElementById('nombre-cliente').value || 'Cliente';
+        const elemento = document.getElementById('documento-presupuesto');
+
+        // Configuración para mejor calidad en celulares
+        const opciones = {
+            margin:       10,
+            filename:     `Presupuesto_Refri_${cliente}.pdf`,
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2, useCORS: true, windowWidth: 800 },
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        html2pdf().set(opciones).from(elemento).save().then(() => {
+            botonesQuitar.forEach(btn => btn.style.display = 'block');
+        });
     }
 </script>
 
