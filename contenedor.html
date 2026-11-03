@@ -18,7 +18,7 @@
     
     <link rel="manifest" href="manifest.json">
     
-    <!-- Librerías para exportar Documentos e Imágenes -->
+    <!-- Librería para exportar Imágenes -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <style>
@@ -51,12 +51,11 @@
         #install-banner span { font-size: 0.85rem; display: inline-block; margin-bottom: 5px; }
         #install-banner button { background: var(--celeste); border: none; color: white; padding: 8px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 0.8rem; margin-left: 5px; }
 
-        /* --- ESTILOS DE BOLETA (SÚPER LEGIBLES Y MULTIFORMATO) --- */
+        /* --- ESTILOS DE BOLETA --- */
         .botones-rapidos { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; }
         .botones-rapidos button { white-space: nowrap; padding: 12px 15px; border-radius: 20px; border: 1px solid #d1d5db; background: #ffffff; color: #374151; font-size: 15px; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.1); font-weight: bold; }
         
         .area-impresion { background: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 1px solid #ccc; font-family: 'Segoe UI', Tahoma, sans-serif; color: #000; position: relative; }
-        
         .cabecera-boleta { border-bottom: 2px solid #003366; padding-bottom: 15px; margin-bottom: 15px; text-align: center; }
         .cabecera-boleta h2 { margin: 0 0 5px 0; font-size: 24px; font-weight: bold; color: #003366; text-transform: uppercase; }
         
@@ -70,10 +69,8 @@
         .btn-cerrar { background: #ff4d4d; border: none; color: white; border-radius: 4px; width: 40px; height: 40px; font-size: 18px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.2); flex-shrink: 0; }
         
         .input-formato-grande { font-size: 16px; padding: 12px; border: 1px solid #bbb; border-radius: 6px; background: #fff; color: #000; box-sizing: border-box; width: 100%; }
-        
         .total-seccion { text-align: right; margin-top: 15px; font-size: 24px; font-weight: bold; background: #e3f2fd; padding: 15px; border-radius: 6px; border: 1px solid #00AEEF; color: #003366; }
         
-        /* Botonera de Envío */
         .acciones-fijas { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; border-top: 2px dashed #ccc; padding-top: 20px; }
         .btn-agregar { background: #e5e7eb; border: none; padding: 15px; border-radius: 6px; font-weight: bold; color: #374151; cursor: pointer; font-size: 16px; width: 100%; }
         
@@ -177,23 +174,21 @@
         <div style="background: #fff8e1; border: 1px solid #ffe0b2; padding: 10px; border-radius: 8px; margin-bottom: 12px;"><strong style="color: #e65100; font-size: 0.9rem;">🟡 Circuito de Mando (Control)</strong></div>
     </div></div>
 
-    <!-- TARJETA 10: CREADOR DE PRESUPUESTOS (NUEVA VERSIÓN MULTIFORMATO Y DESCRIPTIVA) -->
+    <!-- TARJETA 10: CREADOR DE PRESUPUESTOS PRO -->
     <div class="card" style="border-left: 5px solid #ff9800;">
         <div class="card-header" onclick="toggleCard(this)" style="color: #e65100;">
             10. 📝 Creador de Presupuestos PRO <span>▼</span>
         </div>
         <div class="card-content">
             <p style="font-size: 1rem; margin-bottom: 12px; color: #555;">
-                Armá el detalle del trabajo. Ahora podés escribir toda la descripción que necesites y exportarlo en cualquier formato.
+                Armá el detalle del trabajo. Tienes espacio completo para el título y la descripción detallada.
             </p>
             
             <div class="botones-rapidos">
-                <button onclick="agregarItem('Instalación de Aire Acondicionado', 85000)">+ Inst. Aire Acond.</button>
-                <button onclick="agregarItem('Reparación de Heladera', 45000)">+ Rep. Heladera</button>
-                <button onclick="agregarItem('Carga de gas R410A / R22', 45000)">+ Carga de Gas</button>
-                <button onclick="agregarItem('Cambio de motocompresor', 65000)">+ Cambio Motor</button>
-                <button onclick="agregarItem('Limpieza unidad y filtros', 30000)">+ Mantenimiento</button>
-                <button onclick="agregarItem('Capacitor / Relé / Térmico', 15000)">+ Reemplazo Eléctrico</button>
+                <button onclick="agregarItem('Instalación de Aire Acondicionado', 'Se realizó soporte, perforación, conexionado de caños y vacío.', 85000)">+ Inst. Aire</button>
+                <button onclick="agregarItem('Reparación de Heladera', 'Se detectó fuga en baja, prueba con nitrógeno y soldadura.', 45000)">+ Rep. Heladera</button>
+                <button onclick="agregarItem('Carga de gas R410A / R22', 'Control de presiones, subenfriamiento y carga completa.', 45000)">+ Carga Gas</button>
+                <button onclick="agregarItem('Cambio de motocompresor', 'Reemplazo de bocha, filtro nuevo y limpieza de sistema.', 65000)">+ Motor</button>
             </div>
 
             <!-- CONTENEDOR DE LA BOLETA -->
@@ -227,7 +222,7 @@
                 <div style="border-top: 2px solid #003366; margin-top: 20px; margin-bottom: 15px;"></div>
                 
                 <div id="contenedor-items">
-                    <!-- Aquí se agregan los trabajos -->
+                    <!-- Filas dinámicas -->
                 </div>
 
                 <div class="total-seccion">
@@ -236,7 +231,7 @@
             </div>
 
             <div class="acciones-fijas">
-                <button class="btn-agregar" onclick="agregarItem('', 0)">➕ Añadir Fila de Trabajo</button>
+                <button class="btn-agregar" onclick="agregarItem('', '', 0)">➕ Añadir Fila de Trabajo</button>
                 
                 <h3 style="text-align: center; margin-bottom: 5px; margin-top: 10px; color: #444; border:none;">📥 Opciones de Envío / Descarga</h3>
                 
@@ -245,7 +240,7 @@
                         <span style="font-size: 24px;">💬</span> WhatsApp
                     </button>
                     <button class="btn-descarga btn-jpg" onclick="descargarJPG()">
-                        <span style="font-size: 24px;">🖼️</span> Imágen (JPG)
+                        <span style="font-size: 24px;">🖼️</span> Imagen (JPG)
                     </button>
                     <button class="btn-descarga btn-pdf" onclick="imprimirPDF()">
                         <span style="font-size: 24px;">📄</span> PDF (Nativo)
@@ -273,7 +268,6 @@
 </div>
 
 <script>
-    // FUNCIONES BÁSICAS DE LAS TARJETAS ANTERIORES
     function toggleCard(element) { const card = element.parentElement; card.classList.toggle('active'); }
     function limpiarValor(id) { let input = document.getElementById(id).value; if (input === "") return NaN; return parseFloat(input.toString().replace(',', '.')); }
     function calcWtoF() { let val = limpiarValor('wIn'); if(!isNaN(val)) document.getElementById('resWF').innerText = "≡ " + (val * 0.86).toFixed(2) + " Frigorías/h"; }
@@ -282,8 +276,6 @@
     function validarSimple(id, min, max) { let input = document.getElementById(id); let valor = limpiarValor(id); if (isNaN(valor)) { input.style.backgroundColor = "white"; input.style.color = "black"; return; } if (valor >= min && valor <= max) { input.style.backgroundColor = "#c8e6c9"; input.style.color = "#2e7d32"; } else { input.style.backgroundColor = "#ffcdd2"; input.style.color = "#d32f2f"; } }
     setTimeout(() => { document.getElementById('install-banner').style.display = 'block'; }, 3000);
     function cerrarBanner() { document.getElementById('install-banner').style.display = 'none'; }
-
-    // ----- LÓGICA DEL CREADOR DE PRESUPUESTOS (NUEVO DISEÑO AMPLIADO) -----
 
     document.addEventListener("DOMContentLoaded", () => {
         const empresaGuardada = localStorage.getItem("tecEmpresa");
@@ -294,7 +286,7 @@
         if(nombreGuardado) document.getElementById("tec-nombre").value = nombreGuardado;
         if(telGuardado) document.getElementById("tec-tel").value = telGuardado;
         
-        agregarItem('', 0); 
+        agregarItem('', '', 0); 
     });
 
     function guardarDatosTecnico() {
@@ -303,8 +295,8 @@
         localStorage.setItem("tecTel", document.getElementById("tec-tel").value);
     }
 
-    // 1. NUEVO DISEÑO DE FILAS (Con espacio para Descripción Larga)
-    function agregarItem(titulo, precio) {
+    // Fila con Título y Descripción independientes
+    function agregarItem(titulo, desc, precio) {
         const id = Date.now();
         const contenedor = document.getElementById('contenedor-items');
         
@@ -315,7 +307,7 @@
                     <button class="btn-cerrar" onclick="eliminarItem(${id})">X</button>
                 </div>
                 
-                <textarea class="input-desc input-formato-grande" placeholder="Detalle: (Ej: Se realizó barrido con nitrógeno, vacío a 500 micrones, cambio de filtro y carga por peso...)" rows="2" style="font-size: 14px; resize: vertical;"></textarea>
+                <textarea class="input-desc input-formato-grande" placeholder="Descripción detallada del trabajo realizado..." rows="2" style="font-size: 15px; resize: vertical;">${desc}</textarea>
                 
                 <div style="display: flex; align-items: center; justify-content: flex-end; gap: 10px; margin-top: 5px;">
                     <span style="font-size: 20px; font-weight: bold; color: #444;">Precio: $</span>
@@ -342,8 +334,6 @@
         document.getElementById('monto-total').innerText = total.toLocaleString('es-AR');
     }
 
-    // 2. GENERADOR CENTRAL DE HTML PLANO (Esta es la magia que evita hojas en blanco)
-    // Toma todos los datos de los casilleros y arma una tabla de puro texto y diseño para exportar.
     function generarHTMLPlano() {
         const empresa = document.getElementById('empresa-nombre').value || 'Servicio Técnico';
         const tecNombre = document.getElementById('tec-nombre').value || 'Técnico';
@@ -401,19 +391,11 @@
                 <div style="text-align: right; margin-top: 30px; font-size: 26px; font-weight: bold; color: #003366; background: #f0f8ff; padding: 15px; border: 2px solid #00AEEF; border-radius: 8px;">
                     TOTAL ESTIMADO: $ ${total}
                 </div>
-                
-                <p style="text-align: center; margin-top: 40px; color: #777; font-size: 14px; border-top: 1px dashed #ccc; padding-top: 15px;">
-                    Documento generado por <strong>Taller de enseñanza (-20ºT.E-)</strong>
-                </p>
             </div>
         `;
-        
         return html;
     }
 
-    // 3. OPCIONES DE EXPORTACIÓN (LOS 4 BOTONES)
-
-    // A. Enviar por WhatsApp (Solo Texto)
     function enviarWhatsApp() {
         const empresa = document.getElementById('empresa-nombre').value || 'Servicio Técnico';
         const tecNombre = document.getElementById('tec-nombre').value || 'Técnico';
@@ -449,11 +431,9 @@
         window.location.href = url;
     }
 
-    // B. Descargar como Imagen JPG (Súper seguro en celulares)
     function descargarJPG() {
         const clonDiv = document.createElement('div');
         clonDiv.innerHTML = generarHTMLPlano();
-        // Lo ponemos en pantalla pero escondido para sacarle la foto
         clonDiv.style.position = 'absolute';
         clonDiv.style.top = '-9999px';
         document.body.appendChild(clonDiv);
@@ -468,12 +448,11 @@
             a.click();
             document.body.removeChild(clonDiv);
         }).catch(err => {
-            alert("Error al crear imagen. Probá usar PDF o WhatsApp.");
+            alert("Error al crear imagen.");
             document.body.removeChild(clonDiv);
         });
     }
 
-    // C. Imprimir como PDF (Usa la función nativa del celular, jamás sale en blanco)
     function imprimirPDF() {
         const contenido = generarHTMLPlano();
         const ventana = window.open('', '_blank');
@@ -482,25 +461,13 @@
         ventana.document.write('</body></html>');
         ventana.document.close();
         ventana.focus();
-        
-        // Darle medio segundo para renderizar e invocar la impresión del celular
-        setTimeout(() => { 
-            ventana.print(); 
-            ventana.close(); 
-        }, 500);
+        setTimeout(() => { ventana.print(); ventana.close(); }, 500);
     }
 
-    // D. Descargar como Documento de Word (.doc)
+    // CORREGIDO: Formato Word real con codificación MHT compatible con celulares
     function descargarWord() {
         const contenido = generarHTMLPlano();
-        const html = `
-            <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
-            <head><meta charset="utf-8"><title>Presupuesto</title></head>
-            <body>${contenido}</body>
-            </html>
-        `;
-        
-        const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
+        const blob = new Blob(['\ufeff' + contenido], { type: 'application/msword' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         const clienteNombre = document.getElementById('nombre-cliente').value || 'Cliente';
