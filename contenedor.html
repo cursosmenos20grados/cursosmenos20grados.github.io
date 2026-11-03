@@ -18,8 +18,8 @@
     
     <link rel="manifest" href="manifest.json">
     
-    <!-- Librería para generar PDF -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- Librerías para exportar Documentos e Imágenes -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <style>
         :root {
@@ -36,7 +36,7 @@
         .card { background: var(--blanco); border-radius: 12px; margin-bottom: 15px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-left: 5px solid var(--celeste); }
         .card-header { padding: 15px; background: var(--blanco); cursor: pointer; font-weight: bold; display: flex; justify-content: space-between; align-items: center; color: var(--azul-oscuro); }
         .card-content { padding: 0 15px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out, padding 0.3s ease; background: #fafafa; }
-        .card.active .card-content { max-height: 5000px; padding: 15px; border-top: 1px solid #eee; }
+        .card.active .card-content { max-height: 5500px; padding: 15px; border-top: 1px solid #eee; }
         
         img { max-width: 100%; height: auto; border-radius: 8px; display: block; margin: 10px auto; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         table { width: 100%; border-collapse: collapse; margin-top: 10px; }
@@ -51,7 +51,7 @@
         #install-banner span { font-size: 0.85rem; display: inline-block; margin-bottom: 5px; }
         #install-banner button { background: var(--celeste); border: none; color: white; padding: 8px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 0.8rem; margin-left: 5px; }
 
-        /* --- ESTILOS DE BOLETA (SÚPER LEGIBLES Y ANTI-DESFASAJE) --- */
+        /* --- ESTILOS DE BOLETA (SÚPER LEGIBLES Y MULTIFORMATO) --- */
         .botones-rapidos { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; }
         .botones-rapidos button { white-space: nowrap; padding: 12px 15px; border-radius: 20px; border: 1px solid #d1d5db; background: #ffffff; color: #374151; font-size: 15px; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.1); font-weight: bold; }
         
@@ -60,26 +60,29 @@
         .cabecera-boleta { border-bottom: 2px solid #003366; padding-bottom: 15px; margin-bottom: 15px; text-align: center; }
         .cabecera-boleta h2 { margin: 0 0 5px 0; font-size: 24px; font-weight: bold; color: #003366; text-transform: uppercase; }
         
-        /* Entradas apiladas para evitar desbordes */
         .datos-tecnico-cliente { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
         .input-linea { display: flex; flex-direction: column; gap: 4px; }
         .input-linea label { font-weight: bold; font-size: 14px; color: #444; }
         .input-linea input { width: 100%; font-size: 16px; padding: 12px; border: 1px solid #ccc; border-radius: 6px; background: #f9f9f9; color: #000; box-sizing: border-box; }
-        .input-linea input:focus { outline: none; border-color: #00AEEF; background: #fff; }
+        .input-linea input:focus, .item-fila input:focus, .item-fila textarea:focus { outline: none; border-color: #00AEEF; background: #fff; box-shadow: 0 0 5px rgba(0,174,239,0.3); }
 
-        .item-fila { border: 1px solid #e0e0e0; padding: 15px; border-radius: 8px; margin-bottom: 15px; background: #fafafa; position: relative; }
-        .btn-cerrar { background: #ff4d4d; border: none; color: white; border-radius: 4px; width: 40px; height: 40px; font-size: 18px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .item-fila { border: 1px solid #e0e0e0; padding: 15px; border-radius: 8px; margin-bottom: 15px; background: #fafafa; position: relative; display: flex; flex-direction: column; gap: 10px; }
+        .btn-cerrar { background: #ff4d4d; border: none; color: white; border-radius: 4px; width: 40px; height: 40px; font-size: 18px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.2); flex-shrink: 0; }
         
-        /* Cajas de inputs amplias y legibles */
-        .input-formato-grande { font-size: 16px !important; padding: 12px !important; border: 1px solid #bbb !important; border-radius: 6px !important; background: #fff !important; color: #000 !important; box-sizing: border-box; width: 100%; }
+        .input-formato-grande { font-size: 16px; padding: 12px; border: 1px solid #bbb; border-radius: 6px; background: #fff; color: #000; box-sizing: border-box; width: 100%; }
         
         .total-seccion { text-align: right; margin-top: 15px; font-size: 24px; font-weight: bold; background: #e3f2fd; padding: 15px; border-radius: 6px; border: 1px solid #00AEEF; color: #003366; }
         
-        .acciones-fijas { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
-        .btn-agregar { background: #e5e7eb; border: none; padding: 15px; border-radius: 6px; font-weight: bold; color: #374151; cursor: pointer; font-size: 16px; }
-        .grupo-enviar { display: flex; gap: 10px; }
-        .btn-generar { flex: 1; background: #ff9800; color: white; border: none; padding: 15px; border-radius: 6px; font-weight: bold; font-size: 16px; cursor: pointer; }
-        .btn-whatsapp { flex: 1; background: #25D366; color: white; border: none; padding: 15px; border-radius: 6px; font-weight: bold; font-size: 16px; cursor: pointer; }
+        /* Botonera de Envío */
+        .acciones-fijas { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; border-top: 2px dashed #ccc; padding-top: 20px; }
+        .btn-agregar { background: #e5e7eb; border: none; padding: 15px; border-radius: 6px; font-weight: bold; color: #374151; cursor: pointer; font-size: 16px; width: 100%; }
+        
+        .grid-descargas { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .btn-descarga { padding: 15px 10px; border: none; border-radius: 6px; font-weight: bold; font-size: 15px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 5px; color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .btn-wsp { background: #25D366; }
+        .btn-jpg { background: #00AEEF; }
+        .btn-pdf { background: #d32f2f; }
+        .btn-doc { background: #1976D2; }
     </style>
 </head>
 <body>
@@ -110,13 +113,9 @@
         <h3>3. Verificación de estanqueidad</h3><ul><li>Observar si la presión se mantiene estable durante 10–15 minutos.</li><li>Si sube, revisar fugas con detector o solución jabonosa.</li></ul>
         <h3>4. Carga de refrigerante</h3><ul><li>Colocar el cilindro en posición invertida para suministrar líquido.</li><li>Cargar líquido <strong>directo al tubo recibidor</strong>, nunca por succión.</li><li>Controlar cantidad por peso (balanza) o presiones y recalentamiento.</li></ul>
         <h3>5. Ajustes finales</h3><ul><li>Encender el equipo y dejar estabilizar.</li><li>Verificar presiones y temperaturas de descarga/retorno.</li><li>Lograr <strong>Recalentamiento</strong> de 8–12 °C y <strong>Subenfriamiento</strong> de 5–10 °C.</li></ul>
-        <div class="warning-box">👉 <strong>Nota:</strong> En equipos pequeños (hasta 3 HP) es común cargar por peso. Un exceso puede dañar el compresor.</div>
     </div></div>
 
     <div class="card" style="border-left: 5px solid #4caf50;"><div class="card-header" onclick="toggleCard(this)" style="color: #2e7d32;">4. Diagnóstico: Recalentamiento y Subenfriamiento <span>▼</span></div><div class="card-content">
-        <p style="font-size: 0.9rem; line-height: 1.4;">Estos valores permiten verificar si existe desborde o ausencia de refrigerante.</p>
-        <h3 style="color: #2e7d32; font-size: 1rem;">📍 Guía de Conexión en el Equipo</h3>
-        <div style="background-color: #f1f8e9; border: 1px solid #c8e6c9; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 0.85rem;"><strong style="color: #2e7d32;">🎛️ MANIFOLDS (Presiones):</strong><br>• <strong>Manifold de BAJA (Azul):</strong> Conectar en la válvula de servicio de la succión del compresor.<br>• <strong>Manifold de ALTA (Rojo):</strong> Conectar en la línea de líquido (salida del tubo recibidor o válvula de descarga).</div>
         <h3 style="color: #2e7d32; font-size: 1rem;">Tabla de Valores Normales</h3>
         <div style="overflow-x: auto;"><table style="font-size: 0.8rem;"><tr><th>PARÁMETRO</th><th>VALORES NORMALES</th><th>TU VALOR</th></tr><tr><td>Subenfriamiento Condensación</td><td>DE 3° A 6°</td><td><input type="text" id="diagSubC" placeholder="--" oninput="validarSimple('diagSubC', 3, 6)" style="width: 50px; border: 1px solid #ccc; text-align: center; border-radius: 4px;"></td></tr><tr><td>Subenfriamiento Adicional</td><td>DE 2° A 6°</td><td><input type="text" id="diagSubA" placeholder="--" oninput="validarSimple('diagSubA', 2, 6)" style="width: 50px; border: 1px solid #ccc; text-align: center; border-radius: 4px;"></td></tr><tr><td>Recalentamiento Útil</td><td>DE 5° A 8°</td><td><input type="text" id="diagRecU" placeholder="--" oninput="validarSimple('diagRecU', 5, 8)" style="width: 50px; border: 1px solid #ccc; text-align: center; border-radius: 4px;"></td></tr><tr><td>Recalentamiento Ambiental</td><td>DE 12° A 15°</td><td><input type="text" id="diagRecA" placeholder="--" oninput="validarSimple('diagRecA', 12, 15)" style="width: 50px; border: 1px solid #ccc; text-align: center; border-radius: 4px;"></td></tr></table></div>
     </div></div>
@@ -128,7 +127,7 @@
         <div style="background: #e3f2fd; border: 1px solid #bbdefb; padding: 10px; border-radius: 8px; margin-bottom: 10px;"><strong style="color: #1976d2;">💨 El equipo no rinde y la Baja está alta:</strong><ul style="font-size: 0.85rem; margin: 5px 0; padding-left: 20px;"><li>Compresor "desinflado" (válvulas rotas o desgastadas).</li><li>VET trabada abierta.</li></ul></div>
     </div></div>
 
-    <div class="card" style="border-left: 5px solid #ff5722;"><div class="card-header" onclick="toggleCard(this)" style="color: #ff5722;">6. 🧮 Herramientas de Cálculo y Conversión <span>▼</span></div><div class="card-content">
+    <div class="card" style="border-left: 5px solid #ff5722;"><div class="card-header" onclick="toggleCard(this)" style="color: #ff5722;">6. 🧮 Herramientas de Cálculo <span>▼</span></div><div class="card-content">
         <div style="background: #fff; border: 1px solid #ddd; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
             <label style="font-weight: bold; color: var(--azul-oscuro);">Convertir Watts a Frigorías</label>
             <div style="display: flex; gap: 5px; margin-top: 5px;"><input type="text" id="wIn" placeholder="Ej: 1500,5" style="flex-grow: 1; padding: 8px; border: 1px solid #ccc; border-radius: 5px;"><button onclick="calcWtoF()" style="background: var(--azul-oscuro); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">CALCULAR</button></div>
@@ -143,7 +142,7 @@
             <label style="font-weight: bold; color: var(--azul-oscuro);">Dimensionado de Cámara (Media T°)</label>
             <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px; margin-top: 10px;"><input type="text" id="L" placeholder="Largo" style="padding: 8px; border: 1px solid #ccc; border-radius: 5px; width: 100%; box-sizing: border-box;"><input type="text" id="A" placeholder="Ancho" style="padding: 8px; border: 1px solid #ccc; border-radius: 5px; width: 100%; box-sizing: border-box;"><input type="text" id="H" placeholder="Alto" style="padding: 8px; border: 1px solid #ccc; border-radius: 5px; width: 100%; box-sizing: border-box;"></div>
             <button onclick="calcCamara()" style="width: 100%; background: #ff5722; color: white; border: none; padding: 12px; border-radius: 5px; margin-top: 10px; font-weight: bold; cursor: pointer;">CALCULAR HP ESTIMADOS</button>
-            <div id="resC" style="display: none; margin-top: 10px; border-top: 1px dashed #aaa; padding-top: 10px;"><p id="m3" style="margin: 0; font-size: 0.9rem;"></p><p id="hp" style="margin: 5px 0 0; font-weight: bold; color: #d32f2f; font-size: 1.1rem;"></p><small style="color: #666;">*Cálculo base: 1 HP cada 18 m³</small></div>
+            <div id="resC" style="display: none; margin-top: 10px; border-top: 1px dashed #aaa; padding-top: 10px;"><p id="m3" style="margin: 0; font-size: 0.9rem;"></p><p id="hp" style="margin: 5px 0 0; font-weight: bold; color: #d32f2f; font-size: 1.1rem;"></p></div>
         </div>
     </div></div>
 
@@ -172,20 +171,20 @@
     </div></div>
 
     <div class="card" style="border-left: 5px solid #00acc1;"><div class="card-header" onclick="toggleCard(this)" style="color: #006064;">9. ⚡ Esquemas y Planos Eléctricos <span>▼</span></div><div class="card-content">
-        <p style="font-size: 0.85rem; margin-bottom: 12px; color: #555;">Guía técnica para el diseño, simulación e interpretación de automatismos.</p>
+        <p style="font-size: 0.85rem; margin-bottom: 12px; color: #555;">Guía técnica para el diseño e interpretación de automatismos.</p>
         <h3 style="color: #00838f; font-size: 1rem; margin-top: 5px; border-bottom: 1px solid #b2ebf2;">1. Estructura del Diagrama</h3>
         <div style="background: #e0f7fa; border: 1px solid #b2ebf2; padding: 10px; border-radius: 8px; margin-bottom: 10px;"><strong style="color: #006064; font-size: 0.9rem;">🔴 Circuito de Potencia (Fuerza)</strong></div>
         <div style="background: #fff8e1; border: 1px solid #ffe0b2; padding: 10px; border-radius: 8px; margin-bottom: 12px;"><strong style="color: #e65100; font-size: 0.9rem;">🟡 Circuito de Mando (Control)</strong></div>
     </div></div>
 
-    <!-- TARJETA 10: CREADOR DE PRESUPUESTOS BOLETA -->
+    <!-- TARJETA 10: CREADOR DE PRESUPUESTOS (NUEVA VERSIÓN MULTIFORMATO Y DESCRIPTIVA) -->
     <div class="card" style="border-left: 5px solid #ff9800;">
         <div class="card-header" onclick="toggleCard(this)" style="color: #e65100;">
-            10. 📝 Creador de Presupuestos <span>▼</span>
+            10. 📝 Creador de Presupuestos PRO <span>▼</span>
         </div>
         <div class="card-content">
             <p style="font-size: 1rem; margin-bottom: 12px; color: #555;">
-                Generá una boleta detallada para el cliente y mandala en PDF o directo como texto por WhatsApp.
+                Armá el detalle del trabajo. Ahora podés escribir toda la descripción que necesites y exportarlo en cualquier formato.
             </p>
             
             <div class="botones-rapidos">
@@ -194,7 +193,7 @@
                 <button onclick="agregarItem('Carga de gas R410A / R22', 45000)">+ Carga de Gas</button>
                 <button onclick="agregarItem('Cambio de motocompresor', 65000)">+ Cambio Motor</button>
                 <button onclick="agregarItem('Limpieza unidad y filtros', 30000)">+ Mantenimiento</button>
-                <button onclick="agregarItem('Capacitor / Relé', 15000)">+ Cambio Eléctrico</button>
+                <button onclick="agregarItem('Capacitor / Relé / Térmico', 15000)">+ Reemplazo Eléctrico</button>
             </div>
 
             <!-- CONTENEDOR DE LA BOLETA -->
@@ -203,19 +202,18 @@
                     <h2>PRESUPUESTO TÉCNICO</h2>
                 </div>
 
-                <!-- Datos personalizables guardados en memoria -->
                 <div class="datos-tecnico-cliente">
                     <div class="input-linea">
                         <label>Empresa / Taller:</label>
-                        <input type="text" id="empresa-nombre" placeholder="Súper frío..." oninput="guardarDatosTecnico()">
+                        <input type="text" id="empresa-nombre" placeholder="Ej: Súper frío..." oninput="guardarDatosTecnico()">
                     </div>
                     <div class="input-linea">
                         <label>Técnico a cargo:</label>
-                        <input type="text" id="tec-nombre" placeholder="Marcelo..." oninput="guardarDatosTecnico()">
+                        <input type="text" id="tec-nombre" placeholder="Ej: Marcelo..." oninput="guardarDatosTecnico()">
                     </div>
                     <div class="input-linea">
                         <label>Teléfono de contacto:</label>
-                        <input type="tel" id="tec-tel" placeholder="112713..." oninput="guardarDatosTecnico()">
+                        <input type="tel" id="tec-tel" placeholder="Ej: 112713..." oninput="guardarDatosTecnico()">
                     </div>
                     
                     <div style="border-top: 1px dashed #ccc; margin: 10px 0;"></div>
@@ -229,7 +227,7 @@
                 <div style="border-top: 2px solid #003366; margin-top: 20px; margin-bottom: 15px;"></div>
                 
                 <div id="contenedor-items">
-                    <!-- Filas dinámicas -->
+                    <!-- Aquí se agregan los trabajos -->
                 </div>
 
                 <div class="total-seccion">
@@ -238,10 +236,23 @@
             </div>
 
             <div class="acciones-fijas">
-                <button class="btn-agregar" onclick="agregarItem('', 0)">+ Añadir Trabajo Manual</button>
-                <div class="grupo-enviar">
-                    <button id="boton-generar" class="btn-generar" onclick="crearPDF()">📄 Generar PDF</button>
-                    <button class="btn-whatsapp" onclick="enviarWhatsApp()">💬 Enviar WhatsApp</button>
+                <button class="btn-agregar" onclick="agregarItem('', 0)">➕ Añadir Fila de Trabajo</button>
+                
+                <h3 style="text-align: center; margin-bottom: 5px; margin-top: 10px; color: #444; border:none;">📥 Opciones de Envío / Descarga</h3>
+                
+                <div class="grid-descargas">
+                    <button class="btn-descarga btn-wsp" onclick="enviarWhatsApp()">
+                        <span style="font-size: 24px;">💬</span> WhatsApp
+                    </button>
+                    <button class="btn-descarga btn-jpg" onclick="descargarJPG()">
+                        <span style="font-size: 24px;">🖼️</span> Imágen (JPG)
+                    </button>
+                    <button class="btn-descarga btn-pdf" onclick="imprimirPDF()">
+                        <span style="font-size: 24px;">📄</span> PDF (Nativo)
+                    </button>
+                    <button class="btn-descarga btn-doc" onclick="descargarWord()">
+                        <span style="font-size: 24px;">📝</span> Word (DOC)
+                    </button>
                 </div>
             </div>
         </div>
@@ -262,35 +273,19 @@
 </div>
 
 <script>
-    // FUNCIONES ORIGINALES BÁSICAS
+    // FUNCIONES BÁSICAS DE LAS TARJETAS ANTERIORES
     function toggleCard(element) { const card = element.parentElement; card.classList.toggle('active'); }
     function limpiarValor(id) { let input = document.getElementById(id).value; if (input === "") return NaN; return parseFloat(input.toString().replace(',', '.')); }
     function calcWtoF() { let val = limpiarValor('wIn'); if(!isNaN(val)) document.getElementById('resWF').innerText = "≡ " + (val * 0.86).toFixed(2) + " Frigorías/h"; }
     function calcBtoK() { let val = limpiarValor('btuIn'); if(!isNaN(val)) document.getElementById('resBK').innerText = "≡ " + (val * 0.252).toFixed(2) + " Kcal/h"; }
-    function calcCamara() {
-        let l = limpiarValor('L'), a = limpiarValor('A'), h = limpiarValor('H');
-        if(!isNaN(l) && !isNaN(a) && !isNaN(h)) {
-            let vol = l * a * h;
-            let motorSugerido = vol <= 4 ? "1/2 HP o 3/4 HP" : vol <= 8 ? "1 HP" : vol <= 14 ? "1.5 HP" : vol <= 22 ? "2 HP" : vol <= 35 ? "3 HP" : vol <= 50 ? "4 HP o 5 HP" : "Consultar ingeniería";
-            document.getElementById('resC').style.display = "block";
-            document.getElementById('m3').innerHTML = "<strong>Volumen Total:</strong> " + vol.toFixed(2) + " m³";
-            document.getElementById('hp').innerHTML = "<strong>Motor Sugerido:</strong> " + motorSugerido;
-        } else alert("Ingresa las tres medidas.");
-    }
-    function validarSimple(id, min, max) {
-        let input = document.getElementById(id); let valor = limpiarValor(id);
-        if (isNaN(valor)) { input.style.backgroundColor = "white"; input.style.color = "black"; return; }
-        if (valor >= min && valor <= max) { input.style.backgroundColor = "#c8e6c9"; input.style.color = "#2e7d32"; input.style.borderColor = "#4caf50"; } 
-        else { input.style.backgroundColor = "#ffcdd2"; input.style.color = "#d32f2f"; input.style.borderColor = "#f44336"; }
-    }
+    function calcCamara() { let l = limpiarValor('L'), a = limpiarValor('A'), h = limpiarValor('H'); if(!isNaN(l) && !isNaN(a) && !isNaN(h)) { let vol = l * a * h; document.getElementById('resC').style.display = "block"; document.getElementById('m3').innerHTML = "<strong>Volumen:</strong> " + vol.toFixed(2) + " m³"; } }
+    function validarSimple(id, min, max) { let input = document.getElementById(id); let valor = limpiarValor(id); if (isNaN(valor)) { input.style.backgroundColor = "white"; input.style.color = "black"; return; } if (valor >= min && valor <= max) { input.style.backgroundColor = "#c8e6c9"; input.style.color = "#2e7d32"; } else { input.style.backgroundColor = "#ffcdd2"; input.style.color = "#d32f2f"; } }
     setTimeout(() => { document.getElementById('install-banner').style.display = 'block'; }, 3000);
     function cerrarBanner() { document.getElementById('install-banner').style.display = 'none'; }
 
-
-    // ----- LÓGICA DE LA BOLETA, MEMORIA Y WHATSAPP -----
+    // ----- LÓGICA DEL CREADOR DE PRESUPUESTOS (NUEVO DISEÑO AMPLIADO) -----
 
     document.addEventListener("DOMContentLoaded", () => {
-        // Cargar datos de la empresa y técnico guardados en el teléfono
         const empresaGuardada = localStorage.getItem("tecEmpresa");
         const nombreGuardado = localStorage.getItem("tecNombre");
         const telGuardado = localStorage.getItem("tecTel");
@@ -299,7 +294,7 @@
         if(nombreGuardado) document.getElementById("tec-nombre").value = nombreGuardado;
         if(telGuardado) document.getElementById("tec-tel").value = telGuardado;
         
-        agregarItem('', 0); // Fila inicial
+        agregarItem('', 0); 
     });
 
     function guardarDatosTecnico() {
@@ -308,20 +303,23 @@
         localStorage.setItem("tecTel", document.getElementById("tec-tel").value);
     }
 
-    // DISEÑO DE FILAS SIMPLIFICADO: Solo Descripción y Precio
-    function agregarItem(desc, precio) {
+    // 1. NUEVO DISEÑO DE FILAS (Con espacio para Descripción Larga)
+    function agregarItem(titulo, precio) {
         const id = Date.now();
         const contenedor = document.getElementById('contenedor-items');
         
         const html = `
             <div class="item-fila" id="fila-${id}">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 10px;">
-                    <input type="text" class="input-desc input-formato-grande" placeholder="Descripción del trabajo..." value="${desc}">
-                    <button class="btn-cerrar btn-quitar-pdf" onclick="eliminarItem(${id})">X</button>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;">
+                    <input type="text" class="input-titulo input-formato-grande" placeholder="Título del trabajo (Ej: Carga de gas)" value="${titulo}" style="font-weight: bold; color: #003366;">
+                    <button class="btn-cerrar" onclick="eliminarItem(${id})">X</button>
                 </div>
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <span style="font-size: 24px; font-weight: bold; color: #003366;">$</span>
-                    <input type="number" class="input-precio input-formato-grande" value="${precio}" min="0" oninput="calcularSuma()" placeholder="Ingrese el precio aquí...">
+                
+                <textarea class="input-desc input-formato-grande" placeholder="Detalle: (Ej: Se realizó barrido con nitrógeno, vacío a 500 micrones, cambio de filtro y carga por peso...)" rows="2" style="font-size: 14px; resize: vertical;"></textarea>
+                
+                <div style="display: flex; align-items: center; justify-content: flex-end; gap: 10px; margin-top: 5px;">
+                    <span style="font-size: 20px; font-weight: bold; color: #444;">Precio: $</span>
+                    <input type="number" class="input-precio input-formato-grande" value="${precio}" min="0" oninput="calcularSuma()" placeholder="0" style="width: 150px; text-align: right; font-weight: bold;">
                 </div>
             </div>
         `;
@@ -344,116 +342,172 @@
         document.getElementById('monto-total').innerText = total.toLocaleString('es-AR');
     }
 
-    // OPCIÓN: Enviar por WhatsApp
+    // 2. GENERADOR CENTRAL DE HTML PLANO (Esta es la magia que evita hojas en blanco)
+    // Toma todos los datos de los casilleros y arma una tabla de puro texto y diseño para exportar.
+    function generarHTMLPlano() {
+        const empresa = document.getElementById('empresa-nombre').value || 'Servicio Técnico';
+        const tecNombre = document.getElementById('tec-nombre').value || 'Técnico';
+        const tecTel = document.getElementById('tec-tel').value || '-';
+        const cliente = document.getElementById('nombre-cliente').value || 'A quien corresponda';
+        const total = document.getElementById('monto-total').innerText;
+
+        let html = `
+            <div style="background: white; color: black; padding: 40px; font-family: 'Arial', sans-serif; width: 700px; max-width: 100%; margin: auto; border: 1px solid #ccc; box-sizing: border-box;">
+                <h2 style="text-align: center; color: #003366; border-bottom: 3px solid #003366; padding-bottom: 15px; text-transform: uppercase; font-size: 28px;">Presupuesto Técnico</h2>
+                
+                <table style="width: 100%; margin-bottom: 20px; font-size: 16px;">
+                    <tr>
+                        <td style="width: 50%; vertical-align: top;">
+                            <p style="margin: 5px 0;"><strong>Empresa:</strong> ${empresa}</p>
+                            <p style="margin: 5px 0;"><strong>Técnico:</strong> ${tecNombre}</p>
+                            <p style="margin: 5px 0;"><strong>Teléfono:</strong> ${tecTel}</p>
+                        </td>
+                        <td style="width: 50%; vertical-align: top; text-align: right; border-left: 1px solid #ccc; padding-left: 15px;">
+                            <p style="margin: 5px 0;"><strong>Cliente / Dirección:</strong></p>
+                            <p style="margin: 5px 0; font-size: 18px;">${cliente}</p>
+                        </td>
+                    </tr>
+                </table>
+                
+                <table style="width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 16px;">
+                    <tr style="background-color: #003366; color: white;">
+                        <th style="padding: 12px; border: 1px solid #003366; text-align: left;">Detalle del Trabajo / Repuestos</th>
+                        <th style="padding: 12px; border: 1px solid #003366; text-align: right; width: 150px;">Importe</th>
+                    </tr>
+        `;
+
+        const filas = document.querySelectorAll('.item-fila');
+        filas.forEach(fila => {
+            const titulo = fila.querySelector('.input-titulo').value || 'Ítem de trabajo';
+            const desc = fila.querySelector('.input-desc').value || '';
+            const precio = parseFloat(fila.querySelector('.input-precio').value) || 0;
+            
+            html += `
+                <tr>
+                    <td style="padding: 15px; border: 1px solid #ddd;">
+                        <strong style="font-size: 18px; color: #333;">${titulo}</strong><br>
+                        <span style="font-size: 14px; color: #666; display: inline-block; margin-top: 5px;">${desc.replace(/\n/g, '<br>')}</span>
+                    </td>
+                    <td style="padding: 15px; border: 1px solid #ddd; text-align: right; font-size: 18px; font-weight: bold; white-space: nowrap;">
+                        $ ${precio.toLocaleString('es-AR')}
+                    </td>
+                </tr>
+            `;
+        });
+
+        html += `
+                </table>
+                
+                <div style="text-align: right; margin-top: 30px; font-size: 26px; font-weight: bold; color: #003366; background: #f0f8ff; padding: 15px; border: 2px solid #00AEEF; border-radius: 8px;">
+                    TOTAL ESTIMADO: $ ${total}
+                </div>
+                
+                <p style="text-align: center; margin-top: 40px; color: #777; font-size: 14px; border-top: 1px dashed #ccc; padding-top: 15px;">
+                    Documento generado por <strong>Taller de enseñanza (-20ºT.E-)</strong>
+                </p>
+            </div>
+        `;
+        
+        return html;
+    }
+
+    // 3. OPCIONES DE EXPORTACIÓN (LOS 4 BOTONES)
+
+    // A. Enviar por WhatsApp (Solo Texto)
     function enviarWhatsApp() {
         const empresa = document.getElementById('empresa-nombre').value || 'Servicio Técnico';
         const tecNombre = document.getElementById('tec-nombre').value || 'Técnico';
-        const tecTel = document.getElementById('tec-tel').value || '';
         const cliente = document.getElementById('nombre-cliente').value || 'A quien corresponda';
         const total = document.getElementById('monto-total').innerText;
 
         let texto = `*📋 PRESUPUESTO TÉCNICO*\n`;
         texto += `*Empresa:* ${empresa}\n`;
         texto += `*Técnico:* ${tecNombre}\n`;
-        if(tecTel) texto += `*Teléfono:* ${tecTel}\n`;
         texto += `------------------------------\n`;
         texto += `*Para:* ${cliente}\n\n`;
-        texto += `*Detalle del trabajo:*\n`;
+        texto += `*Detalle del trabajo:*\n\n`;
 
         const filas = document.querySelectorAll('.item-fila');
         filas.forEach(fila => {
+            const titulo = fila.querySelector('.input-titulo').value;
             const desc = fila.querySelector('.input-desc').value;
             const precio = parseFloat(fila.querySelector('.input-precio').value) || 0;
             
-            if (desc.trim() !== '') {
-                const subtotal = precio.toLocaleString('es-AR');
-                texto += `🔹 ${desc} : $${subtotal}\n`;
+            if (titulo.trim() !== '' || precio > 0) {
+                texto += `🔹 *${titulo}*\n`;
+                if(desc.trim() !== '') texto += `_${desc}_\n`;
+                texto += `Importe: $${precio.toLocaleString('es-AR')}\n\n`;
             }
         });
 
         texto += `------------------------------\n`;
         texto += `*TOTAL ESTIMADO: $${total}*\n`;
         texto += `------------------------------\n`;
-        texto += `Gracias por confiar en nuestro servicio.`;
+        texto += `Gracias por confiar en nosotros.`;
 
         const url = `whatsapp://send?text=${encodeURIComponent(texto)}`;
         window.location.href = url;
     }
 
-    // PDF 100% BLINDADO PARA CELULARES
-    function crearPDF() {
-        const botonGenerar = document.getElementById('boton-generar');
-        botonGenerar.innerText = "Generando PDF...";
-
-        const elementoOriginal = document.getElementById('documento-presupuesto');
-        const parent = elementoOriginal.parentNode;
+    // B. Descargar como Imagen JPG (Súper seguro en celulares)
+    function descargarJPG() {
+        const clonDiv = document.createElement('div');
+        clonDiv.innerHTML = generarHTMLPlano();
+        // Lo ponemos en pantalla pero escondido para sacarle la foto
+        clonDiv.style.position = 'absolute';
+        clonDiv.style.top = '-9999px';
+        document.body.appendChild(clonDiv);
         
-        // Fijar el texto de los casilleros para la "foto" y quitarle los bordes grises
-        const inputs = elementoOriginal.querySelectorAll('input');
-        inputs.forEach(input => {
-            input.setAttribute('value', input.value);
-            input.style.border = 'none';
-            input.style.borderBottom = '1px solid #ccc';
-            input.style.background = 'transparent';
-        });
-
-        const filasItems = elementoOriginal.querySelectorAll('.item-fila');
-        filasItems.forEach(fila => {
-            fila.style.border = 'none';
-            fila.style.borderBottom = '1px dashed #ccc';
-            fila.style.background = '#fff';
-        });
-
-        const botonesQuitar = elementoOriginal.querySelectorAll('.btn-quitar-pdf');
-        botonesQuitar.forEach(btn => btn.style.display = 'none');
-
-        // Poner la boleta sobre todo el documento temporalmente para la captura perfecta
-        document.body.appendChild(elementoOriginal);
-        elementoOriginal.style.position = 'absolute';
-        elementoOriginal.style.top = '0';
-        elementoOriginal.style.left = '0';
-        elementoOriginal.style.width = '800px'; // Forzar ancho nítido
-        elementoOriginal.style.backgroundColor = '#ffffff';
-        elementoOriginal.style.zIndex = '9999';
-
         const clienteNombre = document.getElementById('nombre-cliente').value || 'Cliente';
 
-        const opciones = {
-            margin:       10,
-            filename:     `Presupuesto_${clienteNombre}.pdf`,
-            image:        { type: 'jpeg', quality: 1.0 },
-            html2canvas:  { scale: 2, useCORS: true },
-            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        };
-
-        html2pdf().set(opciones).from(elementoOriginal).save().then(() => {
-            // Restaurar diseño a la normalidad
-            parent.appendChild(elementoOriginal);
-            elementoOriginal.style.position = 'relative';
-            elementoOriginal.style.width = '100%';
-            elementoOriginal.style.top = 'auto';
-            elementoOriginal.style.left = 'auto';
-            elementoOriginal.style.zIndex = 'auto';
-            
-            inputs.forEach(input => {
-                input.style.border = '1px solid #ccc';
-                input.style.background = '#f9f9f9';
-            });
-            filasItems.forEach(fila => {
-                fila.style.border = '1px solid #e0e0e0';
-                fila.style.background = '#fafafa';
-            });
-            botonesQuitar.forEach(btn => btn.style.display = 'flex');
-            
-            botonGenerar.innerText = "📄 Generar PDF";
+        html2canvas(clonDiv.firstElementChild, { scale: 2, backgroundColor: '#ffffff', useCORS: true }).then(canvas => {
+            const imgData = canvas.toDataURL('image/jpeg', 0.9);
+            const a = document.createElement('a');
+            a.href = imgData;
+            a.download = `Presupuesto_${clienteNombre}.jpg`;
+            a.click();
+            document.body.removeChild(clonDiv);
         }).catch(err => {
-            alert("Error al generar PDF. Utiliza la opción de enviar por WhatsApp.");
-            parent.appendChild(elementoOriginal);
-            elementoOriginal.style.position = 'relative';
-            elementoOriginal.style.width = '100%';
-            botonesQuitar.forEach(btn => btn.style.display = 'flex');
-            botonGenerar.innerText = "📄 Generar PDF";
+            alert("Error al crear imagen. Probá usar PDF o WhatsApp.");
+            document.body.removeChild(clonDiv);
         });
+    }
+
+    // C. Imprimir como PDF (Usa la función nativa del celular, jamás sale en blanco)
+    function imprimirPDF() {
+        const contenido = generarHTMLPlano();
+        const ventana = window.open('', '_blank');
+        ventana.document.write('<html><head><title>Presupuesto Técnico</title></head><body style="margin:0; padding:20px; background:#fff;">');
+        ventana.document.write(contenido);
+        ventana.document.write('</body></html>');
+        ventana.document.close();
+        ventana.focus();
+        
+        // Darle medio segundo para renderizar e invocar la impresión del celular
+        setTimeout(() => { 
+            ventana.print(); 
+            ventana.close(); 
+        }, 500);
+    }
+
+    // D. Descargar como Documento de Word (.doc)
+    function descargarWord() {
+        const contenido = generarHTMLPlano();
+        const html = `
+            <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+            <head><meta charset="utf-8"><title>Presupuesto</title></head>
+            <body>${contenido}</body>
+            </html>
+        `;
+        
+        const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        const clienteNombre = document.getElementById('nombre-cliente').value || 'Cliente';
+        a.href = url;
+        a.download = `Presupuesto_${clienteNombre}.doc`;
+        a.click();
+        URL.revokeObjectURL(url);
     }
 </script>
 
